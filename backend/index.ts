@@ -14,7 +14,7 @@ app.listen(port);
 console.log('%cSuccess', 'color: green');
 
 // Connect Database
-const databaseURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017';
+const databaseURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/crm-webapp';
 mongoose.connect(databaseURI);
 console.log(`Connecting Database: ${databaseURI}`)
 const db = mongoose.connection;
