@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import User from "@models/user";
-import { sendMongooseErrorResponse } from "@utils/index";
 import bcrypt from "bcrypt";
 
 const register = async (req: Request, res: Response) => {
@@ -10,11 +9,11 @@ const register = async (req: Request, res: Response) => {
   const newUser = new User({
     name,
     email,
-    password : hashedPassword,
+    password: hashedPassword,
   });
   newUser.save((saveErr, savedData) => {
     if (saveErr) {
-      sendMongooseErrorResponse(saveErr, res);
+      return res.sendMongooseErrorResponse(saveErr);
     }
     return res.status(200).json(savedData);
   });
