@@ -3,10 +3,14 @@ const app = express();
 import router from "./routes";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import baseMiddleware from "@middlewares/base.middleware";
+import authMiddleware from "@app/middlewares/auth.middleware";
+
 dotenv.config();
 const port = process.env.PORT || 3001;
 
-app.use("/api", express.json(), router);
+app.use("/api/auth", express.json(), baseMiddleware, require("@routes/auth"));
+app.use("/api", express.json(), baseMiddleware, authMiddleware, router);
 
 // start server
 console.log(`Starting Backend Server: http://localhost:${port}`);

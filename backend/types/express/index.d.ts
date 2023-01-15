@@ -1,4 +1,5 @@
 import { MongooseError } from "@app/types/mongooseError";
+import { User } from "../user";
 
 // this file is used to override express type 'Request' on app level
 
@@ -7,6 +8,12 @@ export {};
 
 declare global {
   namespace Express {
+    export interface Request {
+      /**
+       * logged in user object
+       */
+      user?: Omit<User, "password">;
+    }
     export interface Response {
       /**
        * use this method to send custom error message response
