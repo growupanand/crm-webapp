@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "@models/user";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -15,7 +16,16 @@ const register = async (req: Request, res: Response) => {
     if (saveErr) {
       return res.sendMongooseErrorResponse(saveErr);
     }
-    return res.status(200).json(savedData);
+    // create access token
+    const payload = {
+      name: savedData.name,
+      email: savedData.email,
+    };
+    const accessToken = jwt.sign(
+      payload,
+      process.env.ACCESS_TOKEN_SECRET as string
+    );
+    return res.status(200).json({ accessToken });
   });
 };
 
