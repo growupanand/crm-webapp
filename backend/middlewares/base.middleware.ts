@@ -2,7 +2,7 @@ import { MongooseError } from "@app/types/mongooseError";
 import { NextFunction, Request, Response } from "express";
 
 /**
- * This controller will provide extra methods inside request object
+ * This controller will provide custom methods inside request object,
  * E.g: res.sendCustomErrorMessage, res.sendMongooseErrorResponse
  * @param req
  * @param res
