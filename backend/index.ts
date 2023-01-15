@@ -22,4 +22,4 @@ const db = mongoose.connection;
 db.on("error", (error) =>
   console.error("Error while connecting database", error)
 );
-db.once("open", () => console.log("Success"));
+db.once("open", () => console.log("%cSuccess", "color: green"));
