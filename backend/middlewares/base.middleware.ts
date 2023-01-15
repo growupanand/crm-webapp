@@ -1,7 +1,14 @@
 import { MongooseError } from "@app/types/mongooseError";
 import { NextFunction, Request, Response } from "express";
 
-export default function (req: Request, res: Response, next: NextFunction) {
+/**
+ * This controller will provide extra methods inside request object
+ * E.g: res.sendCustomErrorMessage, res.sendMongooseErrorResponse
+ * @param req
+ * @param res
+ * @param next
+ */
+export default function (_req: Request, res: Response, next: NextFunction) {
   res.sendCustomErrorMessage = (message: string, statusCode: number = 400) => {
     return res.status(statusCode).json({
       nonFieldError: message,
