@@ -20,20 +20,37 @@ export default function (_req: Request, res: Response, next: NextFunction) {
       let errors;
       const errorType = mongooseError.name;
       switch (errorType) {
-        case "MongoServerError": // if this is duplicate key error
-          errors = Object.keys(mongooseError.keyValue!).map((key) => ({
-            [key]: `'${mongooseError.keyValue![key]}' already exist!`,
-          }));
-          res.status(400).json(errors);
+        // if this is duplicate key error
+        case "MongoServerError":
+          if (mongooseError.code == 11000) {
+            let regex =
+              /E11000 .+ index: (?<path>.+)_.+ dup key: { : "(?<value>.+)" }/;
+            let match = regex.exec(mongooseError.message);
+            if (match?.groups) {
+              errors = {
+                [match.groups.path]: `'${match.groups.value}' already exist!`,
+              };
+              break;
+            }
+          }
+          if (mongooseError.keyValue) {
+            errors = Object.keys(mongooseError.keyValue!).map((key) => ({
+              [key]: `'${mongooseError.keyValue![key]}' already exist!`,
+            }));
+          }
           break;
-        case "ValidationError": // if this is any type error
+        // if this is any type error
+        case "ValidationError":
           errors = Object.keys(mongooseError.errors!).map((key) => ({
             [key]: mongooseError.errors![key].message,
           }));
-          res.status(400).send(errors);
           break;
         default:
-          res.sendCustomErrorMessage(mongooseError.message, 400);
+      }
+      if (errors) {
+        res.status(400).send(errors);
+      } else {
+        res.sendCustomErrorMessage(mongooseError.message, 400);
       }
       return;
     }
