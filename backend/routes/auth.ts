@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
-import AuthController from "@controllers/auth.controller";
+import authController from "@controllers/auth.controller";
 
-router.post("/register", AuthController.register);
-router.post("/login", AuthController.login);
-router.delete("/logout", AuthController.logout);
-router.post("/getAccessToken", AuthController.getAccessToken);
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+router.delete("/logout", authController.logout);
+router.post("/getAccessToken", authController.getAccessToken);
 
 module.exports = router;
