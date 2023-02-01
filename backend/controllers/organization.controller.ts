@@ -35,9 +35,7 @@ const getUserOrganizations = async (req: Request, res: Response) => {
   const organizations = await organizationModel.find({
     userId: req.user._id,
   });
-  return res.status(200).json({
-    ...organizations,
-  });
+  return res.status(200).json([...organizations]);
 };
 
 /**

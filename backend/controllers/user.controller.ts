@@ -1,6 +1,12 @@
 import userModel from "@app/models/user";
 import { Request, Response } from "express";
 
+/**
+ * Get any user details
+ * @param req
+ * @param res
+ * @returns
+ */
 const getUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const commonErrorMessage = "User not found";
@@ -23,4 +29,20 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export default { getUser };
+/**
+ * Delete current logged in user
+ * @param req
+ * @param res
+ * @returns
+ */
+const deleteUser = async (req: Request, res: Response) => {
+  const { user } = req;
+  try {
+    await userModel.deleteOne({ _id: user._id });
+    return res.status(200).json({ message: "User deleted successfully" });
+  } catch (error: any) {
+    return res.sendCustomErrorMessage(error.message);
+  }
+};
+
+export default { getUser, deleteUser };
