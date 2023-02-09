@@ -13,7 +13,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.7.5"
+    "mongoose": "^6.7.5",
+    "nodemailer": "^6.9.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -21,6 +22,7 @@
     "@types/jsonwebtoken": "^9.0.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.11.10",
+    "@types/nodemailer": "^6.4.7",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.1",

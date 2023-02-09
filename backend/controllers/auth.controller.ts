@@ -16,11 +16,23 @@ const register = async (req: Request, res: Response) => {
   });
   const refreshToken = generateRefreshToken(newUser);
   newUser.refreshToken = refreshToken;
-  newUser.save((saveErr, savedData) => {
+  newUser.save(async (saveErr, savedData) => {
     if (saveErr) {
       return res.sendMongooseErrorResponse(saveErr);
     }
     const accessToken = generateAccessToken(savedData);
+    var message = {
+      from: process.env.MAIL_FROM,
+      to: savedData.email,
+      subject: "CRM - Registration successfully",
+      text: `Hi ${savedData.name}, you successfully registered.`,
+    };
+    await res.transporter.sendMail(message, (err: any) => {
+      if (err) {
+        return console.log("unable to send registration mail");
+      }
+      console.log("registration mail sent successfully");
+    });
     return res.status(200).json({ accessToken, refreshToken });
   });
 };

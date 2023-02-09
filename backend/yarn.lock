@@ -1067,6 +1067,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nodemailer@npm:^6.4.7":
+  version: 6.4.7
+  resolution: "@types/nodemailer@npm:6.4.7"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 4fefece34940e4344ecb7d41553ccfd63bf2697124e6335dec5c358953ee53b2b27cb45dec9b306c3fc848cf4ec4344d62ecb091d1a7aadc36c0b9721ab67322
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
@@ -1486,11 +1495,13 @@ __metadata:
     "@types/jsonwebtoken": "npm:^9.0.0"
     "@types/mongoose": "npm:^5.11.97"
     "@types/node": "npm:^18.11.10"
+    "@types/nodemailer": "npm:^6.4.7"
     bcrypt: "npm:^5.1.0"
     dotenv: "npm:^16.0.3"
     express: "npm:^4.18.2"
     jsonwebtoken: "npm:^9.0.0"
     mongoose: "npm:^6.7.5"
+    nodemailer: "npm:^6.9.1"
     nodemon: "npm:^2.0.20"
     ts-node: "npm:^10.9.1"
     tsconfig-paths: "npm:^4.1.1"
@@ -2482,6 +2493,13 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 986e171f91cedd913800b4f272f9c22258a15bc8f44d2426630dc68d98281614004d4da1a8aec7a70a6171056425a95828cd68d8433b89d0e16ed973507ecccf
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:^6.9.1":
+  version: 6.9.1
+  resolution: "nodemailer@npm:6.9.1"
+  checksum: 6aa3e9afbf512b895c4ae519788d66d49720dc02ea3c0fb132917a6318d9776f7aeb94b0612b9fa2a971ddd1162ab48bcb8c223d16cbccf4ecf5f1ab22982095
   languageName: node
   linkType: hard
 
