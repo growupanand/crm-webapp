@@ -1,7 +1,5 @@
 import { MongooseError } from "@app/types/mongooseError";
 import { User } from "../user";
-import { Transport } from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 // this file is used to override express type 'Request' on app level
 
@@ -33,7 +31,7 @@ declare global {
       sendMongooseErrorResponse: (mongooseError: MongooseError) => any;
       // TODO: Need to add correct type for transporter
       /** This is nodemailer transporter, which have methods like sendMail */
-      transporter: any;
+      // transporter: any;
     }
   }
 }

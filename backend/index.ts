@@ -4,20 +4,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import baseMiddleware from "@middlewares/base.middleware";
 import authMiddleware from "@app/middlewares/auth.middleware";
-import mailMiddleware from "./middlewares/mail.middleware";
 
 dotenv.config();
 const port = process.env.PORT || 3001;
 
 // ---------------EXPRESS JS----------------
 const app = express();
-app.use(
-  "/api/auth",
-  express.json(),
-  baseMiddleware,
-  mailMiddleware,
-  require("@routes/auth")
-);
+app.use("/api/auth", express.json(), baseMiddleware, require("@routes/auth"));
 app.use("/api", express.json(), baseMiddleware, authMiddleware, router);
 console.log(`Starting Backend Server: http://localhost:${port}`);
 app.listen(port);

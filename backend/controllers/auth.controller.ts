@@ -4,7 +4,9 @@ import { generateAccessToken, generateRefreshToken } from "@app/utils";
 import userModel from "@models/user";
 import jwt from "jsonwebtoken";
 import { User } from "@app/types/user";
+import { sendMail } from "@app/utils/sendMail";
 
+/** Register new user */
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,22 +23,16 @@ const register = async (req: Request, res: Response) => {
       return res.sendMongooseErrorResponse(saveErr);
     }
     const accessToken = generateAccessToken(savedData);
-    var message = {
-      from: process.env.MAIL_FROM,
-      to: savedData.email,
-      subject: "CRM - Registration successfully",
+    sendMail({
+      senderMail: savedData.email,
+      subject: "Registration successfully",
       text: `Hi ${savedData.name}, you successfully registered.`,
-    };
-    await res.transporter.sendMail(message, (err: any) => {
-      if (err) {
-        return console.log("unable to send registration mail");
-      }
-      console.log("registration mail sent successfully");
     });
     return res.status(200).json({ accessToken, refreshToken });
   });
 };
 
+/** Login user */
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -61,6 +57,7 @@ const login = async (req: Request, res: Response) => {
   });
 };
 
+/** Logout user */
 const logout = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
@@ -77,6 +74,7 @@ const logout = async (req: Request, res: Response) => {
   return res.status(200).json({ message: "logged out successfully" });
 };
 
+/** Get fresh access token */
 const getAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
