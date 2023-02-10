@@ -22,7 +22,7 @@
     "@types/jsonwebtoken": "^9.0.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.11.10",
-    "@types/nodemailer": "^6.4.7",
+    "@types/nodemailer": "^6",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.1",
