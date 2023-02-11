@@ -12,7 +12,7 @@ declare global {
       /**
        * logged in user object
        */
-      user: Omit<User, "password">;
+      user: User;
     }
     export interface Response {
       /**

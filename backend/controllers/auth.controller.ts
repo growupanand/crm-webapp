@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { generateAccessToken, generateRefreshToken } from "@app/utils";
+import {
+  generateAccessToken,
+  generateEmailVerificationToken,
+  generateRefreshToken,
+} from "@app/utils";
 import userModel from "@models/user";
 import jwt from "jsonwebtoken";
 import { User } from "@app/types/user";
 import { sendMail } from "@app/utils/sendMail";
+import { baseUrl } from "@app/index";
 
 /** Register new user */
 const register = async (req: Request, res: Response) => {
@@ -23,10 +28,11 @@ const register = async (req: Request, res: Response) => {
       return res.sendMongooseErrorResponse(saveErr);
     }
     const accessToken = generateAccessToken(savedData);
+    const emailVerificationToken = generateEmailVerificationToken(savedData);
     sendMail({
       senderMail: savedData.email,
       subject: "Registration successfully",
-      text: `Hi ${savedData.name}, you successfully registered.`,
+      text: `Hi ${savedData.name}, you successfully registered. Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${emailVerificationToken}/`,
     });
     return res.status(200).json({ accessToken, refreshToken });
   });
@@ -78,20 +84,47 @@ const logout = async (req: Request, res: Response) => {
 const getAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
-  if (!refreshToken) return res.sendCustomErrorMessage("Token not found", 401);
+  if (!refreshToken) return res.sendCustomErrorMessage("Token not found", 400);
   // check if refresh token exist in database
   const user = await userModel.findOne({ refreshToken });
-  if (!user) return res.sendCustomErrorMessage("Invalid token", 403);
+  if (!user) return res.sendCustomErrorMessage("Invalid token", 400);
   // verify if token is valid
-  await jwt.verify(
+  jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET as string,
     (error: any, payload: any) => {
-      if (error) return res.sendCustomErrorMessage("Invalid token", 403);
+      if (error) return res.sendCustomErrorMessage("Invalid token", 400);
       const accessToken = generateAccessToken(payload as User);
       return res.status(200).json({ accessToken });
     }
   );
 };
 
-export default { register, login, getAccessToken, logout };
+/** Verify user email */
+const verifyEmailToken = async (req: Request, res: Response) => {
+  const { token } = req.params;
+  jwt.verify(
+    token,
+    process.env.EMAIL_VERIFICATION_TOKEN_SECRET as string,
+    async (error: any, payload: any) => {
+      if (error || !payload?.email)
+        return res.sendCustomErrorMessage("Invalid token", 400);
+      // verify email of user
+      try {
+        await userModel.updateOne(
+          { email: payload.email },
+          {
+            $set: {
+              isEmailVerified: true,
+            },
+          }
+        );
+        return res.status(200).json({ message: "Email verified" });
+      } catch (_error) {
+        return res.sendCustomErrorMessage("Unable to verify email", 500);
+      }
+    }
+  );
+};
+
+export default { register, login, getAccessToken, logout, verifyEmailToken };
