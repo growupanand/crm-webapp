@@ -9,6 +9,10 @@ import { NextFunction, Request, Response } from "express";
  * @param next
  */
 export default function (_req: Request, res: Response, next: NextFunction) {
+  // --------------------CUSTOM VARIABLES-------------------------------------
+
+  // --------------------CUSTOM METHODS----------------------------------------
+
   res.sendCustomErrorMessage = (message: string, statusCode: number = 400) => {
     return res.status(statusCode).json({
       nonFieldError: message,

@@ -19,22 +19,27 @@ export default async function (
   res: Response,
   next: NextFunction
 ) {
-  // check if access token exist in request
+  // verify access token on every api request
   const token = req.headers["authorization"];
   const accessToken = token && token.split(" ")[1];
-  if (!accessToken) return res.sendCustomErrorMessage("No token found", 401);
-
-  // verify token and verified include user object in request object
-  await jwt.verify(
+  if (!accessToken) return res.sendCustomErrorMessage("No token found", 400);
+  jwt.verify(
     accessToken,
     process.env.ACCESS_TOKEN_SECRET as string,
     async (error, tokenPayload) => {
       if (error || !tokenPayload)
-        return res.sendCustomErrorMessage("Invalid token", 401);
+        return res.sendCustomErrorMessage("Invalid token", 400);
       const user = await userModel.findOne({
         email: (tokenPayload as tokenPayload).email,
       });
-      if (!user) return res.sendCustomErrorMessage("User not found", 401);
+      if (!user) return res.sendCustomErrorMessage("User not found", 400);
+
+      // check if user email is verified
+      const allowedUrls = ["/api/user/resendEmailVerification/"];
+      if (!user.isEmailVerified && !allowedUrls.includes(req.originalUrl))
+        return res.sendCustomErrorMessage("Email not verified", 401);
+
+      // if everything looks good put user object in request and continue middleware
       const { password, ...userJson } = user.toJSON();
       req.user = userJson;
       next();

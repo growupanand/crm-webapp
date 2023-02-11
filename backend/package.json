@@ -2,7 +2,6 @@
   "name": "crm-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "doppler run -- nodemon -q -e ts -x ts-node -r tsconfig-paths/register index.ts"
   },

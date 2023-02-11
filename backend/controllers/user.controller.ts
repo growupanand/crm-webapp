@@ -1,12 +1,10 @@
 import userModel from "@app/models/user";
+import { sendMail } from "@app/utils/sendMail";
 import { Request, Response } from "express";
+import { baseUrl } from "..";
+import { generateEmailVerificationToken } from "@app/utils";
 
-/**
- * Get any user details
- * @param req
- * @param res
- * @returns
- */
+/** Get any user details */
 const getUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const commonErrorMessage = "User not found";
@@ -29,12 +27,7 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * Delete current logged in user
- * @param req
- * @param res
- * @returns
- */
+/** Delete current logged in user */
 const deleteUser = async (req: Request, res: Response) => {
   const { user } = req;
   try {
@@ -45,4 +38,28 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export default { getUser, deleteUser };
+/** Resend email verification mail */
+const resendEmailVerify = async (req: Request, res: Response) => {
+  const { user } = req;
+  const emailVerificationToken = generateEmailVerificationToken(user);
+  const mailOption = {
+    senderMail: user.email,
+    subject: "Verification Mail",
+    text: `Hi ${user.name}, Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${emailVerificationToken}/`,
+  };
+  sendMail(mailOption, (error: any, _data: any) => {
+    if (error) {
+      console.error("Mail not send:", { mailOption });
+      return res.sendCustomErrorMessage(
+        "Unable to send verification mail",
+        500
+      );
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Verification mail sent successfully" });
+  });
+};
+
+export default { getUser, deleteUser, resendEmailVerify };

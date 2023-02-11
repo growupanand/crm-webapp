@@ -6,14 +6,16 @@ import baseMiddleware from "@middlewares/base.middleware";
 import authMiddleware from "@app/middlewares/auth.middleware";
 
 dotenv.config();
-const port = process.env.PORT || 3001;
+export const appPort = process.env.PORT || 3001;
+export const appHost = process.env.BACKEND_HOST || "http://localhost";
+export const baseUrl = `${appHost}:${appPort}/`;
 
 // ---------------EXPRESS JS----------------
 const app = express();
 app.use("/api/auth", express.json(), baseMiddleware, require("@routes/auth"));
 app.use("/api", express.json(), baseMiddleware, authMiddleware, router);
-console.log(`Starting Backend Server: http://localhost:${port}`);
-app.listen(port);
+console.log(`Starting Backend Server: ${appHost}:${appPort}`);
+app.listen(appPort);
 console.log("%cServer started successfully", "color: green");
 // ===========================================>
 
