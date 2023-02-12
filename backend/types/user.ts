@@ -5,7 +5,6 @@ export type User = {
   name: string;
   email: string;
   isEmailVerified: boolean;
-  refreshToken: string;
 };
 
 export type UserModel = User & {

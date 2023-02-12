@@ -1,2 +1,2 @@
 export * from "@utils/common";
-export * from "@utils/generateToken";
+export * from "@app/utils/token";

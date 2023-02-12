@@ -38,7 +38,7 @@ export default function (_req: Request, res: Response, next: NextFunction) {
             }
           }
           if (mongooseError.keyValue) {
-            errors = Object.keys(mongooseError.keyValue!).map((key) => ({
+            errors = Object.keys(mongooseError.keyValue).map((key) => ({
               [key]: `'${mongooseError.keyValue![key]}' already exist!`,
             }));
           }
