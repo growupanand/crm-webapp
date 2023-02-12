@@ -21,10 +21,6 @@ const userSchema = new Schema<UserModel>({
     type: String,
     required: true,
   },
-  refreshToken: {
-    type: String,
-    required: false,
-  },
 });
 
 userSchema.pre("deleteOne", async function (next) {

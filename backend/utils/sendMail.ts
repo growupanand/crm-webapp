@@ -45,15 +45,21 @@ type MailOptions = {
  * @param cb callback function
  * @returns
  */
-const sendMail = (mailOptions: MailOptions, cb?: any) => {
+const sendMail = async (mailOptions: MailOptions, cb?: any) => {
   const { senderMail, subject, text } = mailOptions;
-  var mailOption = {
+  const mailOption = {
     from: process.env.MAIL_FROM,
     to: senderMail,
     subject,
     text,
   };
-  return transporter.sendMail(mailOption, cb || sendMailErrorHandler);
+  let data = null;
+  try {
+    data = await transporter.sendMail(mailOption);
+  } catch (_error) {
+    console.error("Mail not send:", { mailOption });
+  }
+  return data;
 };
 
 export { transporter, sendMail };
