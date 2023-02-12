@@ -129,7 +129,7 @@ const resetPassword = async (req: Request, res: Response) => {
     // check if provided token belong to email
     if (email !== payload.email)
       return res.sendCustomErrorMessage("Invalid token", 400);
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email: payload.email });
     if (!user) return res.sendCustomErrorMessage("Invalid token", 400);
     const hashedPassword = await bcrypt.hash(password, 10);
     // delete all old access tokens and refresh tokens of this user
@@ -142,7 +142,7 @@ const resetPassword = async (req: Request, res: Response) => {
     });
     return;
   }
-  const user = await userModel.findOne({ email });
+  const user = await userModel.findOne({ email: email });
   if (!user) return res.status(200).json({ message: defaultMessage }); // send 200 ok status even if user not found, so that hacker cannot use this api to find user exist by email
   // delete old reset password tokens
   await deleteResetPasswordTokens(user);
