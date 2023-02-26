@@ -1,5 +1,6 @@
 import { MongooseError } from "@app/types/mongooseError";
 import { User } from "../user";
+import { Organization } from "../organization";
 
 // this file is used to override express type 'Request' on app level
 
@@ -13,6 +14,8 @@ declare global {
        * logged in user object
        */
       user: User;
+      /** Organization object of Organization Id found url */
+      organization: Organization;
     }
     export interface Response {
       /**

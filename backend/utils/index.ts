@@ -1,2 +1,3 @@
 export * from "@utils/common";
-export * from "@app/utils/token";
+export * from "@utils/token";
+export * from "@utils/validators";
