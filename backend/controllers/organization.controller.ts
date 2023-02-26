@@ -1,6 +1,5 @@
 import organizationModel from "@app/models/organization";
 import { Request, Response } from "express";
-import { MongooseError } from "@app/types/mongooseError";
 
 const {
   Types: { ObjectId },
@@ -58,7 +57,7 @@ const deleteOrganization = async (req: Request, res: Response) => {
       "You are not authorized to delete this organization"
     );
   // delete orgniazation from database
-  await organization.delete((error) => {
+  organization.delete((error) => {
     if (error) return res.sendMongooseErrorResponse(error);
     return res
       .status(200)
