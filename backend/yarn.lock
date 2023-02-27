@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 7
+  version: 6
   cacheKey: 9
 
 "@aws-crypto/ie11-detection@npm:^2.0.0":
@@ -1490,22 +1490,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "crm-backend@workspace:."
   dependencies:
-    "@types/bcrypt": "npm:^5.0.0"
-    "@types/express": "npm:^4.17.14"
-    "@types/jsonwebtoken": "npm:^9.0.0"
-    "@types/mongoose": "npm:^5.11.97"
-    "@types/node": "npm:^18.11.10"
-    "@types/nodemailer": "npm:^6"
-    bcrypt: "npm:^5.1.0"
-    dotenv: "npm:^16.0.3"
-    express: "npm:^4.18.2"
-    jsonwebtoken: "npm:^9.0.0"
-    mongoose: "npm:^6.7.5"
-    nodemailer: "npm:^6.9.1"
-    nodemon: "npm:^2.0.20"
-    ts-node: "npm:^10.9.1"
-    tsconfig-paths: "npm:^4.1.1"
-    typescript: "npm:^4.9.3"
+    "@types/bcrypt": ^5.0.0
+    "@types/express": ^4.17.14
+    "@types/jsonwebtoken": ^9.0.0
+    "@types/mongoose": ^5.11.97
+    "@types/node": ^18.11.10
+    "@types/nodemailer": ^6
+    bcrypt: ^5.1.0
+    dotenv: ^16.0.3
+    express: ^4.18.2
+    jsonwebtoken: ^9.0.0
+    mongoose: ^6.7.5
+    nodemailer: ^6.9.1
+    nodemon: ^2.0.20
+    ts-node: ^10.9.1
+    tsconfig-paths: ^4.1.1
+    typescript: ^4.9.3
   languageName: unknown
   linkType: soft
 
@@ -1776,9 +1776,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
@@ -1910,9 +1910,9 @@ __metadata:
   linkType: hard
 
 "http-cache-semantics@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "http-cache-semantics@npm:4.1.0"
-  checksum: ccfe23dd2729bc564ab419330e0c4646a1247e8dd728a4a6b3ab427b5243d2e0afea0c6fe690ff9ead43d02bd84cc5240e996543c4c87866f272e26e40540acd
+  version: 4.1.1
+  resolution: "http-cache-semantics@npm:4.1.1"
+  checksum: 8/83ac0bc60b17a3a36f9953e7be55e5c8f41acc61b22583060e8dedc9dd5e3607c823a88d0926f9150e571f90946835c7fe150732801010845c72cd8bbff1a236
   languageName: node
   linkType: hard
 
@@ -3150,13 +3150,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.9.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
   version: 4.9.3
-  resolution: "typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>::version=4.9.3&hash=d73830"
+  resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=a1c5e5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 06fd518bc55d054127b39aa7ad11551fd132bb7a8395913ed84fd5caf715455393d622e884ccb4fcf962d4eb5182600009c096b82ec516e8fadd09bf2150bb93
+  checksum: 8/ef65c22622d864497d0a0c5db693523329b3284c15fe632e93ad9aa059e8dc38ef3bd767d6f26b1e5ecf9446f49bd0f6c4e5714a2eeaf352805dc002479843d1
   languageName: node
   linkType: hard
 
