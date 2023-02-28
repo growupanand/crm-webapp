@@ -1,6 +1,5 @@
 import customerModel from "@app/models/customer";
 import { MongooseError } from "@app/types/mongooseError";
-import { isValidMobileNumber } from "@app/utils";
 import { Request, Response } from "express";
 
 /**
@@ -10,12 +9,6 @@ import { Request, Response } from "express";
  */
 const createCustomer = async (req: Request, res: Response) => {
   const { name, mobileNumber } = req.body;
-  // validate values
-  if (!isValidMobileNumber(mobileNumber)) {
-    return res
-      .status(400)
-      .json({ mobileNumber: `${mobileNumber} is a invalid mobile number` });
-  }
   const newCustomer = new customerModel({
     name,
     mobileNumber,
