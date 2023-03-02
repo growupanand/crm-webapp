@@ -1,0 +1,2 @@
+export const DEFAULT_ERROR_MESSAGE = "Something went wrong!";
+export const DEFAULT_MONGOOSE_ERROR_MESSAGE = DEFAULT_ERROR_MESSAGE;

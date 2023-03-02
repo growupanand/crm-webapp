@@ -5,10 +5,10 @@ import { Schema, model } from "mongoose";
 const customerSchema = new Schema<Customer>({
   name: { type: String, required: true },
   mobileNumber: {
-    type: Number,
+    type: String,
     required: true,
     validate: {
-      validator: function (v: number) {
+      validator: function (v: Customer["mobileNumber"]) {
         return isValidMobileNumber(v);
       },
       message: (props) => `${props.value} is not a valid mobile number!`,
