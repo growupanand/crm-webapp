@@ -1,3 +1,4 @@
+import { DEFAULT_MONGOOSE_ERROR_MESSAGE } from "@app/constants";
 import { MongooseError } from "@app/types/mongooseError";
 import { NextFunction, Request, Response } from "express";
 
@@ -9,56 +10,64 @@ import { NextFunction, Request, Response } from "express";
  * @param next
  */
 export default function (_req: Request, res: Response, next: NextFunction) {
-  // --------------------CUSTOM VARIABLES-------------------------------------
+  // ===========================[CUSTOM VARIABLES]=============================
 
-  // --------------------CUSTOM METHODS----------------------------------------
+  // ==========================================================================
 
+  // ============================[CUSTOM METHODS]==============================
+
+  // <----------------------[Send customer error message]----------------------
   res.sendCustomErrorMessage = (message: string, statusCode: number = 400) => {
     return res.status(statusCode).json({
       nonFieldError: message,
     });
   };
+  // ----------------------------------------------------------------------------->
 
+  // <------[Handle error thrown from mongoose]-----------------------------------
   res.sendMongooseErrorResponse = (mongooseError: MongooseError) => {
-    if (mongooseError) {
-      let errors;
-      const errorType = mongooseError.name;
-      switch (errorType) {
-        // if this is duplicate key error
-        case "MongoServerError":
-          if (mongooseError.code == 11000) {
-            let regex =
-              /E11000 .+ index: (?<path>.+)_.+ dup key: { : "(?<value>.+)" }/;
-            let match = regex.exec(mongooseError.message);
-            if (match?.groups) {
-              errors = {
-                [match.groups.path]: `'${match.groups.value}' already exist!`,
-              };
-              break;
-            }
+    let errors: Record<string, any> = {};
+    const errorType = mongooseError.name;
+    switch (errorType) {
+      // Error for duplicate value
+      case "MongoServerError":
+        if (mongooseError.code == 11000) {
+          let regex =
+            /E11000 .+ index: (?<field>.+)_.+ dup key: { : "(?<value>.+)" }/;
+          let match = regex.exec(mongooseError.message);
+          if (match?.groups) {
+            errors = {
+              [match.groups.field]: `'${match.groups.value}' already exist!`,
+            };
+            break;
           }
-          if (mongooseError.keyValue) {
-            errors = Object.keys(mongooseError.keyValue).map((key) => ({
-              [key]: `'${mongooseError.keyValue![key]}' already exist!`,
-            }));
+        }
+        if (mongooseError.keyValue) {
+          for (let field in mongooseError.keyValue) {
+            errors[field] = `'${mongooseError.keyValue[field]}' already exist!`;
           }
-          break;
-        // if this is any type error
-        case "ValidationError":
-          errors = Object.keys(mongooseError.errors!).map((key) => ({
-            [key]: mongooseError.errors![key].message,
-          }));
-          break;
-        default:
-      }
-      if (errors) {
-        res.status(400).send(errors);
-      } else {
-        res.sendCustomErrorMessage(mongooseError.message, 400);
-      }
-      return;
+        }
+        break;
+      // Error related to type of value
+      case "ValidationError":
+        for (let field in mongooseError.errors) {
+          errors[field] = mongooseError.errors[field].message;
+        }
+        break;
+      // Error for wrong field name
+      case "CastError":
+        const { path, value, kind } = mongooseError as any;
+        errors = {
+          [path]: `${value} is not valid ${kind}`,
+        };
+        break;
+      default:
+        errors["nonFieldError"] =
+          mongooseError.message || DEFAULT_MONGOOSE_ERROR_MESSAGE;
     }
-    res.sendCustomErrorMessage("Something went wrong");
+    return res.status(400).send(errors);
   };
+  // ----------------------------------------------------------------------------->
+
   next();
 }

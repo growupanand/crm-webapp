@@ -83,4 +83,37 @@ const getCustomer = async (req: Request, res: Response) => {
   }
 };
 
-export default { createCustomer, deleteCustomer, getAllCustomers, getCustomer };
+/**
+ * Update customer details
+ * @param req
+ * @param res
+ * @returns
+ */
+const updateCustomer = async (req: Request, res: Response) => {
+  const { customerId } = req.params;
+  const updatedCustomerData = req.body;
+  try {
+    const result = await customerModel.findOneAndUpdate(
+      { id: customerId, organizationId: req.organization._id },
+      {
+        $set: {
+          ...updatedCustomerData,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.sendMongooseErrorResponse(error as MongooseError);
+  }
+};
+
+export default {
+  createCustomer,
+  deleteCustomer,
+  getAllCustomers,
+  getCustomer,
+  updateCustomer,
+};
