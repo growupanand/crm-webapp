@@ -87,7 +87,7 @@ const getAccessToken = async (req: Request, res: Response) => {
   // verify if token is valid
   const payload = await useToken(refreshToken, false);
   if (!payload) return res.sendCustomErrorMessage("Invalid token", 400);
-  const accessToken = await generateAccessToken(payload as User);
+  const accessToken = await generateAccessToken(user as User);
   return res.status(200).json({ accessToken });
 };
 
