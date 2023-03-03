@@ -2,18 +2,23 @@ import { Organization } from "@app/types/organization";
 import { generateSlug, randomStringKey } from "@app/utils";
 import { Schema, model } from "mongoose";
 
-const organizationSchema = new Schema<Organization>({
-  name: {
-    type: String,
-    required: true,
+const organizationSchema = new Schema<Organization>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    slug: { type: String, required: false, unique: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      index: true,
+    },
   },
-  slug: { type: String, required: false, unique: true },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-    index: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 organizationSchema.pre("save", function (next) {
   let slug = generateSlug(this.name);

@@ -2,26 +2,32 @@ import { UserModel } from "@app/types/user";
 import { Schema, model } from "mongoose";
 import organizationModel from "./organization";
 
-const userSchema = new Schema<UserModel>({
-  name: {
-    type: String,
-    required: true,
+const userSchema = new Schema<UserModel>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  isEmailVerified: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.pre("deleteOne", async function (next) {
   const { _id: userId } = this.getQuery();
