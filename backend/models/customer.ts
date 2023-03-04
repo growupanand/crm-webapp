@@ -22,6 +22,14 @@ const customerSchema = new Schema<Customer>(
   }
 );
 
+// Force model to run field custom validators on update also
+customerSchema.pre("findOneAndUpdate", function (next) {
+  this.setOptions({
+    runValidators: true,
+  });
+  next();
+});
+
 const customerModel = model<Customer>("customer", customerSchema);
 
 export default customerModel;
