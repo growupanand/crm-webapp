@@ -1,4 +1,5 @@
 import organizationModel from "@app/models/organization";
+import { MongooseError } from "@app/types/mongooseError";
 import { Request, Response } from "express";
 
 const {
@@ -45,24 +46,26 @@ const getUserOrganizations = async (req: Request, res: Response) => {
  */
 const deleteOrganization = async (req: Request, res: Response) => {
   const { organizationId } = req.params;
-  const organization = await organizationModel.findOne({
-    _id: ObjectId(organizationId),
-  });
-  // check if organization exist in database
-  if (!organization)
-    return res.sendCustomErrorMessage("Organization not found");
-  // check if organization is created by current logged in user
-  if (String(organization.userId) !== String(req.user._id))
-    return res.sendCustomErrorMessage(
-      "You are not authorized to delete this organization"
-    );
-  // delete orgniazation from database
-  organization.delete((error) => {
-    if (error) return res.sendMongooseErrorResponse(error);
+  try {
+    const organization = await organizationModel.findOne({
+      _id: ObjectId(organizationId),
+    });
+    // check if organization exist in database
+    if (!organization)
+      return res.sendCustomErrorMessage("Organization not found");
+    // check if organization is created by current logged in user
+    if (String(organization.userId) !== String(req.user._id))
+      return res.sendCustomErrorMessage(
+        "You are not authorized to delete this organization"
+      );
+    // delete organization from database
+    await organization.delete();
     return res
       .status(200)
       .json({ message: "Organization deleted successfully" });
-  });
+  } catch (error) {
+    return res.sendMongooseErrorResponse(error as MongooseError);
+  }
 };
 
 export default { createOrganization, getUserOrganizations, deleteOrganization };
