@@ -2,25 +2,21 @@ import tokenModel from "@app/models/token";
 import { TokenTypes } from "@app/types/token";
 import { User } from "@app/types/user";
 import jwt from "jsonwebtoken";
-import { Types } from "mongoose";
+import { Types, isValidObjectId } from "mongoose";
 
 const DEFAULT_EXPIRE_IN = "24h";
 
 /**
  * save new generated token in database
- * @param token
- * @param userIds array of user id which are linked to this token
+ * @param token jwt token
+ * @param userIds user id which is linked to this token
  * @returns saved token object
  */
-const saveToken = (
-  type: TokenTypes,
-  token: string,
-  userId?: Types.ObjectId
-) => {
+const saveToken = (type: TokenTypes, token: string, userId: Types.ObjectId) => {
   const newToken = new tokenModel({
     type,
     token,
-    userId: userId || undefined,
+    userId,
   });
 
   return newToken.save();
@@ -29,7 +25,8 @@ const saveToken = (
 /**
  * generate jwt token and save it on database
  * @param payload
- * @param userIds
+ * @param userIds link user id while saving token in database
+ * @param saveTokenInDB Do you want to save this generated token in database?
  * @returns token
  */
 const generateToken = async (
@@ -38,11 +35,14 @@ const generateToken = async (
   userId?: Types.ObjectId,
   saveTokenInDB: boolean = true
 ) => {
+  // user id must be valid before if token need to save in database
+  if (saveTokenInDB && (!userId || !isValidObjectId(userId)))
+    throw new Error("Unable to generate token. Invalid User Id.");
   const generatedToken = jwt.sign(payload, process.env.TOKEN_SECRET as string, {
     expiresIn: DEFAULT_EXPIRE_IN,
   });
   if (!generatedToken) throw new Error("Token not generated");
-  if (saveTokenInDB) await saveToken(type, generatedToken, userId);
+  if (saveTokenInDB && userId) await saveToken(type, generatedToken, userId);
   return generatedToken;
 };
 
@@ -147,6 +147,25 @@ export const generateEmailVerificationToken = (
     email: user.email,
   };
   return generateToken("emailVerificationToken", payload, user._id);
+};
+
+/**
+ * This will delete all email verification tokens of user
+ * @param user user object
+ * @returns token
+ */
+export const deleteEmailVerificationTokens = async (
+  user: Pick<User, "_id">
+) => {
+  try {
+    await tokenModel.deleteMany({
+      type: "emailVerificationToken",
+      userId: user._id,
+    });
+  } catch (_error) {
+    return false;
+  }
+  return true;
 };
 
 /**
