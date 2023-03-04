@@ -1,12 +1,19 @@
 import express from "express";
 const router = express.Router();
-import authController from "@controllers/auth.controller";
+import {
+  register,
+  login,
+  logout,
+  getAccessToken,
+  verifyEmailToken,
+  resetPassword,
+} from "@controllers/auth.controller";
 
-router.post("/register", authController.register);
-router.post("/login", authController.login);
-router.delete("/logout", authController.logout);
-router.post("/getAccessToken", authController.getAccessToken);
-router.get("/verifyEmail/:token", authController.verifyEmailToken);
-router.post("/resetPassword", authController.resetPassword);
+router.post("/register", register);
+router.post("/login", login);
+router.delete("/logout", logout);
+router.post("/getAccessToken", getAccessToken);
+router.get("/verifyEmail/:token", verifyEmailToken);
+router.post("/resetPassword", resetPassword);
 
 module.exports = router;
