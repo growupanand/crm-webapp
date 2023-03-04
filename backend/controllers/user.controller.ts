@@ -2,7 +2,10 @@ import userModel from "@app/models/user";
 import { sendMail } from "@app/utils/sendMail";
 import { Request, Response } from "express";
 import { baseUrl } from "..";
-import { generateEmailVerificationToken } from "@app/utils";
+import {
+  deleteEmailVerificationTokens,
+  generateEmailVerificationToken,
+} from "@app/utils";
 
 /** Get any user details */
 const getUser = async (req: Request, res: Response) => {
@@ -44,11 +47,13 @@ const resendEmailVerify = async (req: Request, res: Response) => {
   // don't send mail if user is already verified
   if (user.isEmailVerified)
     return res.sendCustomErrorMessage("User is already verified");
-  const emailVerificationToken = await generateEmailVerificationToken(user);
+  // Delete old email verification tokens of this user
+  await deleteEmailVerificationTokens(user);
+  const newEmailVerificationToken = await generateEmailVerificationToken(user);
   const mailOption = {
     senderMail: user.email,
     subject: "Verification Mail",
-    text: `Hi ${user.name}, Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${emailVerificationToken}/`,
+    text: `Hi ${user.name}, Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${newEmailVerificationToken}/`,
   };
   const data = await sendMail(mailOption);
   if (!data) {

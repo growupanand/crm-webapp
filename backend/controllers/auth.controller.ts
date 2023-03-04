@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import {
   deleteAccessTokens,
+  deleteEmailVerificationTokens,
   deleteRefreshTokens,
   deleteResetPasswordTokens,
   generateAccessToken,
