@@ -2,34 +2,56 @@
 	"info": {
 		"_postman_id": "846d4cf9-89a4-4597-911f-afb278cc0995",
 		"name": "user",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17070325"
 	},
 	"item": [
 		{
 			"name": "get loggedin user info",
-			"id": "e96e6fbd-8adb-4145-ad9b-122e26dee7f8",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": {
-						"token": "{{currentAccessToken}}"
-					}
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "GET",
 				"header": [],
-				"url": "{{backendUrl}}user/me/"
+				"url": {
+					"raw": "{{backendUrl}}user/me/",
+					"host": [
+						"{{backendUrl}}user"
+					],
+					"path": [
+						"me",
+						""
+					]
+				}
 			},
 			"response": [
 				{
-					"id": "f8b1e5f2-5dc7-4c2c-973a-6542573a70b6",
 					"name": "success",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "{{backendUrl}}user/me/"
+						"url": {
+							"raw": "http://localhost:3001/api/user/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"me",
+								""
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -65,16 +87,23 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": null,
 					"body": "{\n    \"_id\": \"64036dba976a1144d6fab79a\",\n    \"name\": \"test user 1\",\n    \"email\": \"00c5s0unnc@qiott.com\",\n    \"isEmailVerified\": true,\n    \"createdAt\": \"2023-03-04T16:11:38.455Z\",\n    \"updatedAt\": \"2023-03-04T17:08:19.638Z\",\n    \"__v\": 0\n}"
 				},
 				{
-					"id": "9f416ab3-31d7-410a-9ef3-025620d57482",
 					"name": "failed",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "{{backendUrl}}user/me/"
+						"url": {
+							"raw": "{{backendUrl}}user/me/",
+							"host": [
+								"{{backendUrl}}user"
+							],
+							"path": [
+								"me",
+								""
+							]
+						}
 					},
 					"status": "Bad Request",
 					"code": 400,
@@ -110,36 +139,56 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": null,
 					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
 				}
 			]
 		},
 		{
 			"name": "delete logged in user",
-			"id": "d716e433-3195-4368-801e-3f4f3c60acd3",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": {
-						"token": "{{currentAccessToken}}"
-					}
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "DELETE",
 				"header": [],
-				"url": "{{backendUrl}}user/me/"
+				"url": {
+					"raw": "{{backendUrl}}user/me/",
+					"host": [
+						"{{backendUrl}}user"
+					],
+					"path": [
+						"me",
+						""
+					]
+				}
 			},
 			"response": [
 				{
-					"id": "1f5fd6a0-8dcb-456e-bd1b-d4faa2b9bbc9",
 					"name": "success",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{backendUrl}}user/me/"
+						"url": {
+							"raw": "http://localhost:3001/api/user/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"me",
+								""
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -175,16 +224,23 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": null,
 					"body": "{\n    \"message\": \"User deleted successfully\"\n}"
 				},
 				{
-					"id": "16ed663a-9388-4796-953c-d2ebd9ea87fb",
 					"name": "failed",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{backendUrl}}user/me/"
+						"url": {
+							"raw": "{{backendUrl}}user/me/",
+							"host": [
+								"{{backendUrl}}user"
+							],
+							"path": [
+								"me",
+								""
+							]
+						}
 					},
 					"status": "Bad Request",
 					"code": 400,
@@ -220,7 +276,6 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": null,
 					"body": "{\n    \"nonFieldError\": \"User not found\"\n}"
 				}
 			]

@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "e217db55-6c40-42fb-a724-486baa958a88",
+		"name": "organization",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17070325"
+	},
+	"item": [
+		{
+			"name": "create new organization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"test organization 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}organizations",
+					"host": [
+						"{{backendUrl}}organizations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test organization 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}organizations",
+							"host": [
+								"{{backendUrl}}organizations"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "219"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"db-6oQ4iS6JFuomdijyUWsUmAQavdc\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:23:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"test organization 1\",\n    \"userId\": \"64037e70a53df096f4a4ed8a\",\n    \"_id\": \"64037e90a53df096f4a4ed9c\",\n    \"createdAt\": \"2023-03-04T17:23:28.398Z\",\n    \"updatedAt\": \"2023-03-04T17:23:28.398Z\",\n    \"slug\": \"test-organization-1-lq70\",\n    \"__v\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "get user organizations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backendUrl}}organizations",
+					"host": [
+						"{{backendUrl}}organizations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}organizations",
+							"host": [
+								"{{backendUrl}}organizations"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "441"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1b9-7ta0M8oqtLBjibL0lW/CBA3+Sws\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:23:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"64037e90a53df096f4a4ed9c\",\n        \"name\": \"test organization 1\",\n        \"userId\": \"64037e70a53df096f4a4ed8a\",\n        \"createdAt\": \"2023-03-04T17:23:28.398Z\",\n        \"updatedAt\": \"2023-03-04T17:23:28.398Z\",\n        \"slug\": \"test-organization-1-lq70\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"64037ea0a53df096f4a4eda3\",\n        \"name\": \"test organization 2\",\n        \"userId\": \"64037e70a53df096f4a4ed8a\",\n        \"createdAt\": \"2023-03-04T17:23:44.009Z\",\n        \"updatedAt\": \"2023-03-04T17:23:44.009Z\",\n        \"slug\": \"test-organization-2-6ac0\",\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "delete organization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{backendUrl}}organizations/64037e90a53df096f4a4ed9csf",
+					"host": [
+						"{{backendUrl}}organizations"
+					],
+					"path": [
+						"64037e90a53df096f4a4ed9csf"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}organizations/64037e90a53df096f4a4ed9c",
+							"host": [
+								"{{backendUrl}}organizations"
+							],
+							"path": [
+								"64037e90a53df096f4a4ed9c"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2f-C4xREmSZpo7Mho+ixbrcQPJF0Zw\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:24:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Organization deleted successfully\"\n}"
+				},
+				{
+					"name": "failed",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}organizations/64037e90a53df096f4a4ed9csf",
+							"host": [
+								"{{backendUrl}}organizations"
+							],
+							"path": [
+								"64037e90a53df096f4a4ed9csf"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-maBEH3zz1cJXUHeU7l+5rY90m3Y\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:36:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Invalid Object Id\"\n}"
+				}
+			]
+		}
+	]
+}

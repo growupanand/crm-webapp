@@ -1,0 +1,1379 @@
+{
+	"info": {
+		"_postman_id": "f63f9686-2612-4ad3-8051-8c5c4b2354fc",
+		"name": "auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17070325"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// this will set logged in user access token in current environment\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"currentAccessToken\", responseJson.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"test user 1\",\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/register",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"test user 1\",\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/register",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "430"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1ae-FVb+Pe0lE3a1bDQEcXi0TvvEf9E\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:12:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzMTY5LCJleHAiOjE2Nzc4OTk1Njl9.Fsa5CzqK18fXbbzQsz2jkws6CBf2wNayag1xckLZyhw\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzMTY5LCJleHAiOjE2Nzc4OTk1Njl9.Fsa5CzqK18fXbbzQsz2jkws6CBf2wNayag1xckLZyhw\"\n}"
+				},
+				{
+					"name": "failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"test user 1\",\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/register",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "49"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"31-TR8UrJo2lJD6dgFJ2IHy53Exed4\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:22:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"email\": \"'00c5s0unnc@qiott.com' already exist!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// this will set logged in user access token in current environment\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"currentAccessToken\", responseJson.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/login",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/login",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "430"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1ae-aw1tRwBpo3M7ifYK2NbrfsanHeA\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:23:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzODA1LCJleHAiOjE2Nzc5MDAyMDV9.yjeU4fHizia_hmA3W5NllxWvYaxnNOU8GLumzHBSiCI\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzODA1LCJleHAiOjE2Nzc5MDAyMDV9.yjeU4fHizia_hmA3W5NllxWvYaxnNOU8GLumzHBSiCI\"\n}"
+				},
+				{
+					"name": "failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"password\" : \"abcdasdf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/login",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "53"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"35-BafRkFXSBaeH62BWIsBi36hD+2E\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:23:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Username or password is incorrect\"\n}"
+				}
+			]
+		},
+		{
+			"name": "forget password (send mail)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// this will set logged in user access token in current environment\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"currentAccessToken\", responseJson.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/resetPassword",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"resetPassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-C+W+8KTRVQYKkxEcSWRttBYVEFs\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:25:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Email send successfully\"\n}"
+				},
+				{
+					"name": "failed - mail not configured on server",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"27-hJzHa8sMWVHBQUeISpjfIJU8/28\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:24:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Unable to send mail\"\n}"
+				},
+				{
+					"name": "wrong email address",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnac@qiott.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-C+W+8KTRVQYKkxEcSWRttBYVEFs\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:25:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Email send successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "forget password (reset password)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// this will set logged in user access token in current environment\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"currentAccessToken\", responseJson.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5NjgxLCJleHAiOjE2NzgwMzYwODF9.oqidFlfMZQ7MutZdfoov5gB3sQfm4YA5LI9vnjcR92Q\",\n    \"password\" : \"abcd1\",\n    \"confirmPassword\" : \"abcd1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/resetPassword",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"resetPassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzODg2LCJleHAiOjE2Nzc5MDAyODZ9.CskO0mzvwqNg-18RKj6fxUgjz0PP0JU_EMwyUFEagp4\",\n    \"password\" : \"abcd1\",\n    \"confirmPassword\" : \"abcd1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-JLWAnLrf6qmJkXqaEuCQpWt9O0c\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:40:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Password reset successfully\"\n}"
+				},
+				{
+					"name": "error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzODg2LCJleHAiOjE2Nzc5MDAyODZ9.CskO0mzvwqNg-18RKj6fxUgjz0PP0JU_EMwyUFEagp4\",\n    \"password\" : \"abcd1\",\n    \"confirmPassword\" : \"abcd2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "38"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"26-60NXatM0MTV9zlehOW2xis03Z3k\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:41:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Password not match\"\n}"
+				},
+				{
+					"name": "invalid token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"00c5s0unnc@qiott.com\",\n    \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzODg2LCJleHAiOjE2Nzc5MDAyODZ9.CskO0mzvwqNg-18RKj6fxUgjz0PP0JU_EMwyUFEagp4\",\n    \"password\" : \"abcd1\",\n    \"confirmPassword\" : \"abcd1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/resetPassword",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21-+mIPN5lQ2jkg1j9NZ+43AgERLAI\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Mar 2023 03:41:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
+				}
+			]
+		},
+		{
+			"name": "get access token from refresh token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5MjIwLCJleHAiOjE2NzgwMzU2MjB9.HCQcjv9yh6XJ4YMT3BdXLq7VXPLV05mWVO74OdmdT0c\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/getAccessToken",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"getAccessToken"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5MjIwLCJleHAiOjE2NzgwMzU2MjB9.HCQcjv9yh6XJ4YMT3BdXLq7VXPLV05mWVO74OdmdT0c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/getAccessToken",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"getAccessToken"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "215"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"d7-yi+8gstWWgPapoSClKWaz7ULVJQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:00:51 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5MjUxLCJleHAiOjE2NzgwMzU2NTF9.me1-skwJBFnwbDXW4r0Hzrf-k2fa7k_zrXZB-WKTmqE\"\n}"
+				},
+				{
+					"name": "failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODE0OTU0LCJleHAiOjE2Nzc5MDEzNTR9.vnGziBhMXzZhNKO8LC0rpah6rurEExWFQZLO5NCm0zw\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/getAccessToken",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"getAccessToken"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21-+mIPN5lQ2jkg1j9NZ+43AgERLAI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:00:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
+				}
+			]
+		},
+		{
+			"name": "verify email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/verifyEmail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTUwNTc2LCJleHAiOjE2NzgwMzY5NzZ9.gnTCM0bTaRI3pGL75m4RLSn7yTjJfVGyp7Jm1J5SFVM",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"verifyEmail",
+						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTUwNTc2LCJleHAiOjE2NzgwMzY5NzZ9.gnTCM0bTaRI3pGL75m4RLSn7yTjJfVGyp7Jm1J5SFVM"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/verifyEmail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ1Njg5LCJleHAiOjE2NzgwMzIwODl9.Jz4dLmkuqv5WOu_evAAjgGazk0CA8R6ttLrWDO-jwow",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"verifyEmail",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ1Njg5LCJleHAiOjE2NzgwMzIwODl9.Jz4dLmkuqv5WOu_evAAjgGazk0CA8R6ttLrWDO-jwow"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "28"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1c-HKxSht1z0bTpFJ6vRQGxW0fz9zo\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 16:02:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Email verified\"\n}"
+				},
+				{
+					"name": "failed - token expired",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/verifyEmail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzNzY1LCJleHAiOjE2Nzc5MDAxNjV9.qGUT8Uf7mvOmdgMSgKza9MIi5ezbfYdVZgdqFby_O1k",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"verifyEmail",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3ODEzNzY1LCJleHAiOjE2Nzc5MDAxNjV9.qGUT8Uf7mvOmdgMSgKza9MIi5ezbfYdVZgdqFby_O1k"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21-+mIPN5lQ2jkg1j9NZ+43AgERLAI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 16:00:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
+				}
+			]
+		},
+		{
+			"name": "resend email verification mail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{backendUrl}}user/resendEmailVerification/",
+					"host": [
+						"{{backendUrl}}user"
+					],
+					"path": [
+						"resendEmailVerification",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}user/resendEmailVerification/",
+							"host": [
+								"{{backendUrl}}user"
+							],
+							"path": [
+								"resendEmailVerification",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2c-I7cN/UQW9j/+Smhs62ylaScxGss\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 16:49:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{ \n    \"message\": \"Verification mail sent successfully\"\n     }"
+				},
+				{
+					"name": "failed - user already verified",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}user/resendEmailVerification/",
+							"host": [
+								"{{backendUrl}}user"
+							],
+							"path": [
+								"resendEmailVerification",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2c-I7cN/UQW9j/+Smhs62ylaScxGss\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 16:49:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"User is already verified\"\n}"
+				}
+			]
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{currentAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5MjIwLCJleHAiOjE2NzgwMzU2MjB9.HCQcjv9yh6XJ4YMT3BdXLq7VXPLV05mWVO74OdmdT0c\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendUrl}}auth/logout",
+					"host": [
+						"{{backendUrl}}auth"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ5MjIwLCJleHAiOjE2NzgwMzU2MjB9.HCQcjv9yh6XJ4YMT3BdXLq7VXPLV05mWVO74OdmdT0c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/logout",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-hS55LWWpPoIDMeC5yTdXPsuu8xk\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:01:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"logged out successfully\"\n}"
+				},
+				{
+					"name": "failed",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCB1c2VyIDEiLCJlbWFpbCI6IjAwYzVzMHVubmNAcWlvdHQuY29tIiwiaWF0IjoxNjc3OTQ1NDE5LCJleHAiOjE2NzgwMzE4MTl9.ONcG5Bc0D_7S_UuQ9KgGwh9dA5OqEhpKexTLWzt1Xug\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}auth/logout",
+							"host": [
+								"{{backendUrl}}auth"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21-+mIPN5lQ2jkg1j9NZ+43AgERLAI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:01:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
+				}
+			]
+		}
+	]
+}
