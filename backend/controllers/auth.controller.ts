@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import {
   deleteAccessTokens,
-  deleteEmailVerificationTokens,
   deleteRefreshTokens,
   deleteResetPasswordTokens,
   generateAccessToken,
@@ -16,7 +15,12 @@ import { User } from "@app/types/user";
 import { sendMail } from "@app/utils/sendMail";
 import { baseUrl } from "@app/index";
 
-const register = async (req: Request, res: Response) => {
+/**
+ * Create new user and send email verification mail
+ * @param req
+ * @param res
+ */
+export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   // create new user in database
@@ -43,7 +47,13 @@ const register = async (req: Request, res: Response) => {
   });
 };
 
-const login = async (req: Request, res: Response) => {
+/**
+ * Login user by creating new access token and refresh token
+ * @param req
+ * @param res
+ * @returns
+ */
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const errMessage = "Username or password is incorrect";
@@ -62,7 +72,13 @@ const login = async (req: Request, res: Response) => {
   });
 };
 
-const logout = async (req: Request, res: Response) => {
+/**
+ * Logout user from all active sessions by deleting all tokens except email verification token.
+ * @param req
+ * @param res
+ * @returns
+ */
+export const logout = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
   if (!refreshToken) return res.sendCustomErrorMessage("Token not found", 401);
@@ -72,13 +88,13 @@ const logout = async (req: Request, res: Response) => {
     return res.sendCustomErrorMessage("Invalid token", 403);
   const user = await userModel.findOne({ email: tokenData.email });
   if (!user) return res.sendCustomErrorMessage("Invalid token", 403);
-  // delete all old access tokens and refresh tokens of this user
+  // delete all access tokens and refresh tokens of this user
   await deleteAccessTokens(user);
   await deleteRefreshTokens(user);
   return res.status(200).json({ message: "logged out successfully" });
 };
 
-const getAccessToken = async (req: Request, res: Response) => {
+export const getAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
   if (!refreshToken) return res.sendCustomErrorMessage("Token not found", 400);
@@ -92,7 +108,13 @@ const getAccessToken = async (req: Request, res: Response) => {
   return res.status(200).json({ accessToken });
 };
 
-const verifyEmailToken = async (req: Request, res: Response) => {
+/**
+ * Verify email of user and delete email verification token
+ * @param req
+ * @param res
+ * @returns
+ */
+export const verifyEmailToken = async (req: Request, res: Response) => {
   const { token } = req.params;
   const payload = await useToken(token);
   if (!payload?.email) return res.sendCustomErrorMessage("Invalid token", 400);
@@ -112,7 +134,13 @@ const verifyEmailToken = async (req: Request, res: Response) => {
   }
 };
 
-const resetPassword = async (req: Request, res: Response) => {
+/**
+ * Create new password of user and delete all tokens of user
+ * @param req
+ * @param res
+ * @returns
+ */
+export const resetPassword = async (req: Request, res: Response) => {
   const defaultMessage = "Email send successfully";
   const { email, token, password, confirmPassword } = req.body;
   if (!email || email.trim() === "")
@@ -155,19 +183,4 @@ const resetPassword = async (req: Request, res: Response) => {
   });
   if (!data) return res.sendCustomErrorMessage("Unable to send mail", 500);
   return res.status(200).json({ message: defaultMessage });
-};
-
-export default {
-  /** Register new user */
-  register,
-  /** Login user */
-  login,
-  /** Get fresh access token */
-  getAccessToken,
-  /** Logout user from all sessions */
-  logout,
-  /** Verify user email */
-  verifyEmailToken,
-  /** Send reset password mail */
-  resetPassword,
 };
