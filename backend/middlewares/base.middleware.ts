@@ -61,6 +61,11 @@ export default function (_req: Request, res: Response, next: NextFunction) {
           [path]: `${value} is not valid ${kind}`,
         };
         break;
+      // Error when invalid Object Id passed
+      case "BSONTypeError":
+        errors["nonFieldError"] = "Invalid Object Id";
+        break;
+      // Unknown error
       default:
         errors["nonFieldError"] =
           mongooseError.message || DEFAULT_MONGOOSE_ERROR_MESSAGE;
