@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "846d4cf9-89a4-4597-911f-afb278cc0995",
+		"name": "user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get loggedin user info",
+			"_postman_id": "e96e6fbd-8adb-4145-ad9b-122e26dee7f8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{currentAccessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{backendUrl}}user/me/"
+			},
+			"response": [
+				{
+					"id": "9f416ab3-31d7-410a-9ef3-025620d57482",
+					"name": "failed",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{backendUrl}}user/me/"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21-+mIPN5lQ2jkg1j9NZ+43AgERLAI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:21:45 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"nonFieldError\": \"Invalid token\"\n}"
+				},
+				{
+					"id": "f8b1e5f2-5dc7-4c2c-973a-6542573a70b6",
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{backendUrl}}user/me/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "195"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c3-+9YCNCJE62hXV11C/gSbTO1q97U\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:22:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"_id\": \"64036dba976a1144d6fab79a\",\n    \"name\": \"test user 1\",\n    \"email\": \"00c5s0unnc@qiott.com\",\n    \"isEmailVerified\": true,\n    \"createdAt\": \"2023-03-04T16:11:38.455Z\",\n    \"updatedAt\": \"2023-03-04T17:08:19.638Z\",\n    \"__v\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "delete logged in user",
+			"_postman_id": "d716e433-3195-4368-801e-3f4f3c60acd3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{currentAccessToken}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{backendUrl}}user/me/"
+			},
+			"response": [
+				{
+					"id": "1f5fd6a0-8dcb-456e-bd1b-d4faa2b9bbc9",
+					"name": "success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{backendUrl}}user/me/"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"27-27o4zzUjhHNmthTJyia4gBCjpos\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:22:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"message\": \"User deleted successfully\"\n}"
+				},
+				{
+					"id": "16ed663a-9388-4796-953c-d2ebd9ea87fb",
+					"name": "failed",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{backendUrl}}user/me/"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"22-px7p49x8DqxwhVrER1/oA2KPqs4\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Mar 2023 17:22:41 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"nonFieldError\": \"User not found\"\n}"
+				}
+			]
+		}
+	]
+}
