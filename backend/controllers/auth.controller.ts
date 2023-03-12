@@ -39,9 +39,13 @@ export const register = async (req: Request, res: Response) => {
       savedData
     );
     sendMail({
-      senderMail: savedData.email,
-      subject: "Registration successfully",
-      text: `Hi ${savedData.name}, you successfully registered. Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${emailVerificationToken}/`,
+      to: savedData.email,
+      template: "signup",
+      context: {
+        subject: "Registration successfully",
+        name: newUser.name,
+        link: `${baseUrl}api/auth/verifyEmail/${emailVerificationToken}`,
+      },
     });
     return res.status(200).json({ accessToken, refreshToken });
   });
@@ -177,9 +181,13 @@ export const resetPassword = async (req: Request, res: Response) => {
   await deleteResetPasswordTokens(user);
   const generatedToken = await generateResetPasswordToken(user);
   const data = await sendMail({
-    senderMail: user.email,
-    subject: "Reset password",
-    text: `Hi ${user.name}, Please use below token to reset your password.\n${generatedToken}`,
+    to: user.email,
+    template: "resetPassword",
+    context: {
+      subject: "Reset password",
+      name: user.name,
+      token: generatedToken,
+    },
   });
   if (!data) return res.sendCustomErrorMessage("Unable to send mail", 500);
   return res.status(200).json({ message: defaultMessage });
