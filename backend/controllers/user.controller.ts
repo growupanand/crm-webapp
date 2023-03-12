@@ -50,12 +50,15 @@ const resendEmailVerify = async (req: Request, res: Response) => {
   // Delete old email verification tokens of this user
   await deleteEmailVerificationTokens(user);
   const newEmailVerificationToken = await generateEmailVerificationToken(user);
-  const mailOption = {
-    senderMail: user.email,
-    subject: "Verification Mail",
-    text: `Hi ${user.name}, Please verify your email using below link.\n${baseUrl}api/auth/verifyEmail/${newEmailVerificationToken}/`,
-  };
-  const data = await sendMail(mailOption);
+  const data = await sendMail({
+    to: user.email,
+    template: "verifyMail",
+    context: {
+      subject: "Verification Mail",
+      name: user.name,
+      link: `${baseUrl}api/auth/verifyEmail/${newEmailVerificationToken}/`,
+    },
+  });
   if (!data) {
     return res.sendCustomErrorMessage("Unable to send verification mail", 500);
   }
