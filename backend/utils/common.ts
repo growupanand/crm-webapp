@@ -30,17 +30,17 @@ export const generateSlug = (value: string) => {
 };
 
 /**
- * Use this to get randome string of given length
- * @param len lenght of string
+ * Use this to get random string of given length
+ * @param len length of string
  * @returns
  */
 export const randomStringKey = (len: number) => {
-  var buf = [];
-  var chars = "0123456789abcdefghijklmnopqrstuvwxyz";
-  var charlen = chars.length;
+  const buf = [];
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+  const charLength = chars.length;
 
-  for (var i = 0; i < len; ++i) {
-    const randomInt = Math.floor(Math.random() * (charlen - 1 - 0 + 1)) + 0;
+  for (let i = 0; i < len; ++i) {
+    const randomInt = Math.floor(Math.random() * (charLength - 1 - 0 + 1)) + 0;
     buf.push(chars[randomInt]);
   }
 
