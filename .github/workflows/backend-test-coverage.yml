@@ -1,0 +1,22 @@
+name: Backend test coverage
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests and generate coverage report
+        run: npm test -- --coverage
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
