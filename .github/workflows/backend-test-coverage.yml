@@ -4,19 +4,29 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  MIN_COVERAGE: 40
+
 jobs:
-  test:
+  backend-tests:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm install
+        working-directory: backend
+        run: yarn
 
-      - name: Run tests and generate coverage report
-        run: npm test -- --coverage
+      - name: Run backend tests
+        working-directory: backend
+        run: yarn test-ci
 
-      - name: List files in the repository
+      - name: Check test coverage
+        working-directory: backend
         run: |
-          ls ${{ github.workspace }}
+          pct=$(cat coverage/coverage-summary.json | jq -r '.total.lines.pct')
+          echo "current test coverage: $pct%  (min required: $MIN_COVERAGE%)"
+          if (( pct < $MIN_COVERAGE )); then
+            exit 1
+          fi
