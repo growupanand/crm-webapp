@@ -30,3 +30,10 @@ jobs:
           if (( pct < $MIN_COVERAGE )); then
             exit 1
           fi
+
+      - name: Move coverage report to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./backend/coverage
+          publish_branch: gh-pages
