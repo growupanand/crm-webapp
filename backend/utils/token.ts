@@ -38,12 +38,19 @@ const generateToken = async (
   // user id must be valid before if token need to save in database
   if (saveTokenInDB && (!userId || !isValidObjectId(userId)))
     throw new Error("Unable to generate token. Invalid User Id.");
-  const generatedToken = jwt.sign(payload, process.env.TOKEN_SECRET as string, {
-    expiresIn: DEFAULT_EXPIRE_IN,
-  });
-  if (!generatedToken) throw new Error("Token not generated");
-  if (saveTokenInDB && userId) await saveToken(type, generatedToken, userId);
-  return generatedToken;
+  try {
+    const generatedToken = jwt.sign(
+      payload,
+      process.env.TOKEN_SECRET as string,
+      {
+        expiresIn: DEFAULT_EXPIRE_IN,
+      }
+    );
+    if (saveTokenInDB && userId) await saveToken(type, generatedToken, userId);
+    return generatedToken;
+  } catch (_) {
+    throw new Error("Token not generated");
+  }
 };
 
 /**
@@ -93,14 +100,19 @@ export const generateAccessToken = (
  */
 export const deleteAccessTokens = async (user: Pick<User, "_id">) => {
   try {
+    console.log({
+      "tokenModel.deleteMany": tokenModel.deleteMany.prototype,
+      user: isValidObjectId(user._id),
+    });
     await tokenModel.deleteMany({
       type: "accessToken",
       userId: user._id,
     });
-  } catch (_error) {
+    return true;
+  } catch (_) {
+    console.log({ _ });
     return false;
   }
-  return true;
 };
 
 /**
