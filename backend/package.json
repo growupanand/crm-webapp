@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "doppler run -- nodemon -q -e ts -x ts-node -r tsconfig-paths/register index.ts",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "test-ci": "cross-env NODE_ENV=test jest --coverage --coverageReporters=html --coverageReporters=json-summary --testTimeout=10000"
+    "test-ci": "cross-env NODE_ENV=test jest --silent --coverage --coverageReporters=html --coverageReporters=text --coverageReporters=json-summary --testTimeout=10000"
   },
   "author": "",
   "license": "ISC",
