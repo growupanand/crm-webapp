@@ -56,21 +56,25 @@ const generateToken = async (
 /**
  * This will verify token and return payload,
  * @param token
- * @param deleteToken `default:true` - it will delete token from database after token verified successfully
- * @param checkInDb `default:true` - it will check for token existing in database also
+ * @param deleteToken `default:true`
+ * @param checkInDb `default:true`
  * @returns
  */
 export const useToken = async (
   token: string,
+  /** Should delete token from database after token verified successfully */
   deleteToken: boolean = true,
+  /** Should token exist in database */
   checkInDb: boolean = true
 ) => {
   let payload;
   try {
     payload = jwt.verify(token, process.env.TOKEN_SECRET as string);
-    const isExistInDB = await tokenModel.findOne({ token });
-    if (checkInDb && !isExistInDB)
-      throw new Error(`Token:${token} does not exist in database`);
+    if (checkInDb) {
+      const isExistInDB = await tokenModel.findOne({ token });
+      if (!isExistInDB)
+        throw new Error(`Token:${token} does not exist in database`);
+    }
   } catch (_error) {
     return null;
   }
@@ -100,17 +104,12 @@ export const generateAccessToken = (
  */
 export const deleteAccessTokens = async (user: Pick<User, "_id">) => {
   try {
-    console.log({
-      "tokenModel.deleteMany": tokenModel.deleteMany.prototype,
-      user: isValidObjectId(user._id),
-    });
     await tokenModel.deleteMany({
       type: "accessToken",
       userId: user._id,
     });
     return true;
   } catch (_) {
-    console.log({ _ });
     return false;
   }
 };
