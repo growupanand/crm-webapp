@@ -1,11 +1,11 @@
 import userModel from "@app/models/user";
 import { sendMail } from "@app/utils/sendMail";
 import { Request, Response } from "express";
-import { baseUrl } from "..";
 import {
   deleteEmailVerificationTokens,
   generateEmailVerificationToken,
 } from "@app/utils";
+import { BASE_URL } from "@app/constants";
 
 /** Get any user details */
 const getUser = async (req: Request, res: Response) => {
@@ -56,7 +56,7 @@ const resendEmailVerify = async (req: Request, res: Response) => {
     context: {
       subject: "Verification Mail",
       name: user.name,
-      link: `${baseUrl}api/auth/verifyEmail/${newEmailVerificationToken}/`,
+      link: `${BASE_URL}api/auth/verifyEmail/${newEmailVerificationToken}/`,
     },
   });
   if (!data) {

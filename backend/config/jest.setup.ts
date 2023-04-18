@@ -1,4 +1,4 @@
-import { testEnv } from "@app/constants/common";
+import { testEnv } from "@app/constants";
 
 /**
  * This file will be called by jest to load environment variables

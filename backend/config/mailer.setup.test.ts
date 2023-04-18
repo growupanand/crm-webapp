@@ -5,7 +5,7 @@ describe("@app/mailer tests", function () {
 
   /** Check if all environment variables valid used by nodemailer */
   const isValidConfig = () => {
-    const { testEnv } = require("@app/constants/common");
+    const { testEnv } = require("@app/constants");
     const {
       NODEMAILER_USER,
       NODEMAILER_PASS,
@@ -51,7 +51,7 @@ describe("@app/mailer tests", function () {
   describe("With invalid config", function () {
     test("transporter should give error on verify", async function () {
       process.env = {};
-      const { transporter } = require("@app/mailer");
+      const { transporter } = require("@app/config/mailer.setup");
       expect.assertions(1);
       try {
         const ets = await transporter.verify((error: any) => {
@@ -67,13 +67,13 @@ describe("@app/mailer tests", function () {
 
   describe("With valid config", function () {
     test("transporter should not give error on verify", async function () {
-      const { isMailConfigured } = require("@app/mailer");
+      const { isMailConfigured } = require("@app/config/mailer.setup");
       expect(isMailConfigured).toEqual(true);
     });
 
     test("transporter should not give error on verify (Service Based Config)", async function () {
       delete process.env.NODEMAILER_SERVICE;
-      const { transporter } = require("@app/mailer");
+      const { transporter } = require("@app/config/mailer.setup");
       expect(await transporter.verify()).toBeUndefined();
     });
   });
