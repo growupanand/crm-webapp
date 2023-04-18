@@ -1,10 +1,10 @@
 import { describe, test, expect, jest } from "@jest/globals";
 
 import { sendMail } from "@app/utils";
-import * as mailer from "@app/mailer";
+import * as mailer from "@app/config/mailer.setup";
 
-jest.mock("@app/mailer", () => {
-  const originalFactory = jest.requireActual("@app/mailer") as any;
+jest.mock("@app/config/mailer.setup", () => {
+  const originalFactory = jest.requireActual("@app/config/mailer.setup") as any;
 
   return {
     __esModule: true,

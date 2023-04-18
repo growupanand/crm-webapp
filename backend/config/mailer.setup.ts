@@ -23,12 +23,12 @@ const transportOption = {
       }),
 };
 let transporter = nodemailer.createTransport(transportOption);
-console.log("Verifying Mail configuration");
 transporter.verify(function (error: any) {
   if (error) {
-    return console.error("Mail configuration failed", { error });
+    return console.error(`Mailer not connected, Reason: ${error.message}`);
   }
-  console.log("Mail configuration success");
+  console.log("Mailer connected");
+  console.log(`All mails will be send from ${NODEMAILER_FROM}`);
   isMailConfigured = true;
 });
 

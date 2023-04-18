@@ -1,4 +1,4 @@
-import organizationMiddleware from "@app/middlewares/organization.middleware";
+import organizationMiddleware from "@app/middleware/organization.middleware";
 import express from "express";
 const router = express.Router();
 

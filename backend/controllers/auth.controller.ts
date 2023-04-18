@@ -13,7 +13,7 @@ import {
 import userModel from "@models/user";
 import { User } from "@app/types/user";
 import { sendMail } from "@app/utils/sendMail";
-import { baseUrl } from "@app/index";
+import { BASE_URL } from "@app/constants";
 
 /**
  * Create new user and send email verification mail
@@ -44,7 +44,7 @@ export const register = async (req: Request, res: Response) => {
       context: {
         subject: "Registration successfully",
         name: newUser.name,
-        link: `${baseUrl}api/auth/verifyEmail/${emailVerificationToken}`,
+        link: `${BASE_URL}api/auth/verifyEmail/${emailVerificationToken}`,
       },
     });
     return res.status(200).json({ accessToken, refreshToken });

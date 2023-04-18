@@ -1,5 +1,9 @@
 import { MailTemplates } from "@app/types/mailTemplates";
-import { NODEMAILER_FROM, isMailConfigured, transporter } from "@app/mailer";
+import {
+  NODEMAILER_FROM,
+  isMailConfigured,
+  transporter,
+} from "@app/config/mailer.setup";
 
 // -------------------Utility Function--------------------------
 

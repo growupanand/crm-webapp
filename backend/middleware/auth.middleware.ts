@@ -1,7 +1,6 @@
 import userModel from "@app/models/user";
 import { useToken } from "@app/utils";
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 
 type tokenPayload = {
   email: string;
