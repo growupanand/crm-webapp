@@ -4,6 +4,7 @@ import {
   isMailConfigured,
   transporter,
 } from "@app/config/mailer.setup";
+import { NODE_ENV } from "@app/constants";
 
 // -------------------Utility Function--------------------------
 
@@ -31,6 +32,9 @@ const sendMail = async <T extends keyof MailTemplates>(props: Props<T>) => {
     context,
   };
   let data = null;
+  if (NODE_ENV === "local") {
+    console.log("Sending mail", { mailOption });
+  }
   try {
     if (!isMailConfigured) {
       throw new Error("Mail is not configured");

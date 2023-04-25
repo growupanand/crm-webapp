@@ -9,5 +9,10 @@ router.use(
   organizationMiddleware,
   require("./customer")
 );
+router.use(
+  "/organizations/:organizationId/insuranceCompanies",
+  organizationMiddleware,
+  require("./insuranceCompany")
+);
 
 export default router;

@@ -13,3 +13,4 @@ export const DEFAULT_MONGOOSE_ERROR_MESSAGE = DEFAULT_ERROR_MESSAGE;
 export const PORT = process.env.PORT || 3001;
 export const HOST = process.env.BACKEND_HOST || "http://localhost";
 export const BASE_URL = `${HOST}:${PORT}/`;
+export const NODE_ENV = process.env.NODE_ENV || "local";
