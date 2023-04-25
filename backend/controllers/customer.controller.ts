@@ -37,7 +37,7 @@ const deleteCustomer = async (req: Request, res: Response) => {
     if (!customer) {
       return res.sendCustomErrorMessage("Customer not found", 400);
     }
-    await customer?.delete();
+    await customer.delete();
     return res.status(200).json({ message: "Customer deleted successfully" });
   } catch (error) {
     return res.sendMongooseErrorResponse(error as MongooseError);

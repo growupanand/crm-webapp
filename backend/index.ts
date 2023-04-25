@@ -8,6 +8,14 @@ console.log("Starting backend, please wait...");
  * <--------------Validate all required environment variables are set-------------
  */
 dotenv.config();
+import { HOST, NODE_ENV, PORT } from "@app/constants";
+
+// Set default environment variables for development purpose
+if (NODE_ENV === "local") {
+  process.env.MONGO_URI =
+    process.env.MONGO_URI || "mongodb://127.0.0.1:27017/crm-webapp";
+}
+
 const requireEnvVariables = ["BACKEND_HOST", "MONGO_URI", "TOKEN_SECRET"];
 requireEnvVariables.forEach((keyName) => {
   const variablesNotFound = [];
@@ -49,7 +57,6 @@ import routes from "./routes";
 import baseMiddleware from "@app/middleware/base.middleware";
 import authMiddleware from "@app/middleware/auth.middleware";
 import rateLimiter from "@app/middleware/rateLimiter.middleware";
-import { HOST, PORT } from "@app/constants";
 
 const app = express();
 app.use(

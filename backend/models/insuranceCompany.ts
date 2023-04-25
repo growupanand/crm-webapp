@@ -7,7 +7,6 @@ const insuranceCompanySchema = new Schema<InsuranceCompany>(
     name: { type: String, required: true },
     slug: { type: String, required: false, unique: true },
     organizationId: { type: Schema.Types.ObjectId, ref: "Organization" },
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
@@ -23,9 +22,9 @@ insuranceCompanySchema.pre("save", function (next) {
   next();
 });
 
-const insuranceModel = model<InsuranceCompany>(
-  "customer",
+const insuranceCompanyModel = model<InsuranceCompany>(
+  "insuranceCompany",
   insuranceCompanySchema
 );
 
-export default insuranceModel;
+export default insuranceCompanyModel;
