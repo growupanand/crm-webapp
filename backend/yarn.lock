@@ -2642,6 +2642,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     express: "npm:^4.18.2"
     express-handlebars: "npm:^7.0.2"
+    express-rate-limit: "npm:^6.7.0"
     jest: "npm:^29.5.0"
     jsonwebtoken: "npm:^9.0.0"
     mongoose: "npm:^6.7.5"
@@ -2958,6 +2959,15 @@ __metadata:
     graceful-fs: "npm:^4.2.10"
     handlebars: "npm:^4.7.7"
   checksum: 7409b71cc83528731a3bdf6c84af2eacbdf935f2b6fe10e298795e7583cea3ca32742813e2fb2b9b178ed3227c1f99beece7aea115c6e24054af4c4719525692
+  languageName: node
+  linkType: hard
+
+"express-rate-limit@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "express-rate-limit@npm:6.7.0"
+  peerDependencies:
+    express: ^4 || ^5
+  checksum: 5bee337c88cb81b5ac777664e854254b0885d51d1f88b115b39dcac8b81b0292a453f0865927f9e6ca8dba07246674f188d5e8095a13d1c32f487aae7ddc9bc2
   languageName: node
   linkType: hard
 

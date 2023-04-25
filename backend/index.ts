@@ -48,10 +48,17 @@ mongoose.connect(databaseURI).then(
 import routes from "./routes";
 import baseMiddleware from "@app/middleware/base.middleware";
 import authMiddleware from "@app/middleware/auth.middleware";
+import rateLimiter from "@app/middleware/rateLimiter.middleware";
 import { HOST, PORT } from "@app/constants";
 
 const app = express();
-app.use("/api/auth", express.json(), baseMiddleware, require("@routes/auth"));
+app.use(
+  "/api/auth",
+  express.json(),
+  rateLimiter, // limit each IP to 2 requests per 5 seconds
+  baseMiddleware,
+  require("@routes/auth")
+);
 app.use("/api", express.json(), baseMiddleware, authMiddleware, routes);
 app.listen(PORT, () =>
   console.log(`%cServer started successfully ${HOST}:${PORT}`, "color: green")
