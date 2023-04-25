@@ -98,6 +98,12 @@ export const logout = async (req: Request, res: Response) => {
   return res.status(200).json({ message: "logged out successfully" });
 };
 
+/**
+ * This function retrieves an access token using a refresh token and returns it in a JSON response.
+ * @returns a JSON response with an access token if the refresh token provided in the request payload
+ * is valid and exists in the database. If the token is not found or invalid, it returns a custom error
+ * message with a 400 status code.
+ */
 export const getAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
@@ -108,6 +114,7 @@ export const getAccessToken = async (req: Request, res: Response) => {
   // verify if token is valid
   const payload = await useToken(refreshToken, false);
   if (!payload) return res.sendCustomErrorMessage("Invalid token", 400);
+  // generate new access token and return in response
   const accessToken = await generateAccessToken(user as User);
   return res.status(200).json({ accessToken });
 };
