@@ -1,6 +1,7 @@
 import { Organization } from "@app/types/organization";
 import { generateSlug, randomStringKey } from "@app/utils";
 import { Schema, model } from "mongoose";
+import userOrganizationModel from "@app/models/userOrganization";
 
 const organizationSchema = new Schema<Organization>(
   {
@@ -26,6 +27,20 @@ organizationSchema.pre("save", function (next) {
     slug = slug.slice(0, 78);
   }
   this.slug = `${slug}-${randomStringKey(4)}`;
+  next();
+});
+
+organizationSchema.pre("deleteOne", async function (next) {
+  const { _id } = this.getQuery();
+
+  if (!_id) {
+    throw new Error("_id required in query to delete organization.");
+  }
+  // delete linking documents between this organization and all users
+  await userOrganizationModel.deleteMany({
+    organization: _id,
+  });
+
   next();
 });
 
