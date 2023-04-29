@@ -16,6 +16,11 @@ const tokenSchema = new Schema<Token>(
       ref: "User",
       required: true,
     },
+    organizationId: {
+      type: Schema.Types.ObjectId,
+      ref: "Organization",
+      required: false,
+    },
   },
   {
     timestamps: true,

@@ -8,50 +8,71 @@ import { Types, isValidObjectId } from "mongoose";
 const DEFAULT_EXPIRE_IN = "24h";
 
 /**
- * save new generated token in database
- * @param token jwt token
- * @param userIds user id which is linked to this token
- * @returns saved token object
+ * This function saves a token with its type, value, user ID, and organization ID to the database.
+ * @param {TokenTypes} type - TokenTypes is a custom type that specifies the type of token being saved
+ * (e.g. "access token", "refresh token", etc.).
+ * @param {string} token - The `token` parameter is a string that represents the actual token that
+ * needs to be saved. It could be an access token, refresh token, or any other type of token used for
+ * authentication or authorization purposes.
+ * @param userId - userId is a parameter of type Types.ObjectId, which represents the unique identifier
+ * of a user in the database. It is used to associate the token with a specific user.
+ * @param organizationId - The `organizationId` parameter is of type `Types.ObjectId` and represents
+ * the unique identifier of the organization associated with the token being saved.
+ * @returns The `saveToken` function returns a promise that resolves to the newly created token object
+ * after it has been saved to the database.
  */
-const saveToken = (type: TokenTypes, token: string, userId: Types.ObjectId) => {
+const saveToken = (
+  type: TokenTypes,
+  token: string,
+  userId: Types.ObjectId,
+  organizationId: Types.ObjectId
+) => {
   const newToken = new tokenModel({
     type,
     token,
     userId,
+    organizationId,
   });
 
   return newToken.save();
 };
 
+type TokenPayload<T extends TokenTypes> =
+  T extends "organizationInvitationToken"
+    ? // organizationId will be required in payload for all organization related token
+      { [key: string]: any; organizationId: Types.ObjectId }
+    : Record<string, any>;
+
 /**
- * generates a JWT token with optional parameters for saving the
- * token in a database and setting an expiration time.
- * @param {TokenTypes} type - Token type, which can be used to differentiate between different types of
- * tokens (e.g. access token, refresh token, etc.).
- * @param payload - The data that will be encoded in the token. It can be any JSON-serializable data.
- * @param [userId] - The ID of the user for whom the token is being generated. It is optional and only
- * required if the `saveTokenInDB` parameter is set to `true`.
- * @param {boolean} [saveTokenInDB=true] - A boolean flag indicating whether the generated token should
- * be saved in the database or not. If set to true, the function will check if a valid userId is
- * provided and then call the `saveToken` function to save the token in the database. If set to false,
- * the token will not be saved
- * @param [expiresIn] - expiresIn is an optional parameter that specifies the expiration time of the
- * token. It can be expressed in seconds or a string describing a time span using the format
- * [zeit/ms](https://github.com/zeit/ms.js). For example, you can set it to 60 seconds, "2 days",
- * @returns The function `generateToken` returns a Promise that resolves to a string representing the
+ * This is a TypeScript function that generates a token with a specified type, payload, and expiration
+ * time, and optionally saves it in a database.
+ * @param {T} type - The type of token being generated. It is a generic type that extends the
+ * TokenTypes enum.
+ * @param payload - The payload parameter is an object that contains the data that will be encoded in
+ * the token. The type of the payload object is determined by the type parameter, which is a generic
+ * type that extends the TokenTypes enum. The payload object must match the shape of the TokenPayload
+ * interface for the corresponding token type
+ * @param [userId] - The ID of the user for whom the token is being generated. This is used to save the
+ * token in the database for future authentication.
+ * @param {boolean} [saveTokenInDB=true] - `saveTokenInDB` is a boolean parameter that determines
+ * whether the generated token should be saved in the database or not. If set to `true`, the token will
+ * be saved in the database, otherwise it won't be saved.
+ * @param [expiresIn] - The expiresIn parameter is an optional parameter that specifies the expiration
+ * time of the token. It can be expressed in seconds or a string describing a time span using the
+ * [zeit/ms](https://github.com/zeit/ms.js) library. If this parameter is not provided, the token will
+ * expire after the default
+ * @returns The function `generateToken` returns a Promise that resolves to a string, which is the
  * generated token.
  */
-const generateToken = async (
-  type: TokenTypes,
-  payload: Record<string, any>,
+const generateToken = async <T extends TokenTypes>(
+  type: T,
+  payload: TokenPayload<T>,
   userId?: Types.ObjectId,
   saveTokenInDB: boolean = true,
   /** expressed in seconds or a string describing a time span [zeit/ms](https://github.com/zeit/ms.js).  Eg: 60, "2 days", "10h", "7d" */
   expiresIn?: SignOptions["expiresIn"]
 ) => {
-  // user id must be valid before if token need to save in database
-  if (saveTokenInDB && (!userId || !isValidObjectId(userId)))
-    throw new Error("Unable to generate token. Invalid User Id.");
+  const organizationId = payload.organizationId;
   try {
     const generatedToken = jwt.sign(
       payload,
@@ -60,10 +81,18 @@ const generateToken = async (
         expiresIn: expiresIn || DEFAULT_EXPIRE_IN,
       }
     );
-    if (saveTokenInDB && userId) await saveToken(type, generatedToken, userId);
+    if (saveTokenInDB) {
+      // valid user id required to save token in database
+      if (!userId || !isValidObjectId(userId))
+        throw new Error("Unable to generate token. Invalid User Id.");
+      // valid organization id also required to saved organization related token in database
+      if (["organizationInvitationToken"].includes(type) && !organizationId)
+        throw new Error("Unable to generate token. Invalid Organization Id.");
+      await saveToken(type, generatedToken, userId, organizationId);
+    }
     return generatedToken;
-  } catch (_) {
-    throw new Error("Token not generated");
+  } catch (error: any) {
+    throw new Error(error.message || "Token not generated");
   }
 };
 
@@ -241,8 +270,8 @@ export const generateOrganizationInvitationToken = (
   return generateToken(
     "organizationInvitationToken",
     payload,
-    undefined,
-    false,
+    payload.invitedByUserId,
+    true,
     "7d"
   );
 };
