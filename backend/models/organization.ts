@@ -2,6 +2,7 @@ import { Organization } from "@app/types/organization";
 import { generateSlug, randomStringKey } from "@app/utils";
 import { Schema, model } from "mongoose";
 import userOrganizationModel from "@app/models/userOrganization";
+import userOrganizationInvitationModel from "./userOrganizationInvitation";
 
 const organizationSchema = new Schema<Organization>(
   {
@@ -21,6 +22,9 @@ const organizationSchema = new Schema<Organization>(
   }
 );
 
+/**
+ * Generate organization slug before saving it
+ */
 organizationSchema.pre("save", function (next) {
   let slug = generateSlug(this.name);
   if (slug.length > 78) {
@@ -30,6 +34,9 @@ organizationSchema.pre("save", function (next) {
   next();
 });
 
+/**
+ * Before deleting an organization delete its linked documents first
+ */
 organizationSchema.pre("deleteOne", async function (next) {
   const { _id } = this.getQuery();
 
@@ -39,6 +46,11 @@ organizationSchema.pre("deleteOne", async function (next) {
   // delete linking documents between this organization and all users
   await userOrganizationModel.deleteMany({
     organization: _id,
+  });
+
+  // delete all invitations of this organization
+  await userOrganizationInvitationModel.deleteMany({
+    organizationId: _id,
   });
 
   next();

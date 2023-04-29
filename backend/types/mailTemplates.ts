@@ -17,4 +17,13 @@ export type MailTemplates = {
     name: string;
     link: string;
   };
+  /** Send Organization invitation mail*/
+  organizationInvitation: {
+    subject: string;
+    organizationName: string;
+    invitedByUserName: string;
+    invitedByUserEmail: string;
+    invitedToEmail: string;
+    link: string;
+  };
 };
