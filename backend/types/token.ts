@@ -4,7 +4,8 @@ export type TokenTypes =
   | "accessToken"
   | "refreshToken"
   | "emailVerificationToken"
-  | "resetPasswordToken";
+  | "resetPasswordToken"
+  | "organizationInvitationToken";
 
 export type Token = {
   type: TokenTypes;

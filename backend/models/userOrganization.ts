@@ -5,12 +5,14 @@ const userOrganizationSchema = new Schema<UserOrganization>(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
+      required: true,
     },
     organization: {
       type: Schema.Types.ObjectId,
-      ref: 'Organization'
-    }
+      ref: "Organization",
+      required: true,
+    },
   },
   {
     timestamps: true,

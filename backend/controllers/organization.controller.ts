@@ -1,6 +1,9 @@
+import { BASE_URL } from "@app/constants";
 import organizationModel from "@app/models/organization";
 import userOrganizationModel from "@app/models/userOrganization";
+import userOrganizationInvitationModel from "@app/models/userOrganizationInvitation";
 import { MongooseError } from "@app/types/mongooseError";
+import { generateOrganizationInvitationToken, sendMail } from "@app/utils";
 import { Request, Response } from "express";
 
 const {
@@ -69,4 +72,61 @@ const deleteOrganization = async (req: Request, res: Response) => {
   }
 };
 
-export default { createOrganization, getUserOrganizations, deleteOrganization };
+/**
+ * This function sends an invitation to join an organization to a specified email address and saves the
+ * invitation information in the database.
+ */
+const sendInvitation = async (req: Request, res: Response) => {
+  const { user } = req;
+  const { organizationId } = req.params;
+  const { email } = req.body;
+  try {
+    // check if organization exist in database
+    const organization = await organizationModel.findOne({
+      _id: ObjectId(organizationId),
+    });
+    if (!organization)
+      return res.sendCustomErrorMessage("Organization not found");
+
+    // create token
+    const tokenPayload = {
+      invitedByUserId: user._id,
+      invitedToEmail: email,
+      organizationId: organization._id,
+    };
+    const token = await generateOrganizationInvitationToken(tokenPayload);
+
+    // send invitation email
+    const data = await sendMail({
+      to: email,
+      template: "organizationInvitation",
+      context: {
+        subject: `Invitation to Join ${organization.name}`,
+        organizationName: organization.name,
+        invitedByUserName: user.name,
+        invitedByUserEmail: user.email,
+        invitedToEmail: email,
+        link: `${BASE_URL}api/organizations/invitations/accept?token=${token}/`,
+      },
+    });
+    // if mail not sent then don't make any sense to save token in DB
+    if (!data) throw new Error("unable to send mail");
+
+    // save info in DB
+    const newOrganizationInvitation = new userOrganizationInvitationModel({
+      ...tokenPayload,
+      token,
+    });
+    await newOrganizationInvitation.save();
+    return res.status(200).json({ ...newOrganizationInvitation.toJSON() });
+  } catch (error) {
+    return res.sendMongooseErrorResponse(error as MongooseError);
+  }
+};
+
+export default {
+  createOrganization,
+  getUserOrganizations,
+  deleteOrganization,
+  sendInvitation,
+};

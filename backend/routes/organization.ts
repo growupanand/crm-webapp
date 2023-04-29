@@ -5,5 +5,9 @@ const router = express.Router();
 router.get("/", organizationController.getUserOrganizations);
 router.post("/", organizationController.createOrganization);
 router.delete("/:organizationId", organizationController.deleteOrganization);
+router.post(
+  "/:organizationId/invitations",
+  organizationController.sendInvitation
+);
 
 module.exports = router;

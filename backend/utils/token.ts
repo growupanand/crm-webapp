@@ -1,7 +1,8 @@
 import tokenModel from "@app/models/token";
 import { TokenTypes } from "@app/types/token";
 import { User } from "@app/types/user";
-import jwt from "jsonwebtoken";
+import { UserOrganizationInvitation } from "@app/types/userOrganizationInvitation";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { Types, isValidObjectId } from "mongoose";
 
 const DEFAULT_EXPIRE_IN = "24h";
@@ -23,17 +24,30 @@ const saveToken = (type: TokenTypes, token: string, userId: Types.ObjectId) => {
 };
 
 /**
- * generate jwt token and save it on database
- * @param payload
- * @param userIds link user id while saving token in database
- * @param saveTokenInDB Do you want to save this generated token in database?
- * @returns token
+ * generates a JWT token with optional parameters for saving the
+ * token in a database and setting an expiration time.
+ * @param {TokenTypes} type - Token type, which can be used to differentiate between different types of
+ * tokens (e.g. access token, refresh token, etc.).
+ * @param payload - The data that will be encoded in the token. It can be any JSON-serializable data.
+ * @param [userId] - The ID of the user for whom the token is being generated. It is optional and only
+ * required if the `saveTokenInDB` parameter is set to `true`.
+ * @param {boolean} [saveTokenInDB=true] - A boolean flag indicating whether the generated token should
+ * be saved in the database or not. If set to true, the function will check if a valid userId is
+ * provided and then call the `saveToken` function to save the token in the database. If set to false,
+ * the token will not be saved
+ * @param [expiresIn] - expiresIn is an optional parameter that specifies the expiration time of the
+ * token. It can be expressed in seconds or a string describing a time span using the format
+ * [zeit/ms](https://github.com/zeit/ms.js). For example, you can set it to 60 seconds, "2 days",
+ * @returns The function `generateToken` returns a Promise that resolves to a string representing the
+ * generated token.
  */
 const generateToken = async (
   type: TokenTypes,
   payload: Record<string, any>,
   userId?: Types.ObjectId,
-  saveTokenInDB: boolean = true
+  saveTokenInDB: boolean = true,
+  /** expressed in seconds or a string describing a time span [zeit/ms](https://github.com/zeit/ms.js).  Eg: 60, "2 days", "10h", "7d" */
+  expiresIn?: SignOptions["expiresIn"]
 ) => {
   // user id must be valid before if token need to save in database
   if (saveTokenInDB && (!userId || !isValidObjectId(userId)))
@@ -43,7 +57,7 @@ const generateToken = async (
       payload,
       process.env.TOKEN_SECRET as string,
       {
-        expiresIn: DEFAULT_EXPIRE_IN,
+        expiresIn: expiresIn || DEFAULT_EXPIRE_IN,
       }
     );
     if (saveTokenInDB && userId) await saveToken(type, generatedToken, userId);
@@ -208,4 +222,27 @@ export const deleteResetPasswordTokens = async (user: Pick<User, "_id">) => {
     return false;
   }
   return true;
+};
+
+/**
+ * This TypeScript function generates an organization invitation token with a payload and a 7-day
+ * expiration time.
+ * @param payload - The payload parameter is an object of type UserOrganizationInvitation, with the
+ * "_id", "status", and "token" properties omitted. This object contains the data that will be used to
+ * generate the organization invitation token.
+ * @returns The function `generateOrganizationInvitationToken` is returning a token generated using the
+ * `generateToken` function. The token is of type "organizationInvitationToken" and is generated using
+ * the `payload` object passed as an argument to the function. The token does not have an expiration
+ * date and is not signed. The function returns the generated token.
+ */
+export const generateOrganizationInvitationToken = (
+  payload: Omit<UserOrganizationInvitation, "_id" | "status" | "token">
+) => {
+  return generateToken(
+    "organizationInvitationToken",
+    payload,
+    undefined,
+    false,
+    "7d"
+  );
 };
