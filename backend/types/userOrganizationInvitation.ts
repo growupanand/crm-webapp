@@ -9,6 +9,4 @@ export type UserOrganizationInvitation = {
   /** the ID of the organization the user will join */
   organizationId: Types.ObjectId;
   status: "pending" | "accepted" | "rejected";
-  /** token which is used to create invitation link while sending email */
-  token: string;
 };

@@ -65,10 +65,13 @@ export default function (_req: Request, res: Response, next: NextFunction) {
       case "BSONTypeError":
         errors["nonFieldError"] = "Invalid Object Id";
         break;
-      // Unknown error
       default:
-        errors["nonFieldError"] =
-          mongooseError.message || DEFAULT_MONGOOSE_ERROR_MESSAGE;
+        break;
+    }
+    // Unknown error
+    if (Object.keys(errors).length === 0) {
+      errors["nonFieldError"] =
+        mongooseError.message || DEFAULT_MONGOOSE_ERROR_MESSAGE;
     }
     return res.status(400).send(errors);
   };

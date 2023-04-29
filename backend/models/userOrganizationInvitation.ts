@@ -30,14 +30,19 @@ const userOrganizationInvitationSchema = new Schema<UserOrganizationInvitation>(
       required: true,
       default: "pending",
     },
-    token: {
-      type: String,
-      required: true,
-    },
   },
   {
     timestamps: true,
   }
+);
+
+/**
+ * Create an index on the invitedToEmail and organizationId fields
+ * This will make sure no duplicate invitation created for same invitedToEmail and organization
+ */
+userOrganizationInvitationSchema.index(
+  { invitedToEmail: 1, organizationId: 1 },
+  { unique: true }
 );
 
 const userOrganizationInvitationModel = model<UserOrganizationInvitation>(

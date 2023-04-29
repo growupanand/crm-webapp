@@ -3,6 +3,7 @@ import { generateSlug, randomStringKey } from "@app/utils";
 import { Schema, model } from "mongoose";
 import userOrganizationModel from "@app/models/userOrganization";
 import userOrganizationInvitationModel from "./userOrganizationInvitation";
+import tokenModel from "./token";
 
 const organizationSchema = new Schema<Organization>(
   {
@@ -50,6 +51,11 @@ organizationSchema.pre("deleteOne", async function (next) {
 
   // delete all invitations of this organization
   await userOrganizationInvitationModel.deleteMany({
+    organizationId: _id,
+  });
+
+  // delete all tokens related to this organization
+  await tokenModel.deleteMany({
     organizationId: _id,
   });
 

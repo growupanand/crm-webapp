@@ -77,6 +77,7 @@ const deleteOrganization = async (req: Request, res: Response) => {
  * invitation information in the database.
  */
 const sendInvitation = async (req: Request, res: Response) => {
+  let newInvitation = {};
   const { user } = req;
   const { organizationId } = req.params;
   const { email } = req.body;
@@ -109,16 +110,34 @@ const sendInvitation = async (req: Request, res: Response) => {
         link: `${BASE_URL}api/organizations/invitations/accept?token=${token}/`,
       },
     });
+
     // if mail not sent then don't make any sense to save token in DB
     if (!data) throw new Error("unable to send mail");
 
-    // save info in DB
-    const newOrganizationInvitation = new userOrganizationInvitationModel({
-      ...tokenPayload,
-      token,
+    // check if invitation of this email and organization already exist in DB
+    const existInvitation = await userOrganizationInvitationModel.findOne({
+      invitedToEmail: tokenPayload.invitedToEmail,
+      organizationId: tokenPayload.organizationId,
     });
-    await newOrganizationInvitation.save();
-    return res.status(200).json({ ...newOrganizationInvitation.toJSON() });
+    if (existInvitation) {
+      // update invitedByUserId of exist invitation in DB
+      await existInvitation.update({
+        invitedByUserId: tokenPayload.invitedByUserId,
+      });
+      newInvitation = {
+        ...existInvitation.toJSON(),
+        invitedByUserId: tokenPayload.invitedByUserId,
+      };
+    } else {
+      // create new invitation in DB
+      const newOrganizationInvitation = new userOrganizationInvitationModel({
+        ...tokenPayload,
+      });
+      await newOrganizationInvitation.save();
+      newInvitation = newOrganizationInvitation.toJSON();
+    }
+
+    return res.status(200).json({ ...newInvitation });
   } catch (error) {
     return res.sendMongooseErrorResponse(error as MongooseError);
   }
