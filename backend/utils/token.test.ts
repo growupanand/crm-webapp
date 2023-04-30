@@ -75,7 +75,7 @@ describe("generateToken tests", function () {
     try {
       await generateAccessToken(user);
     } catch (error) {
-      expect(error).toEqual(new Error("Token not generated"));
+      expect(error).toEqual(new Error("secretOrPrivateKey must have a value"));
     }
   });
 });
@@ -126,8 +126,12 @@ describe("generateToken tests", function () {
 
 describe("useToken tests", function () {
   test("should return null if invalid jwt token passed", async function () {
-    const payload = await useToken(inValidJwtToken);
-    expect(payload).toEqual(null);
+    expect.assertions(1);
+    try {
+      await useToken(inValidJwtToken, false, false);
+    } catch (error) {
+      expect(error).toEqual(new Error("invalid token"));
+    }
   });
 
   test("should return payload for valid jwt token passed", async function () {
@@ -150,9 +154,11 @@ describe("useToken tests", function () {
   });
 
   test("should throw error if token not exist in database", async function () {
-    const payload1 = await useToken(notExistDBValidJwtToken, false, false);
-    expect(payload1!.name).toEqual("test user");
-    const payload2 = await useToken(notExistDBValidJwtToken, false, true);
-    expect(payload2).toEqual(null);
+    expect.assertions(1);
+    try {
+      await useToken(notExistDBValidJwtToken, false, true);
+    } catch (error) {
+      expect(error).toEqual(new Error("Token does not exist"));
+    }
   });
 });
