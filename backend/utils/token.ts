@@ -113,6 +113,7 @@ export const useToken = async (
   checkInDb: boolean = true
 ) => {
   try {
+    if (token.split(".").length !== 3) throw new Error("invalid token");
     if (checkInDb) {
       const isExistInDB = await tokenModel.findOne({ token });
       if (!isExistInDB) throw new Error(`Token does not exist`);
