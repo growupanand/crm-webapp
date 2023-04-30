@@ -1,8 +1,10 @@
 import tokenModel from "@app/models/token";
-import { TokenTypes } from "@app/types/token";
+import {
+  OrganizationInvitationTokenPayload,
+  TokenTypes,
+} from "@app/types/token";
 import { User } from "@app/types/user";
-import { UserOrganizationInvitation } from "@app/types/userOrganizationInvitation";
-import jwt, { SignOptions } from "jsonwebtoken";
+import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import { Types, isValidObjectId } from "mongoose";
 
 const DEFAULT_EXPIRE_IN = "24h";
@@ -110,19 +112,21 @@ export const useToken = async (
   /** Should token exist in database */
   checkInDb: boolean = true
 ) => {
-  let payload;
   try {
-    payload = jwt.verify(token, process.env.TOKEN_SECRET as string);
     if (checkInDb) {
       const isExistInDB = await tokenModel.findOne({ token });
-      if (!isExistInDB)
-        throw new Error(`Token:${token} does not exist in database`);
+      if (!isExistInDB) throw new Error(`Token does not exist`);
+      if (deleteToken) await tokenModel.deleteOne({ token });
     }
-  } catch (_error) {
-    return null;
+    const payload = jwt.verify(
+      token,
+      process.env.TOKEN_SECRET as string
+    ) as JwtPayload;
+    return payload;
+  } catch (error: any) {
+    if (error.name === "TokenExpiredError") throw new Error("token expired");
+    throw error;
   }
-  if (deleteToken) await tokenModel.deleteOne({ token });
-  return payload as Record<string, any>;
 };
 
 /**
@@ -265,7 +269,7 @@ export const deleteResetPasswordTokens = async (user: Pick<User, "_id">) => {
  * date and is not signed. The function returns the generated token.
  */
 export const generateOrganizationInvitationToken = (
-  payload: Omit<UserOrganizationInvitation, "_id" | "status" | "token">
+  payload: OrganizationInvitationTokenPayload
 ) => {
   return generateToken(
     "organizationInvitationToken",

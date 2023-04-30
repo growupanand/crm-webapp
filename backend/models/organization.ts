@@ -46,7 +46,7 @@ organizationSchema.pre("deleteOne", async function (next) {
   }
   // delete linking documents between this organization and all users
   await userOrganizationModel.deleteMany({
-    organization: _id,
+    organizationId: _id,
   });
 
   // delete all invitations of this organization

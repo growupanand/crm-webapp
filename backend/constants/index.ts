@@ -14,3 +14,19 @@ export const PORT = process.env.PORT || 3001;
 export const HOST = process.env.BACKEND_HOST || "http://localhost";
 export const BASE_URL = `${HOST}:${PORT}/`;
 export const NODE_ENV = process.env.NODE_ENV || "local";
+
+/** this api urls can be access without need of user email verified */
+export const ALLOWED_URLS_WO_MAIL_VERIFIED = [
+  {
+    path: "/user/resendEmailVerification/",
+    method: ["POST"],
+  },
+];
+
+/** this api urls can be access without need of user logged in */
+export const ALLOWED_API_REQ_WO_USER_LOGGED_IN = [
+  {
+    path: "/organizations/invitations/accept",
+    method: ["GET"],
+  },
+];

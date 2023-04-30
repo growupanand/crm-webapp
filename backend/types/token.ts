@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { UserOrganizationInvitation } from "@app/types/userOrganizationInvitation";
 
 export type TokenTypes =
   | "accessToken"
@@ -20,5 +21,14 @@ export type Token =
       /** organizationId required for all organization related tokens */
       organizationId: Types.ObjectId;
     };
+
+/**
+ * JWT token payload types
+ */
+
+export type OrganizationInvitationTokenPayload = Omit<
+  UserOrganizationInvitation,
+  "_id" | "status" | "token"
+>;
 
 export type TokenModel = Token;

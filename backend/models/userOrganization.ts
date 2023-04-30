@@ -3,12 +3,12 @@ import { Schema, model } from "mongoose";
 
 const userOrganizationSchema = new Schema<UserOrganization>(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    organization: {
+    organizationId: {
       type: Schema.Types.ObjectId,
       ref: "Organization",
       required: true,
