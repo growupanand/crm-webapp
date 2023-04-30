@@ -1,9 +1,17 @@
 import { BASE_URL } from "@app/constants";
 import organizationModel from "@app/models/organization";
+import tokenModel from "@app/models/token";
+import userModel from "@app/models/user";
 import userOrganizationModel from "@app/models/userOrganization";
 import userOrganizationInvitationModel from "@app/models/userOrganizationInvitation";
 import { MongooseError } from "@app/types/mongooseError";
-import { generateOrganizationInvitationToken, sendMail } from "@app/utils";
+import { Organization } from "@app/types/organization";
+import { OrganizationInvitationTokenPayload } from "@app/types/token";
+import {
+  generateOrganizationInvitationToken,
+  sendMail,
+  useToken,
+} from "@app/utils";
 import { Request, Response } from "express";
 
 const {
@@ -82,6 +90,9 @@ const sendInvitation = async (req: Request, res: Response) => {
   const { organizationId } = req.params;
   const { email } = req.body;
   try {
+    // user cannot send invitation to himself
+    if (user.email === email)
+      throw new Error("logged in user cannot send invitation to himself");
     // check if organization exist in database
     const organization = await organizationModel.findOne({
       _id: ObjectId(organizationId),
@@ -143,9 +154,94 @@ const sendInvitation = async (req: Request, res: Response) => {
   }
 };
 
+const handleInvitation = async (req: Request, res: Response) => {
+  const invalidTokenMessage = "invalid token";
+  const token = req.query.token as string;
+  try {
+    if (!token || token.split(".").length !== 3)
+      throw new Error(invalidTokenMessage);
+    const tokenPayload = (await useToken(
+      token,
+      false,
+      true
+    )) as OrganizationInvitationTokenPayload;
+    if (!tokenPayload) throw new Error(invalidTokenMessage);
+
+    // Get invitation from DB
+    const invitation = await userOrganizationInvitationModel
+      .findOne({
+        invitedToEmail: tokenPayload.invitedToEmail,
+        organizationId: tokenPayload.organizationId,
+      })
+      .populate<{ organizationId: Organization }>("organizationId");
+    if (!invitation) throw new Error(invalidTokenMessage);
+
+    // invitation should be in pending status
+    // (E.g. if invitation already accepted or rejected then invitation need to resend)
+    if (invitation.status !== "pending")
+      throw new Error(`already ${invitation.status} invitation`);
+
+    // get organization details
+    const organization = invitation.organizationId;
+    if (!organization) throw new Error("organization not found");
+
+    // get user details who send invitation
+    const invitedByUser = await userModel.findOne({
+      _id: tokenPayload.invitedByUserId,
+    });
+    if (!invitedByUser) throw new Error("invitation sender not exist");
+
+    // send invitation details
+    const invitationDetails = {
+      organization: { name: organization.name },
+      invitedByUser: { name: invitedByUser.name, email: invitedByUser.email },
+      invitedToUser: { email: tokenPayload.invitedToEmail },
+    } as Record<string, any>;
+
+    // check if this api request is for accept or reject the invitation
+    if (req.method === "PATCH") {
+      const { user } = req;
+      const { status } = req.body;
+      if (user.email !== invitation.invitedToEmail)
+        throw new Error("this invitation is not for current logged user");
+      if (!status || !["accepted", "rejected"].includes(status))
+        throw new Error("valid status required");
+
+      // create user and organization linking document
+      const newUserOrganization = new userOrganizationModel({
+        userId: user._id,
+        organizationId: organization._id,
+      });
+      await newUserOrganization.save();
+
+      // update status of invitation (E.g. "accepted" or "rejected")
+      await invitation.updateOne({
+        $set: {
+          status,
+        },
+      });
+
+      // delete token from DB
+      await tokenModel.deleteOne({ token });
+
+      invitationDetails.message = `invitation ${status} successfully`;
+      if (status === "accepted") {
+        // add organization full details in response
+        invitationDetails.organization = organization;
+      }
+    }
+
+    // else this api request is to get invitation details
+    return res.status(200).json({ ...invitationDetails });
+  } catch (error) {
+    return res.sendMongooseErrorResponse(error as MongooseError);
+  }
+};
+
 export default {
   createOrganization,
   getUserOrganizations,
   deleteOrganization,
   sendInvitation,
+  handleInvitation,
 };
