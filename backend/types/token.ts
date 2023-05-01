@@ -10,11 +10,13 @@ export type TokenTypes =
 
 export type Token =
   | {
+      expiredAt: Date;
       type: Exclude<TokenTypes, "organizationInvitationToken">;
       token: string;
       userId: Types.ObjectId;
     }
   | {
+      expiredAt: Date;
       type: "organizationInvitationToken";
       token: string;
       userId: Types.ObjectId;
