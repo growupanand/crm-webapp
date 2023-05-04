@@ -1,3 +1,5 @@
+import { Role } from "@app/types/role";
+
 export const testEnv = {
   NODEMAILER_SERVICE: "valid-service-name",
   NODEMAILER_USER: "testuser",
@@ -30,3 +32,20 @@ export const ALLOWED_API_REQ_WO_USER_LOGGED_IN = [
     method: ["GET"],
   },
 ];
+
+/** when server start, default roles will be loaded automatically in Database */
+export const DEFAULT_ROLES = [
+  {
+    name: "Owner",
+    slug: "owner",
+    /** only one user at a time can be owner of an organization */
+    description: "This user is owner of the organization",
+    isDefaultRole: true,
+  },
+  {
+    name: "Member",
+    slug: "member",
+    description: "This user is member of the organization",
+    isDefaultRole: true,
+  },
+] as Omit<Role, "_id">[];

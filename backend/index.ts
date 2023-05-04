@@ -2,7 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-console.log("Starting backend, please wait...");
+console.log(`
+=============================================
+Starting backend, please wait...`);
 
 /**
  * <--------------Validate all required environment variables are set-------------
@@ -40,7 +42,10 @@ requireEnvVariables.forEach((keyName) => {
 const databaseURI =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/crm-webapp";
 mongoose.connect(databaseURI).then(
-  () => console.log("%cDatabase connected", "color: green"),
+  () => {
+    console.log("%cDatabase connected", "color: green");
+    seedDefaultRoles();
+  },
   (error) =>
     console.log(
       `%cDatabase not connected. Reason: ${error.message}`,
@@ -57,6 +62,7 @@ import routes from "./routes";
 import baseMiddleware from "@app/middleware/base.middleware";
 import authMiddleware from "@app/middleware/auth.middleware";
 import rateLimiter from "@app/middleware/rateLimiter.middleware";
+import { seedDefaultRoles } from "./seeds/defaultRoles";
 
 const app = express();
 app.use(
