@@ -13,6 +13,6 @@ const roleSchema = new Schema<Role>(
   }
 );
 
-const roleModel = model<Role>("role", roleSchema);
+const roleModel = model<Role>("Role", roleSchema);
 
 export default roleModel;

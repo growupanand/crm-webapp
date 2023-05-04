@@ -1,9 +1,11 @@
 import { BASE_URL } from "@app/constants";
 import organizationModel from "@app/models/organization";
+import roleModel from "@app/models/role";
 import tokenModel from "@app/models/token";
 import userModel from "@app/models/user";
 import userOrganizationModel from "@app/models/userOrganization";
 import userOrganizationInvitationModel from "@app/models/userOrganizationInvitation";
+import userOrganizationRoleModel from "@app/models/userOrganizationRole";
 import { MongooseError } from "@app/types/mongooseError";
 import { Organization } from "@app/types/organization";
 import { OrganizationInvitationTokenPayload } from "@app/types/token";
@@ -31,23 +33,49 @@ const createOrganization = async (req: Request, res: Response) => {
     await newOrganization.save();
     // create user organization linking document
     const newUserOrganization = new userOrganizationModel({
-      user: req.user._id,
-      organization: newOrganization._id,
+      userId: req.user._id,
+      organizationId: newOrganization._id,
     });
     await newUserOrganization.save();
-    return res.status(200).json({ ...newOrganization.toJSON() });
+    const ownerRole = await roleModel.findOne({ slug: "owner" });
+    // create user role in organization
+    const userOrganizationRole = new userOrganizationRoleModel({
+      userOrganizationId: newUserOrganization._id,
+      roleId: ownerRole?._id,
+    });
+    await userOrganizationRole.save();
+    return res
+      .status(200)
+      .json({ ...newOrganization.toJSON(), role: ownerRole?.toJSON() });
   } catch (error) {
     return res.sendMongooseErrorResponse(error as MongooseError);
   }
 };
 
 /**
- * Get list of all organizations created by logged in user
+ * Get list of all organizations where user is owner or member
  */
 const getUserOrganizations = async (req: Request, res: Response) => {
-  const organizations = await organizationModel.find({
-    userId: req.user._id,
-  });
+  const userOrganizations = await userOrganizationModel
+    .find({
+      userId: req.user._id,
+    })
+    .populate("organizationId");
+  const userOrganizationIds = userOrganizations.map((i) => i._id);
+  const userOrganizationRoles = await userOrganizationRoleModel
+    .find({
+      userOrganizationId: { $in: userOrganizationIds },
+    })
+    .populate("roleId");
+  const organizations = userOrganizations.map((userOrganization) => ({
+    ...userOrganization.toJSON().organizationId,
+    role: userOrganizationRoles
+      .find(
+        (i) =>
+          i.userOrganizationId.toString() === userOrganization._id.toString()
+      )
+      ?.toJSON().roleId,
+  }));
   return res.status(200).json([...organizations]);
 };
 
