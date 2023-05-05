@@ -235,12 +235,22 @@ const handleInvitation = async (req: Request, res: Response) => {
       if (!status || !["accepted", "rejected"].includes(status))
         throw new Error("valid status required");
 
-      // create user and organization linking document
-      const newUserOrganization = new userOrganizationModel({
-        userId: user._id,
-        organizationId: organization._id,
-      });
-      await newUserOrganization.save();
+      // Accept the invitation
+      if (status === "accepted") {
+        // create user and organization linking document
+        const newUserOrganization = new userOrganizationModel({
+          userId: user._id,
+          organizationId: organization._id,
+        });
+        await newUserOrganization.save();
+        // create user role in organization
+        const memberRole = await roleModel.findOne({ slug: "member" });
+        const userOrganizationRole = new userOrganizationRoleModel({
+          userOrganizationId: newUserOrganization._id,
+          roleId: memberRole?._id,
+        });
+        await userOrganizationRole.save();
+      }
 
       // update status of invitation (E.g. "accepted" or "rejected")
       await invitation.updateOne({
