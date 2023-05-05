@@ -4,6 +4,8 @@ import { Schema, model } from "mongoose";
 import userOrganizationModel from "@app/models/userOrganization";
 import userOrganizationInvitationModel from "./userOrganizationInvitation";
 import tokenModel from "./token";
+import userOrganizationRoleModel from "./userOrganizationRole";
+import insuranceCompanyModel from "./insuranceCompany";
 
 const organizationSchema = new Schema<Organization>(
   {
@@ -39,24 +41,29 @@ organizationSchema.pre("save", function (next) {
  * Before deleting an organization delete its linked documents first
  */
 organizationSchema.pre("deleteOne", async function (next) {
-  const { _id } = this.getQuery();
+  const { _id: organizationId } = this.getQuery();
 
-  if (!_id) {
+  if (!organizationId) {
     throw new Error("_id required in query to delete organization.");
   }
   // delete linking documents between this organization and all users
   await userOrganizationModel.deleteMany({
-    organizationId: _id,
+    organizationId,
   });
 
   // delete all invitations of this organization
   await userOrganizationInvitationModel.deleteMany({
-    organizationId: _id,
+    organizationId,
   });
 
   // delete all tokens related to this organization
   await tokenModel.deleteMany({
-    organizationId: _id,
+    organizationId,
+  });
+
+  // delete all insurance companies of this organization
+  await insuranceCompanyModel.deleteMany({
+    organizationId,
   });
 
   next();
