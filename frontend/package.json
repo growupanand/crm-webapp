@@ -1,4 +1,10 @@
 {
-  "name": "frontend",
-  "packageManager": "yarn@4.0.0-rc.36"
+  "name": "crm-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "packageManager": "yarn@4.0.0-rc.36",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
