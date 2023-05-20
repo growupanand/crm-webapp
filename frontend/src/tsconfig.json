@@ -8,6 +8,12 @@
     "allowJs": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    /**
+    * Without a source map, the browser's developer tools will only show the compiled JavaScript code,
+    * making it difficult to debug and trace issues back to the original source code.
+    * You won't be able to set breakpoints, inspect variables, or step through the code as it was originally written.
+    */
+    "sourceMap": true,
   },
   "exclude": [
     "node_modules"
