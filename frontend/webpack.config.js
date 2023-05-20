@@ -114,4 +114,9 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
 
+  /**
+   * Required when using 'source-map' in tsconfig
+   */
+  devtool: 'eval-cheap-module-source-map',
+
 }
