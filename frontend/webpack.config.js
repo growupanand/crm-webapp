@@ -43,10 +43,10 @@ module.exports = {
     */
     rules: [
       /**
-       * First of all, we can create a rule here that we are going to use Babel to transpile all files that end in .js excluding files located in the node_modules directory.
+       * First of all, we can create a rule here that we are going to use Babel to transpile all files that end in .js or .jsx excluding files located in the node_modules directory.
        */
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
