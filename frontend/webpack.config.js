@@ -74,6 +74,15 @@ module.exports = {
           "sass-loader",
         ],
       },
+
+
+      /**
+       * Add images file Formats support
+       */
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
+      }
     ],
   },
 
