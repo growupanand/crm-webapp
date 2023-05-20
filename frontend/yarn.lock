@@ -3,9 +3,61 @@
 
 __metadata:
   version: 7
+  cacheKey: 9
 
-"frontend@workspace:.":
+"crm-frontend@workspace:.":
   version: 0.0.0-use.local
-  resolution: "frontend@workspace:."
+  resolution: "crm-frontend@workspace:."
+  dependencies:
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
   languageName: unknown
   linkType: soft
+
+"js-tokens@npm:^3.0.0 || ^4.0.0":
+  version: 4.0.0
+  resolution: "js-tokens@npm:4.0.0"
+  checksum: 47d1c18dc6b9eed4baf1db3d81b36feb95b463201c82ffce0d7a4d65ede596ba97d6ac2468974199705db9ef8a3433606af41fc7bbe7cb25c1dd601785413d9b
+  languageName: node
+  linkType: hard
+
+"loose-envify@npm:^1.1.0":
+  version: 1.4.0
+  resolution: "loose-envify@npm:1.4.0"
+  dependencies:
+    js-tokens: "npm:^3.0.0 || ^4.0.0"
+  bin:
+    loose-envify: cli.js
+  checksum: 39c5fc44c6a8f7f8a92cccf174554fbb307477ef493760407920fdd4ed5f6cc1aec5b6a5ab3c3767ef79547b3e1aea09d8ca08d773232c662d910cfe473a0590
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:^0.23.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 7c5b915fb793d63563cec1f721e059e6ff0e2855ac116ab5cb7450b6c59398f5e25f95c960ce5cb93504cc58ab724a75a78e99282354e702a0e667d0d787d028
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 8434e5782c52b3bf18a80b666348977924ee3827895fa03ec3ffb9faca90c460049f14130428dd1546bab6cf3b2c277f2c243d3c2a856501331d2e69c24b2bb9
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "scheduler@npm:0.23.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: f4022b95cdc282668643da4850f55fe70c899aa956d11819f196e2ca892271bdb253613e53997852094f9351f7c72d057eea8b28d9b4bcb93bcb1c6d09985c82
+  languageName: node
+  linkType: hard
