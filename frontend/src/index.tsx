@@ -1,10 +1,14 @@
 import React from "react";
 import App from "./App";
 import { createRoot } from "react-dom/client";
+import { MantineProvider } from "@mantine/core";
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <App />
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <App />
+    </MantineProvider>
   </React.StrictMode>
 );
