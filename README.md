@@ -39,7 +39,7 @@ To get started contributing to CRM-Webapp, please follow these steps:
 
 We are using [wiki](../../wiki) pages for documenting.
 Here are some usefull links:
-- [API-documentation](../../wiki/API-documentation)
+- [API-documentation](../../wiki/Backend#api-documentation)
 - [Frontend folder structure](../../wiki/Fontend#folder-structure)
 
 
