@@ -83,7 +83,16 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: "asset",
-      }
+      },
+
+      /**
+       * Add .ts, .tsx typescript file formats support
+       */
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
 
@@ -96,6 +105,10 @@ module.exports = {
     hot: true,
     port: 3000,
     open: true,
+  },
+
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
 }
