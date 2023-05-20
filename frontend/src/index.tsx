@@ -1,5 +1,5 @@
 import React from "react";
-import App from "./App";
+import App from "./views/App";
 import { createRoot } from "react-dom/client";
 import { MantineProvider } from "@mantine/core";
 
