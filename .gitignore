@@ -106,3 +106,6 @@ dist
 
 /backend/.yarn/
 /backend/dist/
+
+/frontend/.yarn/
+.pnp.*
