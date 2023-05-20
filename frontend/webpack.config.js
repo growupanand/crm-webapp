@@ -13,7 +13,7 @@ module.exports = {
    * Let’s inform webpack where our application’s entry point,
    * Our application’s entrance point is essentially where our application starts
    */
-  entry: './src/index.js',
+  entry: './src/index.tsx',
 
   /**
    * The name and location of our bundled file will be generated when we produce a production build.
@@ -82,7 +82,7 @@ module.exports = {
        */
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset",
+        type: "asset/inline",
       },
 
       /**
@@ -93,6 +93,9 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+
+
+
     ],
   },
 
