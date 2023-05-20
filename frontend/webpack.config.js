@@ -33,8 +33,8 @@ module.exports = {
   plugins: [
     /** bundled JavaScript file to be loaded into an HTML file */
     new HTMLWebpackPlugin({
-      template: './src/index.html',
-      favicon: './src/logo.svg'
+      template: './index.html',
+      favicon: './src/images/logo.svg'
     }),
 
     // bundle all css files into one single css file

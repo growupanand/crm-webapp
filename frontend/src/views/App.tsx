@@ -1,6 +1,6 @@
 import React from "react";
-import "./App.css";
-import Logo from "./logo.svg";
+import "../styles/App.css";
+import Logo from "../images/logo.svg";
 import { Button } from "@mantine/core";
 
 const App = () => {
