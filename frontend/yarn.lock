@@ -2502,6 +2502,7 @@ __metadata:
     babel-loader: "npm:^9.1.2"
     css-loader: "npm:^6.7.4"
     html-webpack-plugin: "npm:^5.5.1"
+    mini-css-extract-plugin: "npm:^2.7.6"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     style-loader: "npm:^3.3.3"
@@ -3914,6 +3915,17 @@ __metadata:
   version: 2.1.0
   resolution: "mimic-fn@npm:2.1.0"
   checksum: 416cdf3021e8d7fc741a12ec084f4c33af4ea3a4bb3d840fab0f3a786a2d9458aa1fd284fab707f3dc1e356cb6b7c9af84b17273a6433955e11494cae4ea856e
+  languageName: node
+  linkType: hard
+
+"mini-css-extract-plugin@npm:^2.7.6":
+  version: 2.7.6
+  resolution: "mini-css-extract-plugin@npm:2.7.6"
+  dependencies:
+    schema-utils: "npm:^4.0.0"
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: f8b9ecd9c42853bca0e4208b5eae652f96e1c81dbb5aa8824b44a0f69f774f6a2edde431f1ea07e83025c60ca2fc57082174189cd8ce3a0aec99535d706e64d3
   languageName: node
   linkType: hard
 
