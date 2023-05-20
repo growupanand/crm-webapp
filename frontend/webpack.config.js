@@ -61,16 +61,18 @@ module.exports = {
       },
 
       /**
-       * Add Some css Supports
+       * Add Some .css, .scss Formats Supports
        */
       {
-        test: /\.css$/i,
+        test: /\.(s[ac]|c)ss$/i,
         use: [{
           loader: MiniCssExtractPlugin.loader,
           options: { publicPath: "" },
         },
-          "css-loader"
-        ]
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
       },
     ],
   },
