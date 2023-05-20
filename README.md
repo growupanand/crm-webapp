@@ -35,6 +35,15 @@ To get started contributing to CRM-Webapp, please follow these steps:
 8.  Submit a pull request to the main repository
 
 
+## Documentation
+
+We are using [wiki](../../wiki) pages for documenting.
+Here are some usefull links:
+- [API-documentation](../../wiki/API-documentation)
+- [Frontend folder structure](../../wiki/Fontend#folder-structure)
+
+
+
 ## Contributors
 
 Thank you to all the contributors who will help make CRM-Webapp possible!
