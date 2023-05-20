@@ -8,8 +8,10 @@
   },
   "packageManager": "yarn@4.0.0-rc.36",
   "dependencies": {
+    "css-loader": "^6.7.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "style-loader": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",

@@ -54,7 +54,15 @@ module.exports = {
             presets: [['@babel/preset-env', { targets: "defaults" }], ['@babel/preset-react', { runtime: "automatic" }]]
           }
         }
-      }
+      },
+
+      /**
+       * Add Some css Supports
+       */
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
 
