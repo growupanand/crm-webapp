@@ -50,3 +50,4 @@ Thank you to all the contributors who will help make CRM-Webapp possible!
 
 ## Project health
 [![Backend test coverage](https://github.com/growupanand/crm-webapp/actions/workflows/backend-test-coverage.yml/badge.svg?branch=main)](https://growupanand.github.io/crm-webapp/)
+[![Frontend deployment](https://img.shields.io/github/deployments/growupanand/crm-webapp/production?label=Frontend%20deployment&logo=vercel)](https://crm-webapp-zeta.vercel.app/)
