@@ -8,115 +8,150 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
  */
 
 
-module.exports = {
-  /**
-   * Let’s inform webpack where our application’s entry point,
-   * Our application’s entrance point is essentially where our application starts
-   */
-  entry: './src/index.tsx',
+module.exports = (env) => {
+  const IS_PRODUCTION = !!env.production;
+  const IS_DEV_MODE = !!env.development;
+  const environment = IS_PRODUCTION ? 'production' : 'development';
 
-  /**
-   * The name and location of our bundled file will be generated when we produce a production build.
-   */
-  output: {
-    /** We want to put this bundle.js file in a subdirectory called dist after it’s finished. */
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
+  console.log(`
+=============================================
+Starting frontend (${environment}), please wait...`);
+
+  if (!IS_PRODUCTION) {
+    console.log("All environment variables:");
+    console.log(env);
+  }
+
+  return {
+
+    mode: environment,
+
+
     /**
-     * PublicPath specifies the virtual directory in web server from where bundled file, app. js is going to get served up from.
-     * Keep in mind, the word server when using publicPath can be either webpack-dev-server or express server or other server that you can use with webpack.
+     * Let’s inform webpack where our application’s entry point,
+     * Our application’s entrance point is essentially where our application starts
      */
-    publicPath: '/',
-  },
+    entry: './src/index.tsx',
 
-
-  plugins: [
-    /** bundled JavaScript file to be loaded into an HTML file */
-    new HTMLWebpackPlugin({
-      template: './index.html',
-      favicon: './src/images/logo.svg'
-    }),
-
-    // bundle all css files into one single css file
-    new MiniCssExtractPlugin()
-  ],
-
-  module: {
     /**
-    * How various sorts of modules in our project are processed is determined by what we give into this module object.
-    * The rules key is then used to provide the module’s creation rules.
-    */
-    rules: [
+     * The name and location of our bundled file will be generated when we produce a production build.
+     */
+    output: {
+      /** We want to put this bundle.js file in a subdirectory called dist after it’s finished. */
+      path: path.join(__dirname, '/dist'),
+      filename: '[name].js',
       /**
-       * First of all, we can create a rule here that we are going to use Babel to transpile all files that end in .js or .jsx excluding files located in the node_modules directory.
+       * PublicPath specifies the virtual directory in web server from where bundled file, app. js is going to get served up from.
+       * Keep in mind, the word server when using publicPath can be either webpack-dev-server or express server or other server that you can use with webpack.
        */
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [['@babel/preset-env', { targets: "defaults" }], ['@babel/preset-react', { runtime: "automatic" }]]
-          }
-        }
-      },
+      publicPath: '/',
 
-      /**
-       * Add Some .css, .scss Formats Supports
-       */
-      {
-        test: /\.(s[ac]|c)ss$/i,
-        use: [{
-          loader: MiniCssExtractPlugin.loader,
-          options: { publicPath: "" },
-        },
-          "css-loader",
-          "postcss-loader",
-          "sass-loader",
-        ],
-      },
+    },
 
 
-      /**
-       * Add images file Formats support
-       */
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset/inline",
-      },
+    plugins: [
+      /** bundled JavaScript file to be loaded into an HTML file */
+      new HTMLWebpackPlugin({
+        template: './index.html',
+        favicon: './src/images/logo.svg'
+      }),
 
-      /**
-       * Add .ts, .tsx typescript file formats support
-       */
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-
-
-
+      // bundle all css files into one single css file
+      new MiniCssExtractPlugin()
     ],
-  },
 
-  devServer: {
+    module: {
+      /**
+      * How various sorts of modules in our project are processed is determined by what we give into this module object.
+      * The rules key is then used to provide the module’s creation rules.
+      */
+      rules: [
+        /**
+         * First of all, we can create a rule here that we are going to use Babel to transpile all files that end in .js or .jsx excluding files located in the node_modules directory.
+         */
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', { targets: "defaults" }], ['@babel/preset-react', { runtime: "automatic" }]]
+            }
+          }
+        },
+
+        /**
+         * Add Some .css, .scss Formats Supports
+         */
+        {
+          test: /\.(s[ac]|c)ss$/i,
+          use: [{
+            loader: MiniCssExtractPlugin.loader,
+            options: { publicPath: "" },
+          },
+            "css-loader",
+            "postcss-loader",
+            "sass-loader",
+          ],
+        },
+
+
+        /**
+         * Add images file Formats support
+         */
+        {
+          test: /\.(png|jpe?g|gif|svg)$/i,
+          type: "asset/inline",
+        },
+
+        /**
+         * Add .ts, .tsx typescript file formats support
+         */
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
+
+
+
+      ],
+    },
+
+    devServer: {
+      /**
+       * add hot module replacement (HMR) to our development environment.
+       * HMR exchanges, adds or removes modules while the application is running without requiring a full reload,
+       * making our development environment more efficient
+       */
+      hot: true,
+      port: 3000,
+      open: true,
+    },
+
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+    },
+
     /**
-     * add hot module replacement (HMR) to our development environment.
-     * HMR exchanges, adds or removes modules while the application is running without requiring a full reload,
-     * making our development environment more efficient
+     * Required when using 'source-map' in tsconfig
      */
-    hot: true,
-    port: 3000,
-    open: true,
-  },
+    devtool: IS_DEV_MODE && 'eval-cheap-module-source-map',
 
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
 
-  /**
-   * Required when using 'source-map' in tsconfig
-   */
-  devtool: 'eval-cheap-module-source-map',
 
-}
+    optimization: {
+
+      /**
+       * split the code into separate chunks that can be loaded independently
+       */
+      splitChunks: {
+        chunks: 'all',
+        // asset size limit: recommended size limit (244 KiB)
+        maxInitialSize: 244 * 1000,
+      },
+    }
+
+  };
+
+};
