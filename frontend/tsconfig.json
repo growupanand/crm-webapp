@@ -14,8 +14,17 @@
     * You won't be able to set breakpoints, inspect variables, or step through the code as it was originally written.
     */
     "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": [
+        "src/*"
+      ],
+    }
   },
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "./src"
   ]
 }
