@@ -12,6 +12,7 @@ module.exports = (env) => {
   const IS_PRODUCTION = !!env.production;
   const IS_DEV_MODE = !!env.development;
   const environment = IS_PRODUCTION ? 'production' : 'development';
+  const staticPrefix = path.join(__dirname, '.');
 
   console.log(`
 =============================================
@@ -131,6 +132,9 @@ Starting frontend (${environment}), please wait...`);
 
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        '@app': path.join(staticPrefix, 'src'),
+      }
     },
 
     /**
@@ -150,7 +154,7 @@ Starting frontend (${environment}), please wait...`);
         // asset size limit: recommended size limit (244 KiB)
         maxInitialSize: 244 * 1000,
       },
-    }
+    },
 
   };
 
