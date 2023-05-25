@@ -1812,6 +1812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.6.2":
+  version: 1.6.2
+  resolution: "@remix-run/router@npm:1.6.2"
+  checksum: 98f9d84c8d4b66a267fcd908c436a79179137c4ee6bd4e23afec0b8a7cd8b1c1d0fe9b5125f83a6d30d15dd739fcbe505b685418f6ca2360441158d284fed524
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -3025,6 +3032,7 @@ __metadata:
     postcss-loader: "npm:^7.3.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
+    react-router-dom: "npm:^6.11.2"
     sass: "npm:^1.62.1"
     sass-loader: "npm:^13.2.2"
     style-loader: "npm:^3.3.3"
@@ -5309,6 +5317,30 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 68d47a732456598904ec29ebd42966b7454ed502deeaab0cffcc1fcd36211545dfd3ec6df4b15a25f0d3c84245db057231808880071578af3a70369b7033ec3e
+  languageName: node
+  linkType: hard
+
+"react-router-dom@npm:^6.11.2":
+  version: 6.11.2
+  resolution: "react-router-dom@npm:6.11.2"
+  dependencies:
+    "@remix-run/router": "npm:1.6.2"
+    react-router: "npm:6.11.2"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 3d0a845e615067897b5d76c5584e7907ec683e22699c3bc8ba2b29012bc7605e81886308ff151d7ef9e93ccca930a9f11e3797d8ab1d3b025bd0c9830e151791
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.11.2":
+  version: 6.11.2
+  resolution: "react-router@npm:6.11.2"
+  dependencies:
+    "@remix-run/router": "npm:1.6.2"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: def0b9b47fb2b699101b4980635747960009372668a16daa2537da1f3e62c6a649ff3bf497640b7920e15122c087b875ceb5d535f07fbfc982dde4ac974b89ab
   languageName: node
   linkType: hard
 
