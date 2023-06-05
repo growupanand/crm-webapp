@@ -1,10 +1,17 @@
-import { Route, Routes } from "react-router-dom";
-import App from "@app/views/App";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "@app/views/home";
+import Register from "@app/views/register";
+import App from "@app/views/index";
 
 const routes = (
-  <Routes>
-    <Route path="/" Component={App} />
-  </Routes>
+  <BrowserRouter>
+    <Routes>
+      <Route Component={App}>
+        <Route index Component={Home} />
+        <Route path="register" Component={Register} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
 );
 
 export default routes;
