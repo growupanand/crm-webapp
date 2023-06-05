@@ -128,6 +128,12 @@ Starting frontend (${environment}), please wait...`);
       hot: true,
       port: 3000,
       open: true,
+      // Without this page will not load on reload for a subpath url
+      historyApiFallback: true,
+      proxy: {
+        '/api': 'http://localhost:3001',
+        changeOrigin: true,
+      },
     },
 
     resolve: {
@@ -156,6 +162,10 @@ Starting frontend (${environment}), please wait...`);
       },
     },
 
+
+
   };
+
+
 
 };
