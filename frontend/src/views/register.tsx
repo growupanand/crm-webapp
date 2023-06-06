@@ -1,4 +1,4 @@
-import { getErrorMessage } from "@app/utils/getErrorMessage";
+import { getErrorMessage } from "@app/utils/errorHandlers";
 import {
   Box,
   Button,
@@ -73,7 +73,7 @@ function Register() {
           {...form.getInputProps("confirmPassword")}
         />
         <Group mt="xl">
-          <Button disabled={isFormBusy} type="submit">
+          <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
             Register
           </Button>
         </Group>
