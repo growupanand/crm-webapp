@@ -1,13 +1,10 @@
-import { getErrorMessage } from "@app/utils/errorHandlers";
+import { handleCachedError } from "@app/utils/errorHandlers";
 import {
-  Box,
   Button,
   Container,
-  Flex,
   Group,
   PasswordInput,
   TextInput,
-  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import axios from "axios";
@@ -45,7 +42,7 @@ function Register() {
       form.reset();
       alert("registered successfully");
     } catch (error) {
-      alert(getErrorMessage(error));
+      handleCachedError(error, undefined, form.setFieldError);
     } finally {
       setState((cs) => ({ ...cs, isFormBusy: false }));
     }
