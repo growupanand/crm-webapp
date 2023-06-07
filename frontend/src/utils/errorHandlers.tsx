@@ -25,11 +25,6 @@ export const handleCachedError = (
   }
 
   const errorFields = Object.keys(responseData);
-  const isNonFieldError = errorFields.includes("nonFieldError");
-
-  if (isNonFieldError) {
-    return alert(responseData.nonFieldError);
-  }
 
   if (setFieldError) {
     errorFields.forEach((errorField) => {
