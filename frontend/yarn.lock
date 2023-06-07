@@ -1819,6 +1819,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^2.22.0":
+  version: 2.22.0
+  resolution: "@tabler/icons-react@npm:2.22.0"
+  dependencies:
+    "@tabler/icons": "npm:2.22.0"
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 24011b47746c3d0ee7c8754839c99f4aa4343e6fdf1b3bd23ede3aa890286b8f6648657f18d41c3cce9fbf31f3fb0e59213c28da883ccd3ca6032fc79f30cb9c
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:2.22.0":
+  version: 2.22.0
+  resolution: "@tabler/icons@npm:2.22.0"
+  checksum: 90c0ae390b472df0d01499ffca094e1a403306a41370b464938227244ed25853606a3ec0acbbb0e6312ff3ccd2e8d325e2754bf20278050ba3df4ea9c284b168
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -3049,6 +3068,7 @@ __metadata:
     "@mantine/form": "npm:^6.0.11"
     "@mantine/hooks": "npm:^6.0.11"
     "@mantine/notifications": "npm:^6.0.11"
+    "@tabler/icons-react": "npm:^2.22.0"
     "@types/node": "npm:^20.2.1"
     "@types/react": "npm:^18.2.6"
     "@types/react-dom": "npm:^18.2.4"
@@ -5247,7 +5267,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

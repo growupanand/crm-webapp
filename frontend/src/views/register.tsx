@@ -1,24 +1,8 @@
-import { handleCachedError } from "@app/utils/errorHandlers";
-import {
-  Button,
-  Container,
-  Group,
-  PasswordInput,
-  TextInput,
-} from "@mantine/core";
+import Form from "@app/components/form";
+import { Container, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import axios from "axios";
-import { useState } from "react";
-
-type State = {
-  isFormBusy: boolean;
-};
 
 function Register() {
-  const [state, setState] = useState({
-    isFormBusy: false,
-  });
-
   const form = useForm({
     initialValues: {
       name: "",
@@ -32,25 +16,20 @@ function Register() {
     },
   });
 
-  const { isFormBusy } = state;
-
-  const handleSubmit = async (formData: Record<string, any>) => {
-    setState((cs) => ({ ...cs, isFormBusy: true }));
-    try {
-      const { confirmPassword: _, ...payload } = formData;
-      await axios.post("/api/auth/register", payload);
-      form.reset();
-      alert("registered successfully");
-    } catch (error) {
-      handleCachedError(error, undefined, form.setFieldError);
-    } finally {
-      setState((cs) => ({ ...cs, isFormBusy: false }));
-    }
+  const handleSubmitSuccess = async (formData: Record<string, any>) => {
+    alert("registered successfully");
+    form.reset();
   };
 
   return (
     <Container size="sm">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Form
+        form={form}
+        apiEndpoint="/api/auth/register"
+        apiMethod="POST"
+        onSubmitSuccess={handleSubmitSuccess}
+        submitButtonLabel="Register"
+      >
         <TextInput
           label="Full Name"
           placeholder="Utkarsh Anand"
@@ -69,12 +48,7 @@ function Register() {
           label="Confirm password"
           {...form.getInputProps("confirmPassword")}
         />
-        <Group mt="xl">
-          <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
-            Register
-          </Button>
-        </Group>
-      </form>
+      </Form>
     </Container>
   );
 }
