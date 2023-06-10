@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables synchronously (.env)
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -13,6 +14,7 @@ module.exports = (env) => {
   const IS_DEV_MODE = !!env.development;
   const environment = IS_PRODUCTION ? 'production' : 'development';
   const staticPrefix = path.join(__dirname, '.');
+  const BACKEND_API = process.env.BACKEND_API || "http://localhost:3001";
 
   console.log(`
 =============================================
@@ -20,7 +22,7 @@ Starting frontend (${environment}), please wait...`);
 
   if (!IS_PRODUCTION) {
     console.log("All environment variables:");
-    console.log(env);
+    console.log({ ...env, BACKEND_API });
   }
 
   return {
@@ -131,7 +133,7 @@ Starting frontend (${environment}), please wait...`);
       // Without this page will not load on reload for a subpath url
       historyApiFallback: true,
       proxy: {
-        '/api': 'http://localhost:3001',
+        '/api': BACKEND_API,
         changeOrigin: true,
       },
     },

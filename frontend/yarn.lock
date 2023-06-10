@@ -3075,6 +3075,7 @@ __metadata:
     axios: "npm:^1.4.0"
     babel-loader: "npm:^9.1.2"
     css-loader: "npm:^6.7.4"
+    dotenv: "npm:^16.1.4"
     html-webpack-plugin: "npm:^5.5.1"
     mini-css-extract-plugin: "npm:^2.7.6"
     postcss-loader: "npm:^7.3.0"
@@ -3330,6 +3331,13 @@ __metadata:
     no-case: "npm:^3.0.4"
     tslib: "npm:^2.0.3"
   checksum: 951f9f8423106c57ba5f078e5d81cf810a94d20b16e50ea26369942b634bb30789677756a267320907b250b8c0432b598da719ade592c727968bb1f8cfefa8c6
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.1.4":
+  version: 16.1.4
+  resolution: "dotenv@npm:16.1.4"
+  checksum: c8eb9665ee670f2d3aa36b6f3dc43a9108a02da9efaa86cb9890d6873cbc025b047e30ce23f852195be8e4a2601b7684c23173d937d754443c4fbc957e1da512
   languageName: node
   linkType: hard
 

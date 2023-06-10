@@ -33,6 +33,7 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "babel-loader": "^9.1.2",
+    "dotenv": "^16.1.4",
     "html-webpack-plugin": "^5.5.1",
     "postcss-loader": "^7.3.0",
     "sass": "^1.62.1",
