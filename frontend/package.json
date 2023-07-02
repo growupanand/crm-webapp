@@ -7,7 +7,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --env development",
-    "build": "webpack --env production"
+    "build": "rm -rf dist && webpack --env production",
+    "serve": "http-server dist -p 8000"
   },
   "packageManager": "yarn@4.0.0-rc.36",
   "dependencies": {
@@ -35,6 +36,7 @@
     "babel-loader": "^9.1.2",
     "dotenv": "^16.1.4",
     "html-webpack-plugin": "^5.5.1",
+    "http-server": "^14.1.1",
     "postcss-loader": "^7.3.0",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
