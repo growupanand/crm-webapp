@@ -9,7 +9,7 @@
       "port": 7999,
       "request": "launch",
       "type": "chrome",
-      "webRoot": "${workspaceFolder}/static",
+      "webRoot": "${workspaceFolder}/frontend",
     },
     {
       "command": "yarn dev",
