@@ -31,6 +31,15 @@ jobs:
             exit 1
           fi
 
+      # We need to create a empty "frontend" folder to silence below vercel build error and allow "Ignored Build Step" to run
+      # which will stop vercel build for "gh-pages"
+      # Error: The specified Root Directory "frontend" does not exist. Please update your Project Settings.
+      - name: Creating empty frontend folder
+        run: |
+          mkdir -p ./backend/coverage/frontend
+          touch ./backend/coverage/frontend/empty
+          tree -I node_modules
+
       - name: Move coverage report to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
