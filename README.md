@@ -1,7 +1,7 @@
 
 # Welcome to CRM-Webapp
 
-CRM-Webapp is an open-source CRM web app built using the MERN (MongoDB, Express, React, Node.js) stack and TypeScript. It provides a user-friendly interface for managing customer relationships, tracking leads, and closing deals.
+CRM-Webapp is an **open-source CRM web app** built using the **MERN stack (MongoDB, Express, React, Node.js)  and TypeScript**. It provides a user-friendly interface for managing customer relationships, tracking leads, and closing deals.
 
 ## Project health
 [![Backend test coverage](https://github.com/growupanand/crm-webapp/actions/workflows/backend-test-coverage.yml/badge.svg?branch=main)](https://growupanand.github.io/crm-webapp/)
