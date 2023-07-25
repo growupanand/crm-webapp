@@ -2,6 +2,9 @@
   "name": "crm-backend",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=18.13.0"
+  },
   "scripts": {
     "dev": "doppler run -- nodemon -q -e ts -x ts-node -r tsconfig-paths/register index.ts",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
