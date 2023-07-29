@@ -1,5 +1,5 @@
-require("dotenv").config(); // Load environment variables synchronously (.env)
 const path = require("path");
+const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -7,12 +7,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
  * This webpack configuration is created with the help of this article - https://amiladevin.medium.com/create-a-react-web-application-using-webpack-5-full-walkthrough-40291c1fd004
  */
 
-module.exports = (env: Record<string, any>) => {
+module.exports = (envFromCLI: Record<string, any>) => {
+  const env = {
+    ...envFromCLI,
+    ...require("dotenv").config().parsed, // Load environment variables synchronously (.env)
+  };
   const IS_PRODUCTION = !!env.production;
   const IS_DEV_MODE = !!env.development;
   const environment = IS_PRODUCTION ? "production" : "development";
   const staticPrefix = path.join(__dirname, ".");
-  const BACKEND_API = process.env.BACKEND_API || "http://localhost:3001";
+  const REACT_APP_BACKEND_URL =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
 
   console.log(`
 =============================================
@@ -20,7 +25,7 @@ Starting frontend (${environment}), please wait...`);
 
   if (!IS_PRODUCTION) {
     console.log("All environment variables:");
-    console.log({ ...env, BACKEND_API });
+    console.log(env);
   }
 
   return {
@@ -55,6 +60,12 @@ Starting frontend (${environment}), please wait...`);
 
       // bundle all css files into one single css file
       new MiniCssExtractPlugin(),
+
+      new webpack.DefinePlugin({
+        "process.env.REACT_APP_BACKEND_URL": JSON.stringify(
+          REACT_APP_BACKEND_URL
+        ),
+      }),
     ],
 
     module: {
@@ -126,10 +137,6 @@ Starting frontend (${environment}), please wait...`);
       open: true,
       // Without this page will not load on reload for a subpath url
       historyApiFallback: true,
-      proxy: {
-        "/api": BACKEND_API,
-        changeOrigin: true,
-      },
     },
 
     resolve: {
