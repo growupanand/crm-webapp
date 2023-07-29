@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -65,6 +66,10 @@ import rateLimiter from "@app/middleware/rateLimiter.middleware";
 import { seedDefaultRoles } from "./seeds/defaultRoles";
 
 const app = express();
+
+// this will allow api request from any url
+app.use(cors());
+
 app.use(
   "/api/auth",
   express.json(),
