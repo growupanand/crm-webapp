@@ -2,12 +2,12 @@ import { SetFieldError } from "@mantine/form/lib/types";
 import { AxiosError } from "axios";
 
 /**
- *
+ * By passing this function, all field's error messages can be displayed next to the relevant fields in the form,
+ * providing a better user experience. 
  * @param error - Cached error object
  * @param fallbackErrorMessage - Display a custom message if nonFieldError not found in response
- * @param setFieldError - This is a function that is used to set an error message for a specific field in a form.
- * By passing this function, all field's error messages can be displayed next to the relevant fields in the form,
- * providing a better user experience.
+ * @param setFieldError - This is a mantine form component function that is used to set an error message for a specific field in a form.
+
  *
  * @returns `void`
  */

@@ -5,6 +5,7 @@ import { Button } from "./button";
 import { useState } from "react";
 import { handleCachedError } from "@app/utils/errorHandlers";
 import { IconAlertCircle } from "@tabler/icons-react";
+import useAPIClient from "@app/hooks/useAPIClient";
 
 type Props = {
   apiEndpoint: string;
@@ -43,6 +44,8 @@ function Form(props: Props) {
 
   const { isFormBusy, isError, nonFieldError } = state;
 
+  const { client } = useAPIClient();
+
   const handleSubmit = async (formData: Record<string, any>) => {
     setState((cs) => ({
       ...cs,
@@ -51,10 +54,12 @@ function Form(props: Props) {
     }));
     try {
       props.onPreSubmit?.(formData);
-      const responseData = await axios({
-        url: apiEndpoint,
-        method: apiMethod,
-        data: formData,
+      const responseData = await client<any>({
+        path: apiEndpoint,
+        config: {
+          method: apiMethod,
+          data: formData,
+        },
       });
       if (props.onSubmitSuccess) {
         props.onSubmitSuccess(responseData.data);
@@ -64,7 +69,7 @@ function Form(props: Props) {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const responseData = error.response.data;
-        // if you want to handle form submit error
+        // if a custom error handler passed, we will pass this error to it and let it handle the error
         if (props.onSubmitError) {
           props.onSubmitError?.(responseData, error);
           return;
@@ -79,15 +84,14 @@ function Form(props: Props) {
             nonFieldError: responseData["nonFieldError"],
           }));
         }
-        // if it is unexpected error or internal server error
-        if (error.response.status >= 500 && error.response.status < 600) {
-          setState((cs) => ({
-            ...cs,
-            isError: true,
-            nonFieldError: "Something went wrong.",
-          }));
-        }
       }
+
+      // if it is unexpected error or internal server error
+      setState((cs) => ({
+        ...cs,
+        isError: true,
+        nonFieldError: "Something went wrong.",
+      }));
     } finally {
       setState((cs) => ({ ...cs, isFormBusy: false }));
     }

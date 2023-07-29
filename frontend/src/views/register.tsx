@@ -25,7 +25,7 @@ function Register() {
     <Container size="sm">
       <Form
         form={form}
-        apiEndpoint="/api/auth/register"
+        apiEndpoint="auth/register"
         apiMethod="POST"
         onSubmitSuccess={handleSubmitSuccess}
         submitButtonLabel="Register"
