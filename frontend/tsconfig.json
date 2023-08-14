@@ -19,6 +19,9 @@
       "@app/*": [
         "src/*"
       ],
+      "@shared/*": [
+        "../shared/*"
+      ]
     }
   },
   "exclude": [

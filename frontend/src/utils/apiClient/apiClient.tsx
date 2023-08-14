@@ -32,7 +32,17 @@ import client from "./client";
 export async function apiClient<ResponseType>(
   endpoint: string,
   axiosConfig: AxiosRequestConfig,
-  returnAxiosResponse?: boolean
+  returnAxiosResponse: true // -------------------> if true then return type will be AxiosResponse
+): Promise<AxiosResponse<ResponseType, any>>;
+export async function apiClient<ResponseType>(
+  endpoint: string,
+  axiosConfig: AxiosRequestConfig,
+  returnAxiosResponse?: false // -----------------> if false then return type will be ResponseType
+): Promise<ResponseType>;
+export async function apiClient<ResponseType>(
+  endpoint: string,
+  axiosConfig: AxiosRequestConfig,
+  returnAxiosResponse?: boolean // -----------------> if undefined then return type will be ResponseType
 ): Promise<AxiosResponse<ResponseType, any>> {
   const method = axiosConfig.method || "GET";
   const axiosResponse = await client({
