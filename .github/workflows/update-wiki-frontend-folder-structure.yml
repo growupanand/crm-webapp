@@ -1,0 +1,39 @@
+name: Update Wiki with Frontend folder structure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate Directory Structure
+        run: |
+          tree -x -I node_modules > directory_structure.txt
+
+      - name: Push to Wiki Repository
+        uses: actions/checkout@v2
+        with:
+          repository: growupanand/crm-webapp # wiki repository info
+          path: wiki
+
+      - name: Update Frontend Wiki Page
+        run: |
+          cd wiki
+          # Update Frontend.md with the content of directory_structure.txt
+          cat ../directory_structure.txt > Folder-Structure.md
+          git config --global user.email "growupanand@gmail.com"
+          git config --global user.name "growupanand"
+          git add Frontend.md
+          git commit -m "Update Frontend directory structure"
+          git push origin master  # Or the appropriate branch
+
+      - name: Display Wiki URL
+        run: |
+          echo "Wiki URL: https://github.com/growupanand/crm-webapp/wiki"
