@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
-
-import routes from "@app/routes";
+import RenderMainApp from "./renderMain";
 
 /**
  * React app will render from here
@@ -9,5 +8,9 @@ import routes from "@app/routes";
 export function renderReactApp() {
   const container = document.getElementById("root");
   const root = createRoot(container);
-  root.render(<React.StrictMode>{routes}</React.StrictMode>);
+  root.render(
+    <React.StrictMode>
+      <RenderMainApp />
+    </React.StrictMode>
+  );
 }

@@ -63,12 +63,12 @@ export const login = async (req: Request, res: Response) => {
   const errMessage = "Username or password is incorrect";
   // check if user exist with provided email
   const user = await userModel.findOne({ email });
-  if (!user) return res.sendCustomErrorMessage(errMessage, 400);
+  if (!user) return res.sendCustomErrorMessage(errMessage, 401);
 
   // check if password provided is correct
   bcrypt.compare(password, user.password, async (error, result) => {
     if (error || !result) {
-      return res.sendCustomErrorMessage(errMessage, 400);
+      return res.sendCustomErrorMessage(errMessage, 401);
     }
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
