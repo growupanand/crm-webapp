@@ -12,6 +12,7 @@ Starting backend, please wait...`);
  */
 dotenv.config();
 import { HOST, NODE_ENV, PORT } from "@app/constants";
+console.log({ HOST, NODE_ENV, PORT });
 
 // Set default environment variables for development purpose
 if (NODE_ENV === "local") {
