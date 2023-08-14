@@ -1,15 +1,16 @@
 import React from "react";
 import "../styles/App.css";
-import Logo from "../images/logo.svg";
-import { Button } from "@app/components/button";
+import { Button, Title } from "@mantine/core";
+import { getUser } from "@app/utils/storage/user";
+import { resetLocalStorage } from "@app/utils/storage";
 
 function Home() {
+  const user = getUser();
+  const handleLogout = () => resetLocalStorage();
   return (
     <div>
-      <img className="logo" src={Logo} />
-      <h1>React App</h1>
-      <p>This react app is created from scratch using webpack 5</p>
-      <Button to="/register">Register</Button>
+      <Title>Welcome {user.name}</Title>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
 }

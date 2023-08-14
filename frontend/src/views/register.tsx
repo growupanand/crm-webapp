@@ -1,5 +1,13 @@
+import { Button } from "@app/components/button";
 import Form from "@app/components/form";
-import { Container, PasswordInput, TextInput } from "@mantine/core";
+import {
+  Container,
+  Divider,
+  Group,
+  PasswordInput,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 
 function Register() {
@@ -23,32 +31,41 @@ function Register() {
 
   return (
     <Container size="sm">
-      <Form
-        form={form}
-        apiEndpoint="auth/register"
-        apiMethod="POST"
-        onSubmitSuccess={handleSubmitSuccess}
-        submitButtonLabel="Register"
-      >
-        <TextInput
-          label="Full Name"
-          placeholder="Utkarsh Anand"
-          required
-          {...form.getInputProps("name")}
-        />
-        <TextInput
-          label="Email"
-          type="email"
-          placeholder="abcd@email.com"
-          required
-          {...form.getInputProps("email")}
-        />
-        <PasswordInput label="Password" {...form.getInputProps("password")} />
-        <PasswordInput
-          label="Confirm password"
-          {...form.getInputProps("confirmPassword")}
-        />
-      </Form>
+      <Stack spacing="lg">
+        <Form
+          form={form}
+          apiEndpoint="auth/register"
+          apiMethod="POST"
+          onSubmitSuccess={handleSubmitSuccess}
+          submitButtonLabel="Register"
+          submitButtonWithFullWidth
+        >
+          <TextInput
+            label="Full Name"
+            placeholder="Utkarsh Anand"
+            required
+            {...form.getInputProps("name")}
+          />
+          <TextInput
+            label="Email"
+            type="email"
+            placeholder="abcd@email.com"
+            required
+            {...form.getInputProps("email")}
+          />
+          <PasswordInput label="Password" {...form.getInputProps("password")} />
+          <PasswordInput
+            label="Confirm password"
+            {...form.getInputProps("confirmPassword")}
+          />
+        </Form>
+        <Divider label="OR" labelPosition="center" />
+        <Group grow>
+          <Button variant="light" to="/login">
+            Login
+          </Button>
+        </Group>
+      </Stack>
     </Container>
   );
 }
