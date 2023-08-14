@@ -32,7 +32,7 @@ const sendMail = async <T extends keyof MailTemplates>(props: Props<T>) => {
     context,
   };
   let data = null;
-  if (NODE_ENV === "local") {
+  if (["local", "staging"].includes(NODE_ENV)) {
     console.log("Sending mail", { mailOption });
   }
   try {
