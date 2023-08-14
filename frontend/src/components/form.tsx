@@ -1,4 +1,4 @@
-import { Alert, Group } from "@mantine/core";
+import { Alert, Flex, Group, Text } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import axios, { Method } from "axios";
 import { Button } from "./button";
@@ -12,13 +12,18 @@ type Props = {
   apiMethod: Method;
   /** Pass form inputs in children */
   children: React.ReactNode;
-  /** mantine form object initiated from useForm */
+  /** Mantine form object initiated from useForm() hook */
   form: UseFormReturnType<any>;
-  onSubmitSuccess?: (responseData: any) => void;
-  onSubmitError?: (responseData: any, cachedErrorObject: Error) => void;
+  onSubmitSuccess?: (responseData: any, setError?: SetFormError) => void;
+  onSubmitError?: (
+    responseData: any,
+    cachedErrorObject: Error,
+    setError?: SetFormError
+  ) => void;
   /** This callback will be called each time before calling api for submit form */
   onPreSubmit?: (formData: Record<string, any>) => void;
   submitButtonLabel?: string;
+  submitButtonWithFullWidth?: boolean;
 };
 
 type State = {
@@ -33,18 +38,35 @@ const defaultState = {
   nonFieldError: "",
 };
 
+export type SetFormError = (errorMessage: string) => void;
+
 /**
  * This component renders a form with a submit button and handles form submission using an API details passed in props.
  * This component handles basic things automatically E.g. setting field errors .
  */
 function Form(props: Props) {
-  const { apiEndpoint, apiMethod, children, form, submitButtonLabel } = props;
+  const {
+    apiEndpoint,
+    apiMethod,
+    children,
+    form,
+    submitButtonLabel,
+    submitButtonWithFullWidth,
+  } = props;
 
   const [state, setState] = useState<State>(defaultState);
 
   const { isFormBusy, isError, nonFieldError } = state;
 
   const { client } = useAPIClient();
+
+  const setFormError: SetFormError = (errorMessage) => {
+    setState((cs) => ({
+      ...cs,
+      isError: true,
+      nonFieldError: errorMessage,
+    }));
+  };
 
   const handleSubmit = async (formData: Record<string, any>) => {
     setState((cs) => ({
@@ -54,44 +76,33 @@ function Form(props: Props) {
     }));
     try {
       props.onPreSubmit?.(formData);
-      const responseData = await client<any>({
-        path: apiEndpoint,
-        config: {
-          method: apiMethod,
-          data: formData,
-        },
+      const responseData = await client<any>(apiEndpoint, {
+        method: apiMethod,
+        data: formData,
       });
       if (props.onSubmitSuccess) {
-        props.onSubmitSuccess(responseData.data);
+        props.onSubmitSuccess(responseData, setFormError);
         return;
       }
-      alert("success");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const responseData = error.response.data;
+        const errResponseData = error.response.data;
         // if a custom error handler passed, we will pass this error to it and let it handle the error
         if (props.onSubmitError) {
-          props.onSubmitError?.(responseData, error);
+          props.onSubmitError?.(errResponseData, error, setFormError);
           return;
         }
 
         // otherwise field errors and non field error will set automatically
         handleCachedError(error, undefined, form.setFieldError);
-        if (Object.keys(responseData).includes("nonFieldError")) {
-          setState((cs) => ({
-            ...cs,
-            isError: true,
-            nonFieldError: responseData["nonFieldError"],
-          }));
+        if (Object.keys(errResponseData).includes("nonFieldError")) {
+          setFormError(errResponseData["nonFieldError"]);
+          return;
         }
       }
 
       // if it is unexpected error or internal server error
-      setState((cs) => ({
-        ...cs,
-        isError: true,
-        nonFieldError: "Something went wrong.",
-      }));
+      setFormError("Something went wrong.");
     } finally {
       setState((cs) => ({ ...cs, isFormBusy: false }));
     }
@@ -100,17 +111,15 @@ function Form(props: Props) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       {isError && nonFieldError !== "" && (
-        <Alert
-          mb="lg"
-          icon={<IconAlertCircle size="1rem" />}
-          title="Error"
-          color="red"
-        >
-          {nonFieldError}
+        <Alert mb="lg" color="red">
+          <Flex align="center" gap="md">
+            <IconAlertCircle size="1rem" color="red" />
+            <Text color="red">{nonFieldError}</Text>
+          </Flex>
         </Alert>
       )}
       {children}
-      <Group mt="xl">
+      <Group mt="xl" grow={submitButtonWithFullWidth}>
         <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
           {submitButtonLabel || "Submit"}
         </Button>
