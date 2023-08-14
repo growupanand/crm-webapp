@@ -1,4 +1,5 @@
-import { apiClient, Props as ApiClientProps } from "@app/utils/apiClient";
+import { apiClient } from "@app/utils/apiClient";
+import { AxiosRequestConfig } from "axios";
 import { useRef } from "react";
 
 /**
@@ -32,14 +33,12 @@ const useAPIClient = () => {
    * @returns {Promise} A promise that resolves to the API response.
    */
   const clientCallback = async <ResponseType,>(
-    apiClientProps: ApiClientProps
+    endpoint: string,
+    axiosConfig: AxiosRequestConfig
   ) =>
-    apiClient<ResponseType>({
-      path: apiClientProps.path,
-      config: {
-        ...apiClientProps.config,
-        signal: controller.current.signal,
-      },
+    apiClient<ResponseType>(endpoint, {
+      ...axiosConfig,
+      signal: controller.current.signal,
     });
 
   /**
