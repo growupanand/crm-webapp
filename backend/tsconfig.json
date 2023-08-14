@@ -21,6 +21,10 @@
       ],
       "@middlewares/*": [
         "middleware/*"
+      ],
+      "@shared/*": [
+        "../shared/*",
+        "../shared/types"
       ]
     },
     "typeRoots": [

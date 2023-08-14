@@ -1,7 +1,6 @@
 import { getAccessToken } from "@app/utils/storage";
 import { getUser } from "@app/utils/storage/user";
 import { Box, Flex, Loader, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 type State = {
@@ -10,23 +9,11 @@ type State = {
 
 function App() {
   const user = getUser();
-
-  const [state, setState] = useState<State>({
-    isAuthenticated: !!user,
-  });
-
-  const { isAuthenticated } = state;
+  const isAuthenticated = !!user;
 
   const redirectToLogin = () => {
     window.location.href = "/login";
   };
-
-  useEffect(() => {
-    setState((cs) => ({
-      ...cs,
-      isAuthenticated: !!user,
-    }));
-  }, [user]);
 
   if (!isAuthenticated) {
     redirectToLogin();

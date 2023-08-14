@@ -1,5 +1,6 @@
 import { Button } from "@app/components/button";
 import Form, { SetFormError } from "@app/components/form";
+import { User } from "@app/types/user";
 import { apiClient } from "@app/utils/apiClient";
 import {
   resetLocalStorage,
@@ -48,13 +49,13 @@ function Login() {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
     fetchUserInfo();
-    window.location.href = "/";
   };
 
   const fetchUserInfo = async () => {
     try {
-      const userInfo = await apiClient<Record<string, any>>("user/me/", {});
+      const userInfo = await apiClient<User>("user/me/", {});
       setUser(userInfo);
+      window.location.href = "/";
     } catch (error) {
       console.log("unable to fetch user");
     }
