@@ -8,9 +8,5 @@ import RenderMainApp from "./renderMain";
 export function renderReactApp() {
   const container = document.getElementById("root");
   const root = createRoot(container);
-  root.render(
-    <React.StrictMode>
-      <RenderMainApp />
-    </React.StrictMode>
-  );
+  root.render(<RenderMainApp />);
 }
