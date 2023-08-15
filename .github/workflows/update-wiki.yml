@@ -26,12 +26,12 @@ jobs:
           cd base-code
           tree_output=$(tree -d -I "node_modules")
           cd ..
-
-      - name: Make changes to wiki page - "Folder Structure.md"
-        run: |
           echo "\`\`\`" > ./folder_structure.txt
           echo "$tree_output" >> ./folder_structure.txt
           echo "\`\`\`" >> ./folder_structure.txt
+
+      - name: Make changes to wiki page - "Folder Structure.md"
+        run: |
           mv ./folder_structure.txt "./markdown/Folder Structure.md"
 
       - name: Push changes
