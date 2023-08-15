@@ -1,16 +1,13 @@
-import React from "react";
 import "../styles/App.css";
 import { Button, Title } from "@mantine/core";
-import { getUser } from "@app/utils/storage/user";
-import { resetLocalStorage } from "@app/utils/storage";
+import { useAuthStore } from "@app/stores/authStore";
 
 function Home() {
-  const user = getUser();
-  const handleLogout = () => resetLocalStorage();
+  const { user, logout } = useAuthStore();
   return (
     <div>
       <Title>Welcome {user.name}</Title>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button onClick={logout}>Logout</Button>
     </div>
   );
 }

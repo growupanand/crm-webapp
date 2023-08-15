@@ -61,7 +61,7 @@ function Register() {
         </Form>
         <Divider label="OR" labelPosition="center" />
         <Group grow>
-          <Button variant="light" to="/login">
+          <Button variant="light" to="/auth/login">
             Login
           </Button>
         </Group>
