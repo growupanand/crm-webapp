@@ -24,7 +24,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
-    "style-loader": "^3.3.3"
+    "style-loader": "^3.3.3",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
