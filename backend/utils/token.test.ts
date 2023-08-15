@@ -12,6 +12,7 @@ import {
 } from "@app/utils";
 import { isValidObjectId } from "mongoose";
 import tokenModel from "@app/models/token";
+import { INVALID_TOKEN_MSG } from "@app/constants";
 const {
   Types: { ObjectId },
 } = require("mongoose");
@@ -130,7 +131,7 @@ describe("useToken tests", function () {
     try {
       await useToken(inValidJwtToken, false, false);
     } catch (error) {
-      expect(error).toEqual(new Error("invalid token"));
+      expect(error).toEqual(new Error(INVALID_TOKEN_MSG));
     }
   });
 
@@ -158,7 +159,7 @@ describe("useToken tests", function () {
     try {
       await useToken(notExistDBValidJwtToken, false, true);
     } catch (error) {
-      expect(error).toEqual(new Error("Token does not exist"));
+      expect(error).toEqual(new Error(INVALID_TOKEN_MSG));
     }
   });
 });
