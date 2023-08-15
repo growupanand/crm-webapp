@@ -4,6 +4,7 @@ import { removeUser } from "./user";
 
 export * from "./accessToken";
 export * from "./refreshToken";
+export * from "./user";
 
 export const STORAGE_SUFFIX = "CRM-WEBAPP";
 

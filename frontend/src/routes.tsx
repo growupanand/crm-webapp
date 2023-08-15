@@ -10,7 +10,7 @@ const routes = (
     <Routes>
       <Route>
         {/* Unauthorized Routes - Don't require user login */}
-        <Route Component={AuthLayout}>
+        <Route path="auth" Component={AuthLayout}>
           <Route path="register" Component={Register} />
           <Route path="login" Component={Login} />
         </Route>

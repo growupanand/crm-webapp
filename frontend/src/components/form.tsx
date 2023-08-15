@@ -100,8 +100,8 @@ function Form(props: Props) {
           return;
         }
       }
-
       // if it is unexpected error or internal server error
+      console.error(error);
       setFormError("Something went wrong.");
     } finally {
       setState((cs) => ({ ...cs, isFormBusy: false }));

@@ -1,13 +1,7 @@
 import { Button } from "@app/components/button";
 import Form, { SetFormError } from "@app/components/form";
-import { User } from "@app/types/user";
-import { apiClient } from "@app/utils/apiClient";
-import {
-  resetLocalStorage,
-  setAccessToken,
-  setRefreshToken,
-} from "@app/utils/storage";
-import { setUser } from "@app/utils/storage/user";
+import { useAuthStore } from "@app/stores/authStore";
+import { resetLocalStorage } from "@app/utils/storage";
 import {
   Container,
   Divider,
@@ -19,6 +13,8 @@ import {
 import { useForm } from "@mantine/form";
 
 function Login() {
+  const authStore = useAuthStore();
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -45,20 +41,9 @@ function Login() {
       setFormError("Invalid token");
       return;
     }
-    // once login credentials validated successfully, first we will save access token and refresh token in client local storage
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-    fetchUserInfo();
-  };
-
-  const fetchUserInfo = async () => {
-    try {
-      const userInfo = await apiClient<User>("user/me/", {});
-      setUser(userInfo);
-      window.location.href = "/";
-    } catch (error) {
-      console.log("unable to fetch user");
-    }
+    // once login credentials validated successfully, we will initialize auth store
+    await authStore.init(accessToken, refreshToken);
+    window.location.href = "/";
   };
 
   return (
@@ -84,7 +69,7 @@ function Login() {
         </Form>
         <Divider label="OR" labelPosition="center" />
         <Group grow>
-          <Button variant="light" to="/register">
+          <Button variant="light" to="/auth/register">
             Register
           </Button>
         </Group>
