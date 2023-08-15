@@ -1,4 +1,4 @@
-name: Update Wiki with Frontend folder structure
+name: Update Wiki
 
 on:
   push:
