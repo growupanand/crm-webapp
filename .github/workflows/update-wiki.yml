@@ -10,31 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Generate Directory Structure
-        run: |
-          tree -x -I node_modules > directory_structure.txt
-
-      - name: Push to Wiki Repository
+      - name: Checkout base code
         uses: actions/checkout@v2
         with:
-          repository: growupanand/crm-webapp # wiki repository info
-          path: wiki
+          path: base-code
 
-      - name: Make changes to wiki page - "Folder Structure.md"
+      - name: Checkout wiki code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}.wiki # wiki repository info
+          path: markdown
+
+      - name: Generate folder structure
         run: |
           cd base-code
           tree_output=$(tree -d -I "node_modules")
-          echo "\`\`\`" > ../folder_structure.txt
-          echo "$tree_output" >> ../folder_structure.txt
-          echo "\`\`\`" >> ../folder_structure.txt
           cd ..
-          cat ./folder_structure.txt
+
+      - name: Make changes to wiki page - "Folder Structure.md"
+        run: |
+          echo "\`\`\`" > ./folder_structure.txt
+          echo "$tree_output" >> ./folder_structure.txt
+          echo "\`\`\`" >> ./folder_structure.txt
           mv ./folder_structure.txt "./markdown/Folder Structure.md"
 
-      - name: Display Wiki URL
+      - name: Push changes
         run: |
           cd markdown
           git config --local user.email "action@github.com"
