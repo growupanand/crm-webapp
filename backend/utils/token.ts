@@ -1,3 +1,4 @@
+import { INVALID_TOKEN_MSG } from "@app/constants";
 import tokenModel from "@app/models/token";
 import {
   OrganizationInvitationTokenPayload,
@@ -7,7 +8,8 @@ import { User } from "@app/types/user";
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import { Types, isValidObjectId } from "mongoose";
 
-const DEFAULT_EXPIRE_IN = "24h";
+const DEFAULT_ACCESS_TOKEN_EXPIRE_IN = "24h";
+const DEFAULT_REFRESH_TOKEN_EXPIRE_IN = "7d";
 
 /**
  * This function saves a token with its type, value, user ID, and organization ID to the database.
@@ -80,7 +82,7 @@ const generateToken = async <T extends TokenTypes>(
       payload,
       process.env.TOKEN_SECRET as string,
       {
-        expiresIn: expiresIn || DEFAULT_EXPIRE_IN,
+        expiresIn: expiresIn || DEFAULT_ACCESS_TOKEN_EXPIRE_IN,
       }
     );
     if (saveTokenInDB) {
@@ -113,10 +115,10 @@ export const useToken = async (
   checkInDb: boolean = true
 ) => {
   try {
-    if (token.split(".").length !== 3) throw new Error("invalid token");
+    if (token.split(".").length !== 3) throw new Error(INVALID_TOKEN_MSG);
     if (checkInDb) {
       const isExistInDB = await tokenModel.findOne({ token });
-      if (!isExistInDB) throw new Error(`Token does not exist`);
+      if (!isExistInDB) throw new Error(INVALID_TOKEN_MSG);
       if (deleteToken) await tokenModel.deleteOne({ token });
     }
     const payload = jwt.verify(
@@ -125,7 +127,11 @@ export const useToken = async (
     ) as JwtPayload;
     return payload;
   } catch (error: any) {
-    if (error.name === "TokenExpiredError") throw new Error("token expired");
+    if (
+      error.name === "TokenExpiredError" ||
+      error.message === INVALID_TOKEN_MSG
+    )
+      throw new Error(INVALID_TOKEN_MSG);
     throw error;
   }
 };
@@ -174,7 +180,13 @@ export const generateRefreshToken = (
     name: user.name,
     email: user.email,
   };
-  return generateToken("refreshToken", payload, user._id);
+  return generateToken(
+    "refreshToken",
+    payload,
+    user._id,
+    true,
+    DEFAULT_REFRESH_TOKEN_EXPIRE_IN
+  );
 };
 
 /**

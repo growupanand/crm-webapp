@@ -1,6 +1,8 @@
 import {
-  ALLOWED_URLS_WO_MAIL_VERIFIED,
-  ALLOWED_API_REQ_WO_USER_LOGGED_IN,
+  ALLOWED_PATHS_WITHOUT_MAIL_VERIFIED,
+  ALLOWED_PATHS_WITHOUT_USER_LOGGED_IN,
+  EMAIL_NOT_VERIFIED_MSG,
+  INVALID_TOKEN_MSG,
 } from "@app/constants";
 import userModel from "@app/models/user";
 import { useToken } from "@app/utils";
@@ -24,41 +26,56 @@ export default async function (
   next: NextFunction
 ) {
   // check if this api request needs user to be logged in
-  const allowedPathWoLoggedIn = ALLOWED_API_REQ_WO_USER_LOGGED_IN.find(
+  const foundPathWithoutLogin = ALLOWED_PATHS_WITHOUT_USER_LOGGED_IN.find(
     ({ path }) => path === req.path
   );
-  if (
-    !allowedPathWoLoggedIn ||
-    !allowedPathWoLoggedIn.method.includes(req.method)
-  ) {
+
+  const isPathAllowedWithoutLogin = foundPathWithoutLogin?.method.includes(
+    req.method
+  );
+
+  if (!isPathAllowedWithoutLogin) {
     try {
-      // verify access token on every api request except for ALLOWED_URLS_WO_USER_LOGGED_IN
-      const token = req.headers["authorization"];
-      const accessToken = token && token.split(" ")[1];
-      if (!accessToken) throw new Error("user not logged in");
+      const accessToken = req.headers["authorization"]?.split(" ")[1];
+
+      // If user have not provided access token in api request, means he is not logged in
+      if (!accessToken) {
+        throw new Error("user not logged in");
+      }
+
+      // If user provided access token is expired or invalid
       const payload = await useToken(accessToken, false);
-      if (!payload) throw new Error("Invalid token");
+      if (!payload) {
+        throw new Error(INVALID_TOKEN_MSG);
+      }
+
+      // If access token is valid but we are unable to get user details from DB
       const user = await userModel.findOne({
         email: (payload as tokenPayload).email,
       });
-      if (!user) throw new Error("User not found");
+      if (!user) {
+        throw new Error(INVALID_TOKEN_MSG);
+      }
 
-      // check if this api request needs logged in user mail verified
-      const allowedPathWoMailVerified = ALLOWED_URLS_WO_MAIL_VERIFIED.find(
-        ({ path }) => path === req.path
-      );
-      // check if user email is verified
-      if (
-        (!allowedPathWoMailVerified ||
-          !allowedPathWoMailVerified.method.includes(req.method)) &&
-        !user.isEmailVerified
-      )
-        throw new Error("Email not verified");
-      // if everything looks good put user object in request and continue middleware
-      const { password, ...userJson } = user.toJSON();
-      req.user = userJson;
+      // If user is logged in but his email is not verified
+      const foundPathWithoutMailVerified =
+        ALLOWED_PATHS_WITHOUT_MAIL_VERIFIED.find(
+          ({ path }) => path === req.path
+        );
+
+      const isPathAllowedWithoutMailVerified =
+        foundPathWithoutMailVerified?.method.includes(req.method);
+
+      // check if user email is not verified
+      if (!isPathAllowedWithoutMailVerified && !user.isEmailVerified) {
+        return res.sendCustomErrorMessage(EMAIL_NOT_VERIFIED_MSG, 403);
+      }
+
+      // if everything looks good put user object in request object so that it will be accessible in controllers (req.user)
+      const { password, ...userJsonWithoutPassword } = user.toJSON();
+      req.user = userJsonWithoutPassword;
     } catch (error: any) {
-      return res.sendCustomErrorMessage(error.message);
+      return res.sendCustomErrorMessage(error.message, 401);
     }
   }
 

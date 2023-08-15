@@ -18,18 +18,26 @@ export const BASE_URL = `${HOST}:${PORT}/`;
 export const NODE_ENV = process.env.NODE_ENV || "local";
 
 /** this api urls can be access without need of user email verified */
-export const ALLOWED_URLS_WO_MAIL_VERIFIED = [
+export const ALLOWED_PATHS_WITHOUT_MAIL_VERIFIED = [
   {
     path: "/user/resendEmailVerification/",
+    method: ["POST"],
+  },
+  {
+    path: "/auth/getAccessToken",
     method: ["POST"],
   },
 ];
 
 /** this api urls can be access without need of user logged in */
-export const ALLOWED_API_REQ_WO_USER_LOGGED_IN = [
+export const ALLOWED_PATHS_WITHOUT_USER_LOGGED_IN = [
   {
     path: "/organizations/invitations/accept",
     method: ["GET"],
+  },
+  {
+    path: "/auth/getAccessToken",
+    method: ["POST"],
   },
 ];
 
@@ -49,3 +57,10 @@ export const DEFAULT_ROLES = [
     isDefaultRole: true,
   },
 ] as Omit<Role, "_id">[];
+
+/**
+ * Some error messages
+ */
+
+export const INVALID_TOKEN_MSG = "Invalid token";
+export const EMAIL_NOT_VERIFIED_MSG = "Email not verified";
