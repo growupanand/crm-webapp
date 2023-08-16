@@ -37,8 +37,12 @@ jobs:
       - name: Push changes
         run: |
           cd markdown
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Updated folder structure page"
-          git push
+          if [[ -n $(git diff) ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add .
+            git commit -m "Updated folder structure page"
+            git push
+          else
+            echo "No changes to commit."
+          fi
