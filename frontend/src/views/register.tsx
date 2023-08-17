@@ -40,24 +40,29 @@ function Register() {
           submitButtonLabel="Register"
           submitButtonWithFullWidth
         >
-          <TextInput
-            label="Full Name"
-            placeholder="Utkarsh Anand"
-            required
-            {...form.getInputProps("name")}
-          />
-          <TextInput
-            label="Email"
-            type="email"
-            placeholder="abcd@email.com"
-            required
-            {...form.getInputProps("email")}
-          />
-          <PasswordInput label="Password" {...form.getInputProps("password")} />
-          <PasswordInput
-            label="Confirm password"
-            {...form.getInputProps("confirmPassword")}
-          />
+          <Stack spacing="lg">
+            <TextInput
+              label="Full Name"
+              placeholder="Utkarsh Anand"
+              required
+              {...form.getInputProps("name")}
+            />
+            <TextInput
+              label="Email"
+              type="email"
+              placeholder="abcd@email.com"
+              required
+              {...form.getInputProps("email")}
+            />
+            <PasswordInput
+              label="Password"
+              {...form.getInputProps("password")}
+            />
+            <PasswordInput
+              label="Confirm password"
+              {...form.getInputProps("confirmPassword")}
+            />
+          </Stack>
         </Form>
         <Divider label="OR" labelPosition="center" />
         <Group grow>
