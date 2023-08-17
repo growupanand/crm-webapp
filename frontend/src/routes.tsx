@@ -4,6 +4,7 @@ import Register from "@app/views/register";
 import App from "@app/views/index";
 import Login from "@app/views/login";
 import AuthLayout from "@app/layouts/authLayout";
+import ForgetPassword from "@app/views/forgetPassword";
 
 const routes = (
   <BrowserRouter>
@@ -13,6 +14,7 @@ const routes = (
         <Route path="auth" Component={AuthLayout}>
           <Route path="register" Component={Register} />
           <Route path="login" Component={Login} />
+          <Route path="forget-password" Component={ForgetPassword} />
         </Route>
         {/* Authorized Routes - Require user login */}
         <Route Component={App}>

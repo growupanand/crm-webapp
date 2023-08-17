@@ -5,6 +5,7 @@ import { resetLocalStorage } from "@app/utils/storage";
 import {
   Container,
   Divider,
+  Flex,
   Group,
   PasswordInput,
   Stack,
@@ -58,14 +59,25 @@ function Login() {
           submitButtonWithFullWidth
           onPreSubmit={handlePreSubmit}
         >
-          <TextInput
-            label="Email"
-            type="email"
-            placeholder="abcd@email.com"
-            required
-            {...form.getInputProps("email")}
-          />
-          <PasswordInput label="Password" {...form.getInputProps("password")} />
+          <Stack spacing="lg">
+            <TextInput
+              label="Email"
+              type="email"
+              placeholder="abcd@email.com"
+              required
+              {...form.getInputProps("email")}
+            />
+            <PasswordInput
+              label="Password"
+              {...form.getInputProps("password")}
+            />
+          </Stack>
+
+          <Flex justify="end">
+            <Button to="/auth/forget-password" variant="white" px="0" size="sm">
+              Forget password?
+            </Button>
+          </Flex>
         </Form>
         <Divider label="OR" labelPosition="center" />
         <Group grow>
