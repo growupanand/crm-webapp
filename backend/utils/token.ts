@@ -104,7 +104,7 @@ const generateToken = async <T extends TokenTypes>(
  * This will verify token and return payload,
  * @param token
  * @param deleteToken `default:true`
- * @param checkInDb `default:true`
+ * @param checkInDB `default:true`
  * @returns
  */
 export const useToken = async (
@@ -112,20 +112,29 @@ export const useToken = async (
   /** Should delete token from database after token verified successfully */
   deleteToken: boolean = true,
   /** Should token exist in database */
-  checkInDb: boolean = true
+  checkInDB: boolean = true
 ) => {
   try {
     if (token.split(".").length !== 3) throw new Error(INVALID_TOKEN_MSG);
-    if (checkInDb) {
-      const isExistInDB = await tokenModel.findOne({ token });
-      if (!isExistInDB) throw new Error(INVALID_TOKEN_MSG);
-      if (deleteToken) await tokenModel.deleteOne({ token });
-    }
-    const payload = jwt.verify(
+    const tokenPayload = jwt.verify(
       token,
       process.env.TOKEN_SECRET as string
     ) as JwtPayload;
-    return payload;
+
+    // if param value of checkInDB is true then this token should exist in database
+    if (checkInDB) {
+      const tokenDocument = await tokenModel.findOne({ token });
+      const isTokenExistInDB = !!tokenDocument;
+
+      if (!isTokenExistInDB) throw new Error(INVALID_TOKEN_MSG);
+
+      // add token type in token payload
+      tokenPayload["type"] = tokenDocument.type;
+
+      // delete token from database if param value of 'deleteToken' is true
+      if (deleteToken) await tokenModel.deleteOne({ token });
+    }
+    return tokenPayload;
   } catch (error: any) {
     if (
       error.name === "TokenExpiredError" ||
