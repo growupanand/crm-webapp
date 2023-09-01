@@ -7,6 +7,7 @@ import {
   getAccessToken,
   verifyEmailToken,
   resetPassword,
+  getTokenDetails,
 } from "@controllers/auth.controller";
 
 router.post("/register", register);
@@ -15,5 +16,6 @@ router.delete("/logout", logout);
 router.post("/getAccessToken", getAccessToken);
 router.get("/verifyEmail/:token", verifyEmailToken);
 router.post("/resetPassword", resetPassword);
+router.get("/token/:token", getTokenDetails);
 
 module.exports = router;

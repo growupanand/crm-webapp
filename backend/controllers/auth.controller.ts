@@ -199,3 +199,28 @@ export const resetPassword = async (req: Request, res: Response) => {
   if (!data) return res.sendCustomErrorMessage("Unable to send mail", 500);
   return res.status(200).json({ message: defaultMessage });
 };
+
+/**
+ * Get token details
+ * @param req
+ * @param res
+ * @returns
+ */
+export const getTokenDetails = async (req: Request, res: Response) => {
+  const { token } = req.params;
+
+  // check if token value is provided
+  if (!token || token?.trim() === "") {
+    return res.sendCustomErrorMessage("Token not found", 400);
+  }
+
+  try {
+    // check if token is valid
+    const tokenPayload = await useToken(token, false, true);
+
+    // send token data in response
+    return res.json({ ...tokenPayload });
+  } catch (error) {
+    return res.sendCustomErrorMessage("Token invalid or expired", 400);
+  }
+};
