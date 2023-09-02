@@ -25,6 +25,7 @@ function ForgetPassword() {
           onSubmitSuccess={handleSubmitSuccess}
           submitButtonLabel="Submit"
           submitButtonWithFullWidth
+          formTitle="Forget password"
         >
           <Stack spacing="lg">
             <TextInput
