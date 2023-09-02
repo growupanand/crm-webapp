@@ -1,4 +1,4 @@
-import { Alert, Flex, Group, Text } from "@mantine/core";
+import { Alert, Flex, Group, Text, Title } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import axios, { Method } from "axios";
 import { Button } from "./button";
@@ -24,6 +24,8 @@ type Props = {
   onPreSubmit?: (formData: Record<string, any>) => void;
   submitButtonLabel?: string;
   submitButtonWithFullWidth?: boolean;
+  additionalPayloadData?: Record<string, any>;
+  formTitle?: string;
 };
 
 type State = {
@@ -52,6 +54,8 @@ function Form(props: Props) {
     form,
     submitButtonLabel,
     submitButtonWithFullWidth,
+    additionalPayloadData,
+    formTitle,
   } = props;
 
   const [state, setState] = useState<State>(defaultState);
@@ -78,7 +82,7 @@ function Form(props: Props) {
       props.onPreSubmit?.(formData);
       const responseData = await client<any>(apiEndpoint, {
         method: apiMethod,
-        data: formData,
+        data: { ...formData, ...additionalPayloadData },
       });
       if (props.onSubmitSuccess) {
         props.onSubmitSuccess(responseData, setFormError);
@@ -109,22 +113,29 @@ function Form(props: Props) {
   };
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-      {isError && nonFieldError !== "" && (
-        <Alert mb="lg" color="red">
-          <Flex align="center" gap="md">
-            <IconAlertCircle size="1rem" color="red" />
-            <Text color="red">{nonFieldError}</Text>
-          </Flex>
-        </Alert>
+    <>
+      {formTitle && (
+        <Title order={3} mb="xs" fw="normal">
+          {formTitle}
+        </Title>
       )}
-      {children}
-      <Group mt="xl" grow={submitButtonWithFullWidth}>
-        <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
-          {submitButtonLabel || "Submit"}
-        </Button>
-      </Group>
-    </form>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        {isError && nonFieldError !== "" && (
+          <Alert mb="lg" color="red">
+            <Flex align="center" gap="md">
+              <IconAlertCircle size="1rem" color="red" />
+              <Text color="red">{nonFieldError}</Text>
+            </Flex>
+          </Alert>
+        )}
+        {children}
+        <Group mt="xl" grow={submitButtonWithFullWidth}>
+          <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
+            {submitButtonLabel || "Submit"}
+          </Button>
+        </Group>
+      </form>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import App from "@app/views/index";
 import Login from "@app/views/login";
 import AuthLayout from "@app/layouts/authLayout";
 import ForgetPassword from "@app/views/forgetPassword";
+import TokenPage from "./views/token";
 
 const routes = (
   <BrowserRouter>
@@ -15,6 +16,11 @@ const routes = (
           <Route path="register" Component={Register} />
           <Route path="login" Component={Login} />
           <Route path="forget-password" Component={ForgetPassword} />
+          <Route
+            path="token/:token"
+            Component={TokenPage}
+            errorElement={<p>error page</p>}
+          />
         </Route>
         {/* Authorized Routes - Require user login */}
         <Route Component={App}>
