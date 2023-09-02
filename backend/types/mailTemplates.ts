@@ -9,7 +9,7 @@ export type MailTemplates = {
   resetPassword: {
     subject: string;
     name: string;
-    token: string;
+    link: string;
   };
   /** User request for verify mail */
   verifyMail: {

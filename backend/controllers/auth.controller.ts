@@ -154,6 +154,7 @@ export const verifyEmailToken = async (req: Request, res: Response) => {
 export const resetPassword = async (req: Request, res: Response) => {
   const defaultMessage = "Email send successfully";
   const { email, token, password, confirmPassword } = req.body;
+  const frontendOrigin = req.get("origin");
   if (!email || email.trim() === "")
     return res.sendCustomErrorMessage("Please provide email address", 400);
 
@@ -182,6 +183,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     });
     return;
   }
+
   const user = await userModel.findOne({ email: email });
   if (!user) return res.status(200).json({ message: defaultMessage }); // send 200 ok status even if user not found, so that hacker cannot use this api to find user exist by email
   // delete old reset password tokens
@@ -193,7 +195,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     context: {
       subject: "Reset password",
       name: user.name,
-      token: generatedToken,
+      link: `${frontendOrigin}/auth/token/${generatedToken}/`,
     },
   });
   if (!data) return res.sendCustomErrorMessage("Unable to send mail", 500);
