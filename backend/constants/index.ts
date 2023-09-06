@@ -27,6 +27,10 @@ export const ALLOWED_PATHS_WITHOUT_MAIL_VERIFIED = [
     path: "/auth/getAccessToken",
     method: ["POST"],
   },
+  {
+    path: "/user/me/",
+    method: ["GET"],
+  },
 ];
 
 /** this api urls can be access without need of user logged in */
