@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "@app/views/home";
 import Register from "@app/views/register";
-import App from "@app/views/index";
 import Login from "@app/views/login";
 import AuthLayout from "@app/layouts/authLayout";
 import ForgetPassword from "@app/views/forgetPassword";
-import TokenPage from "./views/token";
+import TokenPage from "@app/views/token";
+import AppLayout from "@app/layouts/appLayout";
 
 const routes = (
   <BrowserRouter>
@@ -23,7 +23,7 @@ const routes = (
           />
         </Route>
         {/* Authorized Routes - Require user login */}
-        <Route Component={App}>
+        <Route Component={AppLayout}>
           <Route index Component={Home} />
         </Route>
       </Route>

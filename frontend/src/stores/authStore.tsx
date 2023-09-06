@@ -22,6 +22,8 @@ interface AuthState {
   refreshToken: () => Promise<string>;
   /** Logout current user and redirect to login page */
   logout: () => void;
+  /** Refresh user details */
+  refreshUser: () => Promise<void>;
 }
 
 /**
@@ -32,6 +34,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   user: getUser(),
 
   init: async (accessToken, refreshToken) => {
+    const { refreshUser } = get();
     resetLocalStorage();
 
     // first we will save tokens in local storage
@@ -39,6 +42,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     setRefreshToken(refreshToken);
 
     // now we will try to fetch user details
+    await refreshUser();
+  },
+
+  refreshUser: async () => {
     const user = await apiClient<User>("user/me/", {});
     setUser(user);
     set((cs) => ({
