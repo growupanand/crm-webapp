@@ -4,6 +4,14 @@ import axios, { AxiosRequestConfig } from "axios";
 import { useRef } from "react";
 
 /**
+ * This is the type of the client callback function that is returned by the useAPIClient hook.
+ */
+export type ClientCallback = <ResponseType>(
+  endpoint: string,
+  axiosConfig: AxiosRequestConfig
+) => Promise<ResponseType>;
+
+/**
  * Use this hook to make any api request to backend, this hook give two main feature which we want to use:
  * 1. It give you a function callback which can be used to cancel a ongoing request created by current client instance
  * 2. It will handle some know cause where api request could be failed, E.g. email not verified, token expired.

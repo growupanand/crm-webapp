@@ -1,7 +1,9 @@
 import { Button } from "@app/components/button";
+import { useAuthStore } from "@app/stores/authStore";
 import { Group, Header, Title } from "@mantine/core";
 
 function AppHeader() {
+  const { user, isAuthenticated, logout } = useAuthStore();
   return (
     <Header height="auto" p={15}>
       <Group position="apart">
@@ -9,12 +11,20 @@ function AppHeader() {
           <Title color="black">CRM</Title>
         </Button>
         <Group position="right">
-          <Button variant="light" to="/login">
-            Login
-          </Button>
-          <Button variant="subtle" to="/register">
-            Register
-          </Button>
+          {isAuthenticated && user ? (
+            <Button variant="light" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button variant="light" to="/login">
+                Login
+              </Button>
+              <Button variant="subtle" to="/register">
+                Register
+              </Button>
+            </>
+          )}
         </Group>
       </Group>
     </Header>
