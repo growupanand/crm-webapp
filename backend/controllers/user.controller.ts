@@ -1,4 +1,5 @@
 import userModel from "@app/models/user";
+import bcrypt from "bcrypt";
 import { sendMail } from "@app/utils/sendMail";
 import { Request, Response } from "express";
 import {
@@ -68,4 +69,23 @@ const resendEmailVerify = async (req: Request, res: Response) => {
     .json({ message: "Verification mail sent successfully" });
 };
 
-export default { getUser, deleteUser, resendEmailVerify };
+/**
+ * This controller is used to change password of user
+ */
+const changePassword = async (req: Request, res: Response) => {
+  const { newPassword, confirmPassword } = req.body;
+  // check if password match with confirm password
+  if (!newPassword || !confirmPassword || newPassword !== confirmPassword)
+    return res.sendCustomErrorMessage("Password not match", 400);
+  // update password
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const user = await userModel.findOne({ _id: req.user._id });
+  if (!user) return res.sendCustomErrorMessage("User not found", 400);
+  user.password = hashedPassword;
+  user.save((error) => {
+    if (error) return res.sendMongooseErrorResponse(error);
+    return res.status(200).json({ message: "Password changed successfully" });
+  });
+};
+
+export default { getUser, deleteUser, resendEmailVerify, changePassword };
