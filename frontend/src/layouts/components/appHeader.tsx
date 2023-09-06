@@ -1,20 +1,37 @@
 import { Button } from "@app/components/button";
 import { useAuthStore } from "@app/stores/authStore";
-import { Group, Header, Title } from "@mantine/core";
+import { Group, Header, Text, Title } from "@mantine/core";
+import { IconLogout } from "@tabler/icons-react";
 
 function AppHeader() {
   const { user, isAuthenticated, logout } = useAuthStore();
   return (
-    <Header height="auto" p={15}>
+    <Header height="auto" py="sm">
       <Group position="apart">
-        <Button variant="white" to="/">
-          <Title color="black">CRM</Title>
-        </Button>
+        <Group position="left">
+          <Button variant="white" to="/">
+            <Title color="black" order={3}>
+              CRM
+            </Title>
+          </Button>
+          <Text color="gray" size="sm">
+            {isAuthenticated && user ? user.email : "Not logged in"}
+          </Text>
+        </Group>
         <Group position="right">
           {isAuthenticated && user ? (
-            <Button variant="light" onClick={logout}>
-              Logout
-            </Button>
+            <>
+              <Button to="/change-password" variant="white">
+                Change Password
+              </Button>
+              <Button
+                leftIcon={<IconLogout />}
+                variant="white"
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </>
           ) : (
             <>
               <Button variant="light" to="/login">

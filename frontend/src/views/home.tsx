@@ -7,7 +7,6 @@ function Home() {
   return (
     <div>
       <Title>Welcome {user.name}</Title>
-      <Button onClick={logout}>Logout</Button>
     </div>
   );
 }
