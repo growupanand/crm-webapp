@@ -15,7 +15,7 @@ function AppLayout() {
     if (isUserAuthenticated && !isEmailVerified) {
       refreshUser();
     }
-  }, [isUserAuthenticated, isEmailVerified, refreshUser]);
+  }, []);
 
   // If user is not authenticated, redirect to login page
   if (!isUserAuthenticated) {
