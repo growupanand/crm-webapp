@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 7
+  version: 6
   cacheKey: 9
 
 "@ampproject/remapping@npm:^2.2.0":
@@ -1612,6 +1612,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mongodb-js/saslprep@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@mongodb-js/saslprep@npm:1.1.0"
+  dependencies:
+    sparse-bitfield: ^3.0.3
+  checksum: 8/1479a43e216734672f8eb1a2a55165b6896841bd00fb5bd645390a24374ef6c29f0f6d19a43618a19b8f1912fcbd2b2cc2210a62361103d1f28dce6852cf31d4
+  languageName: node
+  linkType: hard
+
 "@npmcli/fs@npm:^2.1.0":
   version: 2.1.2
   resolution: "@npmcli/fs@npm:2.1.2"
@@ -2333,6 +2342,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bson@npm:^4.7.2":
+  version: 4.7.2
+  resolution: "bson@npm:4.7.2"
+  dependencies:
+    buffer: ^5.6.0
+  checksum: 8/f357d12c5679c8eb029a62e410ad40fb862b7b91f0fc12a3399fb3668e14aecaa63205ffeeee48735a01d393171743607dcd527eb8c058b6f2bd294079ee4125
+  languageName: node
+  linkType: hard
+
 "buffer-equal-constant-time@npm:1.0.1":
   version: 1.0.1
   resolution: "buffer-equal-constant-time@npm:1.0.1"
@@ -2648,32 +2666,32 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "crm-backend@workspace:."
   dependencies:
-    "@types/bcrypt": "npm:^5.0.0"
-    "@types/cors": "npm:^2"
-    "@types/express": "npm:^4.17.14"
-    "@types/jest": "npm:^29.5.0"
-    "@types/jsonwebtoken": "npm:^9.0.0"
-    "@types/mongoose": "npm:^5.11.97"
-    "@types/node": "npm:^18.11.10"
-    "@types/nodemailer": "npm:^6"
-    "@types/nodemailer-express-handlebars": "npm:^4.0.2"
-    bcrypt: "npm:^5.1.0"
-    cors: "npm:^2.8.5"
-    cross-env: "npm:^7.0.3"
-    dotenv: "npm:^16.0.3"
-    express: "npm:^4.18.2"
-    express-handlebars: "npm:^7.0.2"
-    express-rate-limit: "npm:^6.7.0"
-    jest: "npm:^29.5.0"
-    jsonwebtoken: "npm:^9.0.0"
-    mongoose: "npm:^6.7.5"
-    nodemailer: "npm:^6.9.1"
-    nodemailer-express-handlebars: "npm:^6.1.0"
-    nodemon: "npm:^2.0.20"
-    ts-jest: "npm:^29.1.0"
-    ts-node: "npm:^10.9.1"
-    tsconfig-paths: "npm:^4.1.1"
-    typescript: "npm:^4.9.3"
+    "@types/bcrypt": ^5.0.0
+    "@types/cors": ^2
+    "@types/express": ^4.17.14
+    "@types/jest": ^29.5.0
+    "@types/jsonwebtoken": ^9.0.0
+    "@types/mongoose": ^5.11.97
+    "@types/node": ^18.11.10
+    "@types/nodemailer": ^6
+    "@types/nodemailer-express-handlebars": ^4.0.2
+    bcrypt: ^5.1.0
+    cors: ^2.8.5
+    cross-env: ^7.0.3
+    dotenv: ^16.0.3
+    express: ^4.18.2
+    express-handlebars: ^7.0.2
+    express-rate-limit: ^6.7.0
+    jest: ^29.5.0
+    jsonwebtoken: ^9.0.0
+    mongoose: ^6.11.3
+    nodemailer: ^6.9.1
+    nodemailer-express-handlebars: ^6.1.0
+    nodemon: ^2.0.20
+    ts-jest: ^29.1.0
+    ts-node: ^10.9.1
+    tsconfig-paths: ^4.1.1
+    typescript: ^4.9.3
   languageName: unknown
   linkType: soft
 
@@ -3132,9 +3150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
@@ -4165,6 +4183,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"kareem@npm:2.5.1":
+  version: 2.5.1
+  resolution: "kareem@npm:2.5.1"
+  checksum: 8/b019a960a7b9e44b6ef224ef85e7583d4e969619f53319e571677fbed7e57e01ee8774589726b29741e42790996567d878003c18e674296742dc343bfbf3efb9
+  languageName: node
+  linkType: hard
+
 "kleur@npm:^3.0.3":
   version: 3.0.3
   resolution: "kleur@npm:3.0.3"
@@ -4487,7 +4512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-connection-string-url@npm:^2.5.4":
+"mongodb-connection-string-url@npm:^2.5.4, mongodb-connection-string-url@npm:^2.6.0":
   version: 2.6.0
   resolution: "mongodb-connection-string-url@npm:2.6.0"
   dependencies:
@@ -4516,7 +4541,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongoose@npm:*, mongoose@npm:^6.7.5":
+"mongodb@npm:4.17.1":
+  version: 4.17.1
+  resolution: "mongodb@npm:4.17.1"
+  dependencies:
+    "@aws-sdk/credential-providers": ^3.186.0
+    "@mongodb-js/saslprep": ^1.1.0
+    bson: ^4.7.2
+    mongodb-connection-string-url: ^2.6.0
+    socks: ^2.7.1
+  dependenciesMeta:
+    "@aws-sdk/credential-providers":
+      optional: true
+    "@mongodb-js/saslprep":
+      optional: true
+  checksum: 8/e7f280570d0f23d60c308b2a484ed55762ec8e523946c0de1a0b3b398f24efcf1916a745e5407f32cd1c105b2f19d8ac75474c92f73cdf651affe3430a963f54
+  languageName: node
+  linkType: hard
+
+"mongoose@npm:*":
   version: 6.7.5
   resolution: "mongoose@npm:6.7.5"
   dependencies:
@@ -4528,6 +4571,21 @@ __metadata:
     ms: "npm:2.1.3"
     sift: "npm:16.0.1"
   checksum: ab42e0aecdfe8bdc1d30312c305e7148beb1fa51c3ddad94812dab5e49146774aea0bc831c23767397e9da492b221b5ddec7b6d57cb10be810c52cc3f6aa7105
+  languageName: node
+  linkType: hard
+
+"mongoose@npm:^6.11.3":
+  version: 6.12.0
+  resolution: "mongoose@npm:6.12.0"
+  dependencies:
+    bson: ^4.7.2
+    kareem: 2.5.1
+    mongodb: 4.17.1
+    mpath: 0.9.0
+    mquery: 4.0.3
+    ms: 2.1.3
+    sift: 16.0.1
+  checksum: 8/8e47cc3b717ecc61a964049c8d48da83340f42e45950d7e9a77d7aee6d19a689fb8e85efea9a8aae84025dec2c27570bfa820d2f76e12d2c49bacf2b979366d3
   languageName: node
   linkType: hard
 
@@ -5101,16 +5159,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.20.0#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.20.0#~builtin<compat/resolve>":
   version: 1.22.2
-  resolution: "resolve@patch:resolve@npm%3A1.22.2#optional!builtin<compat/resolve>::version=1.22.2&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.2#~builtin<compat/resolve>::version=1.22.2&hash=c3c19d"
   dependencies:
     is-core-module: "npm:^2.11.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
     resolve: bin/resolve
-  checksum: 58838d3b80cac9bc3386d09c058e91c6169659ba8d42a01698e149bd27a7e3c1557c46e1d0e2bde1b426731ee46bf17d3a8e750c2ae78c093129891b39886c20
+  checksum: 8/66cc788f13b8398de18eb4abb3aed90435c84bb8935953feafcf7231ba4cd191b2c10b4a87b1e9681afc34fb138c705f91f7330ff90bfa36f457e5584076a2b8
   languageName: node
   linkType: hard
 
@@ -5721,13 +5779,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.9.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
   version: 4.9.3
-  resolution: "typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>::version=4.9.3&hash=d73830"
+  resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=a66ed4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 06fd518bc55d054127b39aa7ad11551fd132bb7a8395913ed84fd5caf715455393d622e884ccb4fcf962d4eb5182600009c096b82ec516e8fadd09bf2150bb93
+  checksum: 8/d7bdcf5e18193f709339540d69577f7b0389000265db2bf10edfaa67336a29d6bcbee11828084150f7fdd110d605794cfa6df33bebc0a2e33daad2dbe2a7a59f
   languageName: node
   linkType: hard
 
