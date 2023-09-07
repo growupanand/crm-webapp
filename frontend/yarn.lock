@@ -1662,6 +1662,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/modals@npm:^6.0.20":
+  version: 6.0.20
+  resolution: "@mantine/modals@npm:6.0.20"
+  dependencies:
+    "@mantine/utils": "npm:6.0.20"
+  peerDependencies:
+    "@mantine/core": 6.0.20
+    "@mantine/hooks": 6.0.20
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 0c7c85584c2b352a822a4d5620045e587f5d630041bf79fc7ca696f193260ea99c79ef23e13de17b78e77e2b3378da373e21ea896b11034abb929db9cc02d8bc
+  languageName: node
+  linkType: hard
+
 "@mantine/notifications@npm:^6.0.11":
   version: 6.0.11
   resolution: "@mantine/notifications@npm:6.0.11"
@@ -1697,6 +1711,15 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 730f302b41a3704a0b69787a939a4019bf2ae572b0ef16e2cb3110dce4d25373015f510696964892c4caf8beaf38b59e0574af57376ee692c651135cc69ebea4
+  languageName: node
+  linkType: hard
+
+"@mantine/utils@npm:6.0.20":
+  version: 6.0.20
+  resolution: "@mantine/utils@npm:6.0.20"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: e4117c019015dc10c56590af4c3931de078e7a4dcf130397ec028819a22cb3e16bc490efd0ab909ac7341f7471cd2f408a2610452d760d17954d7a767fcf2ac0
   languageName: node
   linkType: hard
 
@@ -3221,6 +3244,7 @@ __metadata:
     "@mantine/core": "npm:^6.0.11"
     "@mantine/form": "npm:^6.0.11"
     "@mantine/hooks": "npm:^6.0.11"
+    "@mantine/modals": "npm:^6.0.20"
     "@mantine/notifications": "npm:^6.0.11"
     "@swc/register": "npm:^0.1.10"
     "@tabler/icons-react": "npm:^2.22.0"
