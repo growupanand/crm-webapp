@@ -1,10 +1,10 @@
-import routes from "@app/routes";
+import buildRoutes from "@app/routes";
 import { MantineProvider } from "@mantine/core";
 
 function RenderMainApp() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      {routes}
+      {buildRoutes()}
     </MantineProvider>
   );
 }
