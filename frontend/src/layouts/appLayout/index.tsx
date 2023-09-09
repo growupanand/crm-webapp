@@ -1,21 +1,46 @@
 import { Alert, AppShell, Box, Flex, Loader, Text } from "@mantine/core";
-import AppHeader from "@app/layouts/components/appHeader";
+// import AppNavBar from "@app/layouts/components/appNavBar";
 import { useAuthStore } from "@app/stores/authStore";
 import { Outlet } from "react-router-dom";
 import { IconAlertCircle } from "@tabler/icons-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ModalsProvider } from "@mantine/modals";
+import { useOrganizationStore } from "@app/stores/organizationStore";
+import AppHeader from "../components/appHeader";
 
 function AppLayout() {
+  const [state, setState] = useState({
+    isLoadingStores: true,
+  });
+  const { isLoadingStores } = state;
   const { isAuthenticated, user, logout, refreshUser } = useAuthStore();
+  const { fetchOrganizations } = useOrganizationStore();
+
   const isUserAuthenticated = isAuthenticated && user;
   const isEmailVerified = isUserAuthenticated && user?.isEmailVerified;
+
+  const initializeStores = async () => {
+    setState({ isLoadingStores: true });
+    await fetchOrganizations();
+    setState({ isLoadingStores: false });
+  };
 
   // user email is not verified, but we have access token, so we will try to refresh user details
   useEffect(() => {
     if (isUserAuthenticated && !isEmailVerified) {
       refreshUser();
+    } else {
+      initializeStores();
     }
   }, []);
+
+  if (isLoadingStores) {
+    return (
+      <Flex align="center" justify="center" h="100vh" gap="xs">
+        <Loader size="md" />
+      </Flex>
+    );
+  }
 
   // If user is not authenticated, redirect to login page
   if (!isUserAuthenticated) {
@@ -33,19 +58,21 @@ function AppLayout() {
   }
 
   return (
-    <AppShell
-      header={<AppHeader />}
-      children={
-        isEmailVerified ? (
-          // if user is authenticated and email is verified, show the app
-          <Outlet />
-        ) : (
-          // if user is authenticated, but his email is not verified, show a message to verify email
-          <EmailNotVerified />
-        )
-      }
-      fixed={false}
-    />
+    <ModalsProvider>
+      <AppShell
+        header={<AppHeader />}
+        children={
+          isEmailVerified ? (
+            // if user is authenticated and email is verified, show the app
+            <Outlet />
+          ) : (
+            // if user is authenticated, but his email is not verified, show a message to verify email
+            <EmailNotVerified />
+          )
+        }
+        fixed={false}
+      />
+    </ModalsProvider>
   );
 }
 
