@@ -137,7 +137,7 @@ export const useToken = async (
     return tokenPayload;
   } catch (error: any) {
     if (
-      error.name === "TokenExpiredError" ||
+      ["JsonWebTokenError", "TokenExpiredError"].includes(error.name) ||
       error.message === INVALID_TOKEN_MSG
     )
       throw new Error(INVALID_TOKEN_MSG);
