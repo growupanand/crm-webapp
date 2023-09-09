@@ -18,8 +18,6 @@ interface AuthState {
   user: User | null;
   /** Initialize auth store with provided user tokens */
   init: (accessToken: string, refreshToken: string) => Promise<void>;
-  /** Refresh access token using this function */
-  refreshToken: () => Promise<string>;
   /** Logout current user and redirect to login page */
   logout: () => void;
   /** Refresh user details */
@@ -53,26 +51,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isAuthenticated: true,
       user: user,
     }));
-  },
-
-  refreshToken: async () => {
-    const { logout } = get();
-    try {
-      const { accessToken } = await apiClient<{ accessToken: string }>(
-        "auth/getAccessToken",
-        {
-          method: "POST",
-          data: {
-            refreshToken: getRefreshToken(),
-          },
-        }
-      );
-      setAccessToken(accessToken);
-      return accessToken;
-    } catch (error) {
-      // if we are unable to refresh access token, we will logout user and redirect to login page
-      logout();
-    }
   },
 
   logout: () => {
