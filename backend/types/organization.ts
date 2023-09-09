@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
+import { Organization as SharedOrganization } from "@shared/types";
 
-export type Organization = {
+export type Organization = Omit<SharedOrganization, "_id" | "userId"> & {
   _id: Types.ObjectId;
-  name: string;
-  slug: string;
   userId: Types.ObjectId;
 };

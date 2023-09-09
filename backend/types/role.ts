@@ -1,10 +1,6 @@
 import { Types } from "mongoose";
+import { Role as SharedRole } from "@shared/types";
 
-export type Role = {
+export type Role = SharedRole & {
   _id: Types.ObjectId;
-  name: string;
-  slug: string;
-  description: string;
-  /** default roles cannot be modified */
-  isDefaultRole: boolean;
 };
