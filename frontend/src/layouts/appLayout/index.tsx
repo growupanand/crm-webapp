@@ -1,12 +1,11 @@
 import { Alert, AppShell, Box, Flex, Loader, Text } from "@mantine/core";
-// import AppNavBar from "@app/layouts/components/appNavBar";
+import AppNavBar from "@app/layouts/components/appNavBar";
 import { useAuthStore } from "@app/stores/authStore";
 import { Outlet } from "react-router-dom";
 import { IconAlertCircle } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
 import { useOrganizationStore } from "@app/stores/organizationStore";
-import AppHeader from "../components/appHeader";
 
 function AppLayout() {
   const [state, setState] = useState({
@@ -60,7 +59,7 @@ function AppLayout() {
   return (
     <ModalsProvider>
       <AppShell
-        header={<AppHeader />}
+        navbar={<AppNavBar />}
         children={
           isEmailVerified ? (
             // if user is authenticated and email is verified, show the app

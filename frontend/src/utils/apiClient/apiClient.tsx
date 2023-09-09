@@ -83,22 +83,25 @@ export async function apiClient<ResponseType>(
        *    In this case we will try to get new access token using refresh token
        */
       if (statusCode === 401 && errorMessage === "Invalid token") {
-        // fetch new access token
-        const newAccessToken = await refreshToken();
+        try {
+          // fetch new access token
+          const newAccessToken = await refreshToken();
 
-        // once new access token successfully fetched, we will retry previous api call
-        if (newAccessToken) {
-          const previousAxiosConfig = error.config;
-          previousAxiosConfig.headers[
-            "Authorization"
-          ] = `Bearer ${newAccessToken}`;
+          // once new access token successfully fetched, we will retry previous api call
+          if (newAccessToken) {
+            const previousAxiosConfig = error.config;
+            previousAxiosConfig.headers[
+              "Authorization"
+            ] = `Bearer ${newAccessToken}`;
 
-          // we want to use clientCallback recursively here, so that case 2 (email not verified) can be checked on retry previous api call
-          return await apiClient(endpoint, previousAxiosConfig);
+            // we want to use clientCallback recursively here, so that case 2 (email not verified) can be checked on retry previous api call
+            return await apiClient(endpoint, previousAxiosConfig);
+          }
+        } catch (error) {
+          // if we are unable to refresh access token, we will logout user and redirect to login page
+          logout();
         }
 
-        // if we are unable to refresh access token, we will logout user and redirect to login page
-        logout();
         return;
       }
 
