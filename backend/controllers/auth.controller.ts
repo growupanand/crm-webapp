@@ -108,15 +108,24 @@ export const getAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   // check if token is in request payload
   if (!refreshToken) return res.sendCustomErrorMessage("Token not found", 400);
-  // check if refresh token exist in database
-  const user = await userModel.findOne({ refreshToken });
-  if (!user) return res.sendCustomErrorMessage("Invalid token", 400);
-  // verify if token is valid
-  const payload = await useToken(refreshToken, false);
-  if (!payload) return res.sendCustomErrorMessage("Invalid token", 400);
-  // generate new access token and return in response
-  const accessToken = await generateAccessToken(user as User);
-  return res.status(200).json({ accessToken });
+
+  try {
+    // check if refresh token exist in database
+    const user = await userModel.findOne({ refreshToken });
+    if (!user) {
+      throw new Error();
+    }
+    // verify if token is valid
+    const payload = await useToken(refreshToken, false);
+    if (!payload) {
+      throw new Error();
+    }
+    // generate new access token and return in response
+    const accessToken = await generateAccessToken(user as User);
+    return res.status(200).json({ accessToken });
+  } catch (error) {
+    return res.sendCustomErrorMessage("Invalid token", 400);
+  }
 };
 
 /**
