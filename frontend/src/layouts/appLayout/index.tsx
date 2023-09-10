@@ -28,18 +28,12 @@ function AppLayout() {
   useEffect(() => {
     if (isUserAuthenticated && !isEmailVerified) {
       refreshUser();
-    } else {
+    }
+
+    if (isUserAuthenticated && isEmailVerified) {
       initializeStores();
     }
   }, []);
-
-  if (isLoadingStores) {
-    return (
-      <Flex align="center" justify="center" h="100vh" gap="xs">
-        <Loader size="md" />
-      </Flex>
-    );
-  }
 
   // If user is not authenticated, redirect to login page
   if (!isUserAuthenticated) {
@@ -52,6 +46,14 @@ function AppLayout() {
         <Box>
           <Loader variant="dots" color="gray" size="sm" />
         </Box>
+      </Flex>
+    );
+  }
+
+  if (isLoadingStores) {
+    return (
+      <Flex align="center" justify="center" h="100vh" gap="xs">
+        <Loader size="md" />
       </Flex>
     );
   }
