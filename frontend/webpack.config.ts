@@ -16,8 +16,9 @@ module.exports = (envFromCLI: Record<string, any>) => {
   const IS_DEV_MODE = !!env.development;
   const environment = IS_PRODUCTION ? "production" : "development";
   const staticPrefix = path.join(__dirname, ".");
-  const REACT_APP_BACKEND_URL =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
+  const REACT_APP_BACKEND_URL = IS_PRODUCTION
+    ? process.env.REACT_APP_BACKEND_URL
+    : "http://localhost:3001";
 
   console.log(`
 =============================================
