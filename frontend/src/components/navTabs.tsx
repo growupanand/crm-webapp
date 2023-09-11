@@ -9,6 +9,8 @@ export type NavTab = {
   onClick?: () => void;
   Icon?: ReactNode;
   disabled?: boolean;
+  /** Overwrite function to check if current tab is active */
+  isActive?: (path: string) => boolean;
 };
 
 export type Props = {
@@ -27,7 +29,11 @@ const NavTabs = (props: Props) => {
       {tabs.map((tab) => (
         <NavLink
           key={`${tab.label}-${tab.path}`}
-          active={activeTabPath === tab.path}
+          active={
+            tab.isActive !== undefined
+              ? tab.isActive(tab.path)
+              : activeTabPath === tab.path
+          }
           label={tab.label}
           onClick={() => {
             onChange?.(tab.path);

@@ -1,20 +1,22 @@
 import { Button } from "@app/components/button";
 import NavTabs, { NavTab } from "@app/components/navTabs";
 import { useAuthStore } from "@app/stores/authStore";
-import { NavLink, Navbar, Text } from "@mantine/core";
+import { ActionIcon, Group, NavLink, Navbar, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { modals } from "@mantine/modals";
-import { Organization } from "@shared/types";
 import getCreateOrganizationModal from "@app/modals/createOrganization";
 import { useOrganizationStore } from "@app/stores/organizationStore";
-import { IconLogout, IconPlus } from "@tabler/icons-react";
+import { IconLogout, IconPlus, IconSettings } from "@tabler/icons-react";
 
 function AppNavBar() {
-  const { organizations, addOrganization } = useOrganizationStore();
+  const { organizations, currentOrganization } = useOrganizationStore();
 
   const organizationTabs = organizations.map((organization) => ({
     label: organization.name,
-  }));
+    path: `/organization/${organization._id}`,
+    isActive: (path: string) =>
+      currentOrganization && path.includes(currentOrganization._id),
+  })) as NavTab[];
 
   const tabs = [
     {
@@ -28,7 +30,6 @@ function AppNavBar() {
         ...organizationTabs,
       ],
     },
-    { label: "Settings", path: "settings" },
   ] as NavTab[];
   const createOrganizationModal = getCreateOrganizationModal({
     onSuccess: onOrganizationCreated,
@@ -41,19 +42,23 @@ function AppNavBar() {
     modals.open(createOrganizationModal);
   }
 
-  function onOrganizationCreated(organization: Organization) {
-    addOrganization(organization);
+  function onOrganizationCreated() {
     modals.close(createOrganizationModal.modalId);
   }
 
   return (
     <Navbar p="xs" w={300}>
       <Navbar.Section>
-        <Button to="/" variant="white" mb="lg">
-          <Text color="black" size="xl" fw={800}>
-            CRM
-          </Text>
-        </Button>
+        <Group align="center" position="apart" mb="lg">
+          <Button to="/" variant="white">
+            <Text color="black" size="xl" fw={800}>
+              CRM
+            </Text>
+          </Button>
+          <ActionIcon component={Button} to="/settings">
+            <IconSettings size={20} />
+          </ActionIcon>
+        </Group>
         <Text px="xs" truncate color="gray" size="xs">
           {isAuthenticated && user ? user.email : "Not logged in"}
         </Text>

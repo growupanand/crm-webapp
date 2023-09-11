@@ -13,14 +13,14 @@ function AppLayout() {
   });
   const { isLoadingStores } = state;
   const { isAuthenticated, user, logout, refreshUser } = useAuthStore();
-  const { fetchOrganizations } = useOrganizationStore();
+  const { initialize } = useOrganizationStore();
 
   const isUserAuthenticated = isAuthenticated && user;
   const isEmailVerified = isUserAuthenticated && user?.isEmailVerified;
 
   const initializeStores = async () => {
     setState({ isLoadingStores: true });
-    await fetchOrganizations();
+    await initialize();
     setState({ isLoadingStores: false });
   };
 

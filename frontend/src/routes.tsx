@@ -9,6 +9,8 @@ import AppLayout from "@app/layouts/appLayout";
 import ChangePasswordPage from "@app/views/settings/changePassword";
 import SettingLayoutPage from "@app/layouts/settingsLayout";
 import AccountPage from "@app/views/settings/account";
+import AppIndexPage from "./views/appIndex";
+import OrganizationLayout from "@app/layouts/organizationLayout";
 
 function buildRoutes() {
   const settingRoutes = (
@@ -35,9 +37,15 @@ function buildRoutes() {
             />
           </Route>
           {/* Authorized Routes - Require user login */}
-          <Route Component={AppLayout}>
-            <Route index Component={Home} />
+          <Route path="/" Component={AppLayout}>
+            <Route path="/" Component={AppIndexPage} />
             {settingRoutes}
+            <Route
+              path="/organization/:organizationId"
+              Component={OrganizationLayout}
+            >
+              <Route index Component={Home} />
+            </Route>
           </Route>
         </Route>
       </Routes>
