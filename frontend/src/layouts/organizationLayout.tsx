@@ -1,3 +1,7 @@
+import { useOrganizationStore } from "@app/stores/organizationStore";
+import { useEffect } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+
 /**
  * This is organization layout, all routes starting with "/organization/:organizationId" will be rendered inside this
  * layout. Here we will do two things:
@@ -8,10 +12,6 @@
  * 2. We will insure the organization id in url is valid, if not we will redirect user to correct place.
  *
  */
-
-import { useOrganizationStore } from "@app/stores/organizationStore";
-import { useEffect } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 function OrganizationLayout() {
   const { organizationId } = useParams();
@@ -25,15 +25,11 @@ function OrganizationLayout() {
     }
   }, [organizationId]);
 
-  useEffect(() => {
-    if (
-      organizationId &&
-      !organizations.find((o) => o._id === organizationId)
-    ) {
-      // If organization id in url is not valid, redirect user to index route
-      navigate("/");
-    }
-  }, [organizationId, organizations]);
+  if (organizationId && !organizations.find((o) => o._id === organizationId)) {
+    // If organization id in url is not valid, redirect user to index route
+    navigate("/");
+    return;
+  }
 
   return (
     <>

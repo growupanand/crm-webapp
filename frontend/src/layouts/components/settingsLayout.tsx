@@ -1,15 +1,24 @@
 import NavTabs, { NavTab } from "@app/components/navTabs";
-import { ActionIcon, Box, Container, Drawer, Flex, Group } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Container,
+  Drawer,
+  Flex,
+  Group,
+  Title,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconMenu2 } from "@tabler/icons-react";
 import { Outlet } from "react-router-dom";
 
-const tabs = [
-  { label: "Account", path: "account" },
-  { label: "Change Password", path: "change-password" },
-] as NavTab[];
+type Props = {
+  tabs: NavTab[];
+  title: string;
+};
 
-function SettingLayoutPage() {
+function SettingLayoutPage(props: Props) {
+  const { tabs, title } = props;
   const [opened, { open, close }] = useDisclosure(false);
   const matches = useMediaQuery("(min-width: 62em)");
 
@@ -33,6 +42,9 @@ function SettingLayoutPage() {
           </>
         )}
         <Box w="100%" miw={matches ? "400px" : undefined}>
+          <Title order={2} mb="xl">
+            {title}
+          </Title>
           <Outlet />
         </Box>
       </Flex>

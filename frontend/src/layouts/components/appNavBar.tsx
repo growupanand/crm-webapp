@@ -1,7 +1,14 @@
 import { Button } from "@app/components/button";
 import NavTabs, { NavTab } from "@app/components/navTabs";
 import { useAuthStore } from "@app/stores/authStore";
-import { ActionIcon, Group, NavLink, Navbar, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Group,
+  NavLink,
+  Navbar,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { modals } from "@mantine/modals";
 import getCreateOrganizationModal from "@app/modals/createOrganization";
@@ -14,6 +21,7 @@ function AppNavBar() {
 
   const isUserAuthenticated = isAuthenticated && user;
   const isEmailVerified = isUserAuthenticated && user?.isEmailVerified;
+  const noOrganizations = organizations.length === 0;
 
   const organizationTabs = organizations.map((organization) => ({
     label: organization.name,
@@ -33,6 +41,13 @@ function AppNavBar() {
         },
         ...organizationTabs,
       ],
+    },
+    {
+      label: "Organization settings",
+      ...(currentOrganization && {
+        path: `/organization/${currentOrganization._id}/settings`,
+      }),
+      disabled: noOrganizations,
     },
   ] as NavTab[];
   const createOrganizationModal = getCreateOrganizationModal({
@@ -59,7 +74,9 @@ function AppNavBar() {
             </Text>
           </Button>
           <ActionIcon component={Button} to="/settings">
-            <IconSettings size={20} />
+            <Tooltip label="Account setting" withArrow color="gray">
+              <IconSettings size={20} />
+            </Tooltip>
           </ActionIcon>
         </Group>
         <Text px="xs" truncate color="gray" size="xs">
