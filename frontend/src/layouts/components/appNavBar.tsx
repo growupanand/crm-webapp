@@ -9,7 +9,11 @@ import { useOrganizationStore } from "@app/stores/organizationStore";
 import { IconLogout, IconPlus, IconSettings } from "@tabler/icons-react";
 
 function AppNavBar() {
+  const { logout, isAuthenticated, user } = useAuthStore();
   const { organizations, currentOrganization } = useOrganizationStore();
+
+  const isUserAuthenticated = isAuthenticated && user;
+  const isEmailVerified = isUserAuthenticated && user?.isEmailVerified;
 
   const organizationTabs = organizations.map((organization) => ({
     label: organization.name,
@@ -35,7 +39,6 @@ function AppNavBar() {
     onSuccess: onOrganizationCreated,
   });
 
-  const { logout, isAuthenticated, user } = useAuthStore();
   const navigate = useNavigate();
 
   function openCreateOrganizationModal() {
@@ -64,8 +67,9 @@ function AppNavBar() {
         </Text>
       </Navbar.Section>
       <Navbar.Section grow mt="md">
-        <NavTabs tabs={tabs} />
+        <NavTabs disabled={!isEmailVerified} tabs={tabs} />
       </Navbar.Section>
+
       <Navbar.Section color="red">
         {isAuthenticated ? (
           <NavLink icon={<IconLogout />} onClick={logout} label="Logout" />
