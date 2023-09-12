@@ -1,8 +1,8 @@
 import { User } from "@app/types/user";
 import { apiClient } from "@app/utils/apiClient";
+import { logout } from "@app/utils/auth";
 import {
   getAccessToken,
-  getRefreshToken,
   getUser,
   resetLocalStorage,
   setAccessToken,
@@ -53,8 +53,5 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }));
   },
 
-  logout: () => {
-    resetLocalStorage();
-    window.location.href = "/auth/login";
-  },
+  logout: logout,
 }));

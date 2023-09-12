@@ -1,4 +1,4 @@
-import { NavLink } from "@mantine/core";
+import { Box, NavLink } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
 
@@ -45,7 +45,9 @@ const NavTabs = (props: Props) => {
           disabled={props.disabled || tab.disabled}
         >
           {tab.nestedTabs && (
-            <NavTabs onChange={onChange} tabs={tab.nestedTabs} />
+            <Box mb={2}>
+              <NavTabs onChange={onChange} tabs={tab.nestedTabs} />
+            </Box>
           )}
         </NavLink>
       ))}

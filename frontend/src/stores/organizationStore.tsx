@@ -23,6 +23,8 @@ type OrganizationStore = {
   updateLastVisitedOrganizationId: (id: string) => void;
   /** Get organization by id */
   getOrganizationById: (id: string) => Organization | undefined;
+  /** Delete organization */
+  deleteOrganization: (id: string) => void;
 };
 
 /**
@@ -81,6 +83,15 @@ export const useOrganizationStore = create<OrganizationStore>((set, get) => ({
     set({
       organizations: [...organizations, organization],
       currentOrganization: organization,
+    });
+  },
+
+  deleteOrganization: (id: string) => {
+    const { organizations } = get();
+    const updatedOrganizations = organizations.filter((o) => o._id !== id);
+    set({
+      organizations: updatedOrganizations,
+      currentOrganization: updatedOrganizations[0] || null,
     });
   },
 }));
