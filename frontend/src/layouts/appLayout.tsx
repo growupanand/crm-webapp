@@ -50,7 +50,7 @@ function AppLayout() {
     );
   }
 
-  if (isLoadingStores) {
+  if (isEmailVerified && isLoadingStores) {
     return (
       <Flex align="center" justify="center" h="100vh" gap="xs">
         <Loader size="md" />
