@@ -16,6 +16,7 @@ export type NavTab = {
 export type Props = {
   onChange?: (path: string) => void;
   tabs: NavTab[];
+  disabled?: boolean;
 };
 
 const NavTabs = (props: Props) => {
@@ -41,7 +42,7 @@ const NavTabs = (props: Props) => {
             tab.path && navigate(tab.path);
           }}
           icon={tab?.Icon}
-          disabled={tab.disabled}
+          disabled={props.disabled || tab.disabled}
         >
           {tab.nestedTabs && (
             <NavTabs onChange={onChange} tabs={tab.nestedTabs} />
