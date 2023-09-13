@@ -116,10 +116,16 @@ const sendInvitation = async (req: Request, res: Response) => {
   let newInvitation = {};
   const { user } = req;
   const { organizationId } = req.params;
-  const { email } = req.body;
+  const invitedToEmail = req.body.invitedToEmail?.toLowerCase().trim();
   try {
+    // check if email is valid
+    if (!invitedToEmail) {
+      return res.sendCustomFieldErrorMessage({
+        email: "Email is required",
+      });
+    }
     // user cannot send invitation to himself
-    if (user.email === email)
+    if (user.email === invitedToEmail)
       throw new Error("logged in user cannot send invitation to himself");
     // check if organization exist in database
     const organization = await organizationModel.findOne({
@@ -131,21 +137,21 @@ const sendInvitation = async (req: Request, res: Response) => {
     // create token
     const tokenPayload = {
       invitedByUserId: user._id,
-      invitedToEmail: email,
+      invitedToEmail: invitedToEmail,
       organizationId: organization._id,
     };
     const token = await generateOrganizationInvitationToken(tokenPayload);
 
     // send invitation email
     const data = await sendMail({
-      to: email,
+      to: invitedToEmail,
       template: "organizationInvitation",
       context: {
         subject: `Invitation to Join ${organization.name}`,
         organizationName: organization.name,
         invitedByUserName: user.name,
         invitedByUserEmail: user.email,
-        invitedToEmail: email,
+        invitedToEmail,
         link: `${BASE_URL}api/organizations/invitations/accept?token=${token}/`,
       },
     });
