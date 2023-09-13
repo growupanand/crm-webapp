@@ -6,7 +6,7 @@ import { ModalSettings } from "@mantine/modals/lib/context";
 import { Organization } from "@app/types/organization";
 import { useNavigate } from "react-router-dom";
 
-export type Props = ModalSettings & {
+type Props = {
   onSuccess?: (organization: Organization) => void;
 };
 
@@ -45,7 +45,10 @@ const CreateOrganizationModal = (props: Props) => {
   );
 };
 
-const getCreateOrganizationModal = ({ onSuccess, ...modalProps }: Props) =>
+const getCreateOrganizationModal = ({
+  onSuccess,
+  ...modalProps
+}: Props & ModalSettings) =>
   ({
     modalId: "create-organization-modal",
     title: "Create New Organization",
