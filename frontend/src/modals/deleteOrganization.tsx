@@ -7,7 +7,7 @@ import { Button } from "@app/components/button";
 import { modals } from "@mantine/modals";
 import { useOrganizationStore } from "@app/stores/organizationStore";
 
-export type Props = ModalSettings & {};
+type Props = {};
 
 type State = {
   isDeleting: boolean;
@@ -70,7 +70,7 @@ const DeleteOrganizationModal = () => {
   );
 };
 
-const getDeleteOrganizationModal = (modalProps: Props) =>
+const getDeleteOrganizationModal = (modalProps: Props & ModalSettings) =>
   ({
     modalId: "delete-organization-modal",
     title: <Text fw={500}>Delete organization</Text>,

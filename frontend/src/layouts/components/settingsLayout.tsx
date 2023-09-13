@@ -23,7 +23,7 @@ function SettingLayoutPage(props: Props) {
   const matches = useMediaQuery("(min-width: 62em)");
 
   return (
-    <Container size="xs" px="xs" mx={0}>
+    <Container size="xs" px="xs" mx={0} fluid>
       <Flex px="lg" gap="xl" direction={matches ? "row" : "column"}>
         {matches ? (
           <Box miw="200px">

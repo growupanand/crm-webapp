@@ -10,9 +10,10 @@ import ChangePasswordPage from "@app/views/settings/changePassword";
 import AccountPage from "@app/views/settings/account";
 import AppIndexPage from "./views/appIndex";
 import OrganizationLayout from "@app/layouts/organizationLayout";
-import AccountSettingsLayout from "./layouts/accountSettingsLayout";
-import OrganizationSettingsLayout from "./layouts/organizationSettingsLayout";
-import OrganizationSettingsDetailsPage from "./views/organizationSettings/details";
+import AccountSettingsLayout from "@app/layouts/accountSettingsLayout";
+import OrganizationSettingsLayout from "@app/layouts/organizationSettingsLayout";
+import OrganizationSettingsDetailsPage from "@app/views/organizationSettings/details";
+import OrganizationInvitations from "@app/views/organizationSettings/organizationInvitations";
 
 function buildRoutes() {
   const settingRoutes = (
@@ -29,6 +30,7 @@ function buildRoutes() {
       <Route path="settings" Component={OrganizationSettingsLayout}>
         <Route index element={<Navigate replace to="details" />} />
         <Route path="details" Component={OrganizationSettingsDetailsPage} />
+        <Route path="invitations" Component={OrganizationInvitations} />
       </Route>
     </Route>
   );

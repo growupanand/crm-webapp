@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "@app/components/button";
 import { modals } from "@mantine/modals";
 
-export type Props = ModalSettings & {};
+type Props = {};
 
 type State = {
   isDeleting: boolean;
@@ -66,7 +66,7 @@ const DeleteAccountModal = () => {
   );
 };
 
-const getDeleteAccountModal = (modalProps: Props) =>
+const getDeleteAccountModal = (modalProps: Props & ModalSettings) =>
   ({
     modalId: "delete-account-modal",
     title: <Text fw={500}>Delete your account</Text>,
