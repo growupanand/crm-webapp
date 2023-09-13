@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const form = useForm({
@@ -24,9 +25,13 @@ function Register() {
     },
   });
 
+  const navigate = useNavigate();
+
   const handleSubmitSuccess = async (formData: Record<string, any>) => {
     alert("registered successfully");
     form.reset();
+    // redirect user to login page
+    navigate("/auth/login");
   };
 
   return (
