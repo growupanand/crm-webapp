@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import client from "./client";
 import { logout, refreshToken } from "@app/utils/auth";
+import { getUser, setUser } from "../storage";
 
 /**
  * This function can be used to make HTTP requests to the backend server. The API client encapsulates the Axios library
@@ -110,8 +111,16 @@ export async function apiClient<ResponseType>(
        * In this case we don't want to logout user but redirect him to email not verified screen
        */
       if (statusCode === 403) {
-        // redirect user to email not verified screen
-        window.location.href = "/verify-email";
+
+        // Note: There could be a case where in local storage user isEmailVerified is true but in backend it is false,
+        // so we will update local storage user isEmailVerified status with backend response
+        const user = getUser();
+        if (user) {
+          setUser({ ...user, isEmailVerified: false });
+        }
+
+        // Since we have already handled to display email not verified screen in appLayout.tsx, we will just redirect user to home page
+        window.location.href = "/";
         return;
       }
 
