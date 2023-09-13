@@ -24,6 +24,15 @@ export default function (_req: Request, res: Response, next: NextFunction) {
   };
   // ----------------------------------------------------------------------------->
 
+  // <----------------------[Send field error message]----------------------
+  res.sendCustomFieldErrorMessage = (
+    fieldMessage: Record<string, any>,
+    statusCode: number = 400
+  ) => {
+    return res.status(statusCode).json(fieldMessage);
+  };
+  // ----------------------------------------------------------------------------->
+
   // <------[Handle error thrown from mongoose]-----------------------------------
   res.sendMongooseErrorResponse = (mongooseError: MongooseError) => {
     let errors: Record<string, any> = {};

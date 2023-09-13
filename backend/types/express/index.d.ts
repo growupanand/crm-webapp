@@ -25,6 +25,7 @@ declare global {
        * @returns { nonFieldError: 'custom error message' }
        */
       sendCustomErrorMessage: (message: string, statusCode?: number) => any;
+
       /**
        * use this method to send parsed mongoose errors in json
        * @param mongooseError
@@ -32,6 +33,24 @@ declare global {
        * @returns  {'filedName' : 'error message', 'nonFieldError' : 'custom error message'}
        */
       sendMongooseErrorResponse: (mongooseError: MongooseError) => any;
+
+      /**
+       * use this method to send custom field error message response
+       * @param fieldMessage custom message text
+       * @param statusCode http status code (default:400)
+       * @returns { 'filedName' : 'error message' }
+       * @example
+       * res.sendCustomFieldErrorMessage({email: 'email already exist!'})
+       * // will return
+       * {
+       * email: 'email already exist!'
+       * }
+       */
+      sendCustomFieldErrorMessage: (
+        fieldMessage: Record<string, any>,
+        statusCode?: number
+      ) => any;
+
       // TODO: Need to add correct type for transporter
       /** This is nodemailer transporter, which have methods like sendMail */
       // transporter: any;
