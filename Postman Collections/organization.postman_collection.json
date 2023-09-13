@@ -7,6 +7,374 @@
 	},
 	"item": [
 		{
+			"name": "invitation",
+			"item": [
+				{
+					"name": "send invitation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{currentAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invitedToEmail\" : \"axg30sged3@icznn.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}organizations/6500a563de8ae31e94a7f7c4/invitations",
+							"host": [
+								"{{backendUrl}}organizations"
+							],
+							"path": [
+								"6500a563de8ae31e94a7f7c4",
+								"invitations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"invitedToEmail\" : \"qxg30saged3@icznn.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendUrl}}organizations/644e8e049ecc0d89aa0c0ee2/invitations",
+									"host": [
+										"{{backendUrl}}organizations"
+									],
+									"path": [
+										"644e8e049ecc0d89aa0c0ee2",
+										"invitations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "269"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10d-Tm2l9SfnZRUT6vm5hi37Bl5V7lQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Apr 2023 16:54:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"invitedByUserId\": \"644bf38abd15552459942910\",\n    \"invitedToEmail\": \"qxg30saged3@icznn.com\",\n    \"organizationId\": \"644e8e049ecc0d89aa0c0ee2\",\n    \"status\": \"pending\",\n    \"_id\": \"644e9d38858f25f124a6708b\",\n    \"createdAt\": \"2023-04-30T16:54:16.867Z\",\n    \"updatedAt\": \"2023-04-30T16:54:16.867Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "get invitation details",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{backendUrl}}organizations/invitations/accept?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWRjMGIzNjIwMjRkZmJhNDdhOWUiLCJpbnZpdGVkVG9FbWFpbCI6ImJ4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODc0MDA4LCJleHAiOjE2ODM0Nzg4MDh9.pX4keq36r-nq-Xo7BcJug0-vQDy0-G9TucPn-loLU1o",
+							"host": [
+								"{{backendUrl}}organizations"
+							],
+							"path": [
+								"invitations",
+								"accept"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWRjMGIzNjIwMjRkZmJhNDdhOWUiLCJpbnZpdGVkVG9FbWFpbCI6ImJ4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODc0MDA4LCJleHAiOjE2ODM0Nzg4MDh9.pX4keq36r-nq-Xo7BcJug0-vQDy0-G9TucPn-loLU1o"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{backendUrl}}organizations/invitations/accept?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRiZjM4YWJkMTU1NTI0NTk5NDI5MTAiLCJpbnZpdGVkVG9FbWFpbCI6InF4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODczNjU0LCJleHAiOjE2ODM0Nzg0NTR9.4HG6U2GLK9mqnld_7PiVRVBBEv7Y3COS0k1fJnnN-aw",
+									"host": [
+										"{{backendUrl}}organizations"
+									],
+									"path": [
+										"invitations",
+										"accept"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRiZjM4YWJkMTU1NTI0NTk5NDI5MTAiLCJpbnZpdGVkVG9FbWFpbCI6InF4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODczNjU0LCJleHAiOjE2ODM0Nzg0NTR9.4HG6U2GLK9mqnld_7PiVRVBBEv7Y3COS0k1fJnnN-aw"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "167"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a7-wSD3x6RP0HsrRSH//9CB1IS58aw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Apr 2023 16:54:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"organization\": {\n        \"name\": \"test organization 2\"\n    },\n    \"invitedByUser\": {\n        \"name\": \"test user 1\",\n        \"email\": \"qxg30sged3@icznn.com\"\n    },\n    \"invitedToUser\": {\n        \"email\": \"qxg30saged3@icznn.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "accept invitation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{currentAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"accepted\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendUrl}}organizations/invitations/accept?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWVhMmIzNjIwMjRkZmJhNDdhYzkiLCJpbnZpdGVkVG9FbWFpbCI6ImF4ZzMwc2dlZDNAaWN6bm4uY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NDRlOGUwNDllY2MwZDg5YWEwYzBlZTIiLCJpYXQiOjE2ODI4NzQyNjUsImV4cCI6MTY4MzQ3OTA2NX0.5wj4MgjqSW0nOhbaUAAcIXGCOOXoly3a2rzyosb7ZZU",
+							"host": [
+								"{{backendUrl}}organizations"
+							],
+							"path": [
+								"invitations",
+								"accept"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWVhMmIzNjIwMjRkZmJhNDdhYzkiLCJpbnZpdGVkVG9FbWFpbCI6ImF4ZzMwc2dlZDNAaWN6bm4uY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NDRlOGUwNDllY2MwZDg5YWEwYzBlZTIiLCJpYXQiOjE2ODI4NzQyNjUsImV4cCI6MTY4MzQ3OTA2NX0.5wj4MgjqSW0nOhbaUAAcIXGCOOXoly3a2rzyosb7ZZU"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "failed - wrong user",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : \"rejected\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendUrl}}organizations/invitations/accept?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRiZjM4YWJkMTU1NTI0NTk5NDI5MTAiLCJpbnZpdGVkVG9FbWFpbCI6InF4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODczNjU0LCJleHAiOjE2ODM0Nzg0NTR9.4HG6U2GLK9mqnld_7PiVRVBBEv7Y3COS0k1fJnnN-aw",
+									"host": [
+										"{{backendUrl}}organizations"
+									],
+									"path": [
+										"invitations",
+										"accept"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRiZjM4YWJkMTU1NTI0NTk5NDI5MTAiLCJpbnZpdGVkVG9FbWFpbCI6InF4ZzMwc2FnZWQzQGljem5uLmNvbSIsIm9yZ2FuaXphdGlvbklkIjoiNjQ0ZThlMDQ5ZWNjMGQ4OWFhMGMwZWUyIiwiaWF0IjoxNjgyODczNjU0LCJleHAiOjE2ODM0Nzg0NTR9.4HG6U2GLK9mqnld_7PiVRVBBEv7Y3COS0k1fJnnN-aw"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"42-P4tfw5j/4V+1lrSaJXriy0IHgNg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Apr 2023 16:54:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"nonFieldError\": \"this invitation is not for current logged user\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : \"accepted\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendUrl}}organizations/invitations/accept?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWVhMmIzNjIwMjRkZmJhNDdhYzkiLCJpbnZpdGVkVG9FbWFpbCI6ImF4ZzMwc2dlZDNAaWN6bm4uY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NDRlOGUwNDllY2MwZDg5YWEwYzBlZTIiLCJpYXQiOjE2ODI4NzQyNjUsImV4cCI6MTY4MzQ3OTA2NX0.5wj4MgjqSW0nOhbaUAAcIXGCOOXoly3a2rzyosb7ZZU",
+									"host": [
+										"{{backendUrl}}organizations"
+									],
+									"path": [
+										"invitations",
+										"accept"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnZpdGVkQnlVc2VySWQiOiI2NDRlOWVhMmIzNjIwMjRkZmJhNDdhYzkiLCJpbnZpdGVkVG9FbWFpbCI6ImF4ZzMwc2dlZDNAaWN6bm4uY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NDRlOGUwNDllY2MwZDg5YWEwYzBlZTIiLCJpYXQiOjE2ODI4NzQyNjUsImV4cCI6MTY4MzQ3OTA2NX0.5wj4MgjqSW0nOhbaUAAcIXGCOOXoly3a2rzyosb7ZZU"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "400"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"190-+MW1x4XJXKyw+r9Z/dN/Ccl75P4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Apr 2023 17:04:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"organization\": {\n        \"_id\": \"644e8e049ecc0d89aa0c0ee2\",\n        \"name\": \"test organization 2\",\n        \"userId\": \"644bf38abd15552459942910\",\n        \"createdAt\": \"2023-04-30T15:49:24.915Z\",\n        \"updatedAt\": \"2023-04-30T15:49:24.915Z\",\n        \"slug\": \"test-organization-2-pj6u\",\n        \"__v\": 0\n    },\n    \"invitedByUser\": {\n        \"name\": \"test user 1\",\n        \"email\": \"bxg30sged3@icznn.com\"\n    },\n    \"invitedToUser\": {\n        \"email\": \"axg30sged3@icznn.com\"\n    },\n    \"message\": \"invitation accepted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "create new organization",
 			"request": {
 				"auth": {
@@ -45,7 +413,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"test organization 1\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"test organization 2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -68,20 +436,24 @@
 							"value": "Express"
 						},
 						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
 							"key": "Content-Type",
 							"value": "application/json; charset=utf-8"
 						},
 						{
 							"key": "Content-Length",
-							"value": "219"
+							"value": "453"
 						},
 						{
 							"key": "ETag",
-							"value": "W/\"db-6oQ4iS6JFuomdijyUWsUmAQavdc\""
+							"value": "W/\"1c5-JoZVnFBqIhL0qbcV0VcSvzCfFE8\""
 						},
 						{
 							"key": "Date",
-							"value": "Sat, 04 Mar 2023 17:23:28 GMT"
+							"value": "Sat, 09 Sep 2023 10:28:49 GMT"
 						},
 						{
 							"key": "Connection",
@@ -93,7 +465,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"name\": \"test organization 1\",\n    \"userId\": \"64037e70a53df096f4a4ed8a\",\n    \"_id\": \"64037e90a53df096f4a4ed9c\",\n    \"createdAt\": \"2023-03-04T17:23:28.398Z\",\n    \"updatedAt\": \"2023-03-04T17:23:28.398Z\",\n    \"slug\": \"test-organization-1-lq70\",\n    \"__v\": 0\n}"
+					"body": "{\n    \"name\": \"test organization 2\",\n    \"userId\": \"64fa9eb98999e8b088323000\",\n    \"_id\": \"64fc48e101686ae3b0374dce\",\n    \"createdAt\": \"2023-09-09T10:28:49.396Z\",\n    \"updatedAt\": \"2023-09-09T10:28:49.396Z\",\n    \"slug\": \"test-organization-2-98vf\",\n    \"__v\": 0,\n    \"role\": {\n        \"_id\": \"6484a69380778d05c0619661\",\n        \"name\": \"Owner\",\n        \"slug\": \"owner\",\n        \"description\": \"This user is owner of the organization\",\n        \"isDefaultRole\": true,\n        \"createdAt\": \"2023-06-10T16:36:35.450Z\",\n        \"updatedAt\": \"2023-06-10T16:36:35.450Z\",\n        \"__v\": 0\n    }\n}"
 				}
 			]
 		},
@@ -186,12 +558,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{backendUrl}}organizations/64037e90a53df096f4a4ed9csf",
+					"raw": "{{backendUrl}}organizations/644bf6dd6ccf3b60b6550208",
 					"host": [
 						"{{backendUrl}}organizations"
 					],
 					"path": [
-						"64037e90a53df096f4a4ed9csf"
+						"644bf6dd6ccf3b60b6550208"
 					]
 				}
 			},
