@@ -1,0 +1,54 @@
+<mxfile host="65bd71144e">
+    <diagram id="mOgIgFryTJ4uSoR3P7ie" name="Page-1">
+        <mxGraphModel dx="1155" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="6" value="go to organization settings &amp;gt; invitations page" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="70" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="11" target="24">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="API Request" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;spacingLeft=0;spacingBottom=0;" vertex="1" connectable="0" parent="25">
+                    <mxGeometry x="-0.0833" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="Enter email and submit" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="100" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="6" target="11">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="160" y="360" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="18" target="22">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Success" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#2D7600;fillColor=#60a917;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="125" y="400" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Send mail with invitation link:&lt;br&gt;http://domain.com/auth/invitation/&amp;lt;token&amp;gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="45" y="505" width="230" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" style="html=1;" edge="1" parent="1" source="24" target="18">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="660" y="400" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="660" y="410"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="API Response&lt;br&gt;-Body: &amp;lt;token&amp;gt;" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="29">
+                    <mxGeometry x="0.3003" y="1" relative="1" as="geometry">
+                        <mxPoint x="-19" y="-4" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="Validate email and create a unique invitation token" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
