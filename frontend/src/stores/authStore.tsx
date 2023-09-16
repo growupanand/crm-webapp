@@ -22,6 +22,8 @@ interface AuthState {
   logout: () => void;
   /** Refresh user details */
   refreshUser: () => Promise<void>;
+  /** Resend email verification link */
+  resendMailVerification: () => Promise<void>;
 }
 
 /**
@@ -51,6 +53,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isAuthenticated: true,
       user: user,
     }));
+  },
+
+  resendMailVerification: async () => {
+    await apiClient("user/resendEmailVerification/", {
+      method: "POST",
+    });
   },
 
   logout: logout,
