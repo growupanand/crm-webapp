@@ -14,6 +14,7 @@ import userModel from "@models/user";
 import { User } from "@app/types/user";
 import { sendMail } from "@app/utils/sendMail";
 import { BASE_URL } from "@app/constants";
+import organizationModel from "@app/models/organization";
 
 /**
  * Create new user and send email verification mail
@@ -228,6 +229,20 @@ export const getTokenDetails = async (req: Request, res: Response) => {
   try {
     // check if token is valid
     const tokenPayload = await useToken(token, false, true);
+
+    // check if token is for accepting invitation
+    if (
+      tokenPayload?.type === "organizationInvitationToken" &&
+      tokenPayload.organizationId
+    ) {
+      const organization = await organizationModel.findById(
+        tokenPayload.organizationId
+      );
+      if (!organization) {
+        return res.sendCustomErrorMessage("Organization not found", 400);
+      }
+      return res.json({ ...tokenPayload, organization });
+    }
 
     // send token data in response
     return res.json({ ...tokenPayload });
