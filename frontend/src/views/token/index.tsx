@@ -1,20 +1,23 @@
 import useAPIClient from "@app/hooks/useAPIClient";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ResetPasswordPage from "@app/views/token/resetPassword";
 import { Container, Group, Loader, Stack, Text } from "@mantine/core";
 import { Button } from "@app/components/button";
+import ResetPasswordPage from "./resetPassword";
+import OrganizationInvitationPage from "./organizationInvitation";
+import { useAuthStore } from "@app/stores/authStore";
 
 type State = {
   isValidatingToken: boolean;
   tokenData: null | Record<string, any>;
 };
 
-const VALID_TOKEN_TYPES = ["resetPasswordToken"];
+const VALID_TOKEN_TYPES = ["resetPasswordToken", "organizationInvitationToken"];
 
 function TokenPage() {
   const { token } = useParams();
   const { client } = useAPIClient();
+  const { isAuthenticated } = useAuthStore();
 
   const [state, setState] = useState<State>({
     isValidatingToken: true,
@@ -32,6 +35,11 @@ function TokenPage() {
       case "resetPasswordToken":
         TokenTypePage = (
           <ResetPasswordPage token={token} tokenData={tokenData} />
+        );
+        break;
+      case "organizationInvitationToken":
+        TokenTypePage = (
+          <OrganizationInvitationPage token={token} tokenData={tokenData} />
         );
         break;
 
@@ -74,9 +82,15 @@ function TokenPage() {
       <Stack spacing="lg">
         {isInvalidToken ? <InvalidToken /> : getTokenPage()}
         <Group grow>
-          <Button variant="light" to="/auth/login">
-            Back to login
-          </Button>
+          {isAuthenticated ? (
+            <Button variant="light" to="/">
+              Back to dashboard
+            </Button>
+          ) : (
+            <Button variant="light" to="/auth/login">
+              Back to login
+            </Button>
+          )}
         </Group>
       </Stack>
     </Container>

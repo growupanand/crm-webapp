@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach Frontend",
+      "name": "Launch chrome (frontend debugger)",
       "port": 7999,
       "request": "launch",
       "type": "chrome",

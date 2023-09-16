@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@app/components/button";
 import { modals } from "@mantine/modals";
 import { useOrganizationStore } from "@app/stores/organizationStore";
+import { handleCachedError } from "@app/utils/errorHandlers";
 
 type Props = {};
 
@@ -32,7 +33,8 @@ const DeleteOrganizationModal = () => {
       modals.close("delete-organization-modal");
       deleteOrganization(currentOrganization._id);
     } catch (error) {
-      closeNotification("Error deleting organization", "error");
+      closeNotification();
+      handleCachedError(error);
       setState((cs) => ({ ...cs, isDeleting: false }));
     }
   };

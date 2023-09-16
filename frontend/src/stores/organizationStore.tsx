@@ -41,8 +41,28 @@ export const useOrganizationStore = create<OrganizationStore>((set, get) => ({
   initialize: async () => {
     const { fetchOrganizations } = get();
     const organizations = await fetchOrganizations();
-    const lastVisitedOrganizationId =
-      get().lastVisitedOrganizationId || organizations[0]?._id || null;
+    let lastVisitedOrganizationId = get().lastVisitedOrganizationId;
+    let currentOrganization = null;
+
+    // If last visited organization id is not set, set it to first organization
+    if (!lastVisitedOrganizationId && organizations.length > 0) {
+      lastVisitedOrganizationId = organizations[0]._id;
+      setLastVisitedOrganizationId(lastVisitedOrganizationId);
+    }
+
+    // If last visited organization id is set, check if it is exists in organizations list or not
+    if (lastVisitedOrganizationId) {
+      currentOrganization = organizations.find(
+        (o) => o._id === lastVisitedOrganizationId
+      );
+    }
+
+    // if last visited organization id is not exists in organizations list, set current organization to first organization
+    if (!currentOrganization && organizations.length > 0) {
+      currentOrganization = organizations[0];
+      lastVisitedOrganizationId = currentOrganization._id;
+      setLastVisitedOrganizationId(lastVisitedOrganizationId);
+    }
 
     set((cs) => ({
       ...cs,
