@@ -16,6 +16,8 @@ export const PORT = process.env.PORT || 3001;
 export const HOST = process.env.BACKEND_HOST || "http://localhost";
 export const BASE_URL = `${HOST}:${PORT}/`;
 export const NODE_ENV = process.env.NODE_ENV || "local";
+export const FRONTEND_HOST =
+  process.env.FRONTEND_HOST || "http://localhost:3000";
 
 /** this api urls can be access without need of user email verified */
 export const ALLOWED_PATHS_WITHOUT_MAIL_VERIFIED = [

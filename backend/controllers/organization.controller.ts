@@ -1,4 +1,4 @@
-import { BASE_URL } from "@app/constants";
+import { BASE_URL, FRONTEND_HOST } from "@app/constants";
 import organizationModel from "@app/models/organization";
 import roleModel from "@app/models/role";
 import tokenModel from "@app/models/token";
@@ -152,7 +152,7 @@ const sendInvitation = async (req: Request, res: Response) => {
         invitedByUserName: user.name,
         invitedByUserEmail: user.email,
         invitedToEmail,
-        link: `${BASE_URL}api/organizations/invitations/accept?token=${token}/`,
+        link: `${FRONTEND_HOST}/auth/token/${token}/`,
       },
     });
 
@@ -239,7 +239,7 @@ const handleInvitation = async (req: Request, res: Response) => {
       if (user.email !== invitation.invitedToEmail)
         throw new Error("this invitation is not for current logged user");
       if (!status || !["accepted", "rejected"].includes(status))
-        throw new Error("valid status required");
+        throw new Error("valid action required");
 
       // Accept the invitation
       if (status === "accepted") {
