@@ -6,6 +6,11 @@ import { IconAlertCircle } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
 import { useOrganizationStore } from "@app/stores/organizationStore";
+import { Button } from "@app/components/button";
+import {
+  addErrorNotification,
+  addSuccessNotification,
+} from "@app/stores/notificationStore";
 
 function AppLayout() {
   const [state, setState] = useState({
@@ -77,17 +82,44 @@ function AppLayout() {
   );
 }
 
-const EmailNotVerified = () => (
-  <Flex align="center" justify="center">
-    <Alert mb="lg" color="orange">
-      <Flex align="center" gap="md">
-        <IconAlertCircle size="2rem" color="orange" />
-        <Text color="orange" size="xl">
-          Please verify your email
-        </Text>
-      </Flex>
-    </Alert>
-  </Flex>
-);
+const EmailNotVerified = () => {
+  const [state, setState] = useState({
+    isLoading: false,
+  });
+  const { isLoading } = state;
+  const { resendMailVerification } = useAuthStore();
+
+  const handleResendMailVerification = async () => {
+    setState({ isLoading: true });
+    try {
+      await resendMailVerification();
+      addSuccessNotification("Verification link sent to your email");
+    } catch {
+      addErrorNotification("Failed to send verification link");
+    } finally {
+      setState({ isLoading: false });
+    }
+  };
+
+  return (
+    <Flex align="center" justify="center">
+      <Alert mb="lg" color="orange">
+        <Flex align="center" gap="md">
+          <IconAlertCircle size="2rem" color="orange" />
+          <Text color="orange" size="xl">
+            Please verify your email.
+          </Text>
+          <Button
+            variant="subtle"
+            onClick={handleResendMailVerification}
+            disabled={isLoading}
+          >
+            Resend verification mail
+          </Button>
+        </Flex>
+      </Alert>
+    </Flex>
+  );
+};
 
 export default AppLayout;
