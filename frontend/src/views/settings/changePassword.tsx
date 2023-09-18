@@ -1,4 +1,5 @@
 import Form from "@app/components/form";
+import { addSuccessNotification } from "@app/stores/notificationStore";
 import { TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -17,7 +18,7 @@ function ChangePasswordPage() {
   });
 
   const handleSubmitSuccess = async (formData: Record<string, any>) => {
-    alert("password changed successfully");
+    addSuccessNotification("password changed successfully");
     form.reset();
   };
 
