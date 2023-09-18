@@ -1,5 +1,6 @@
 import { Button } from "@app/components/button";
 import Form from "@app/components/form";
+import { addSuccessNotification } from "@app/stores/notificationStore";
 import { Container, Divider, Group, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -12,7 +13,7 @@ function ForgetPassword() {
 
   const handleSubmitSuccess = async () => {
     form.reset();
-    alert("Password reset link sent to you mail.");
+    addSuccessNotification("Password reset link sent to you mail.");
   };
 
   return (

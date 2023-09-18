@@ -1,5 +1,6 @@
 import { Button } from "@app/components/button";
 import Form from "@app/components/form";
+import { addSuccessNotification } from "@app/stores/notificationStore";
 import {
   Container,
   Divider,
@@ -28,7 +29,7 @@ function Register() {
   const navigate = useNavigate();
 
   const handleSubmitSuccess = async (formData: Record<string, any>) => {
-    alert("registered successfully");
+    addSuccessNotification("registered successfully");
     form.reset();
     // redirect user to login page
     navigate("/auth/login");
