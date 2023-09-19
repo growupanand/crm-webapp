@@ -13,3 +13,11 @@ There are many ways you can contribute to CRM-Webapp:
 
 For more details, refer to the following sections in the `README.md`:
 
+## How to Contribute
+
+There are many ways you can contribute to CRM-Webapp, including:
+
+-   Reporting bugs: If you come across a bug while using CRM-Webapp, please report it on our GitHub Issues page.
+-   Requesting features: If there's a feature you'd like to see added to CRM-Webapp, please let us know by opening an issue.
+-   Contributing code: If you'd like to contribute code to CRM-Webapp, please fork the repository, make your changes, and submit a pull request.
+-   Updating documentation: If you notice any errors or omissions in our documentation, please submit a pull request to correct them.
