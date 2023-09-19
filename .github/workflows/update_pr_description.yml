@@ -1,0 +1,47 @@
+name: Update PR Description
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  update_pr_description:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update PR description
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Fetch the list of commits for the PR
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            console.log({commits});
+
+            // Extract the commit messages and format them into a list
+            const commitMessages = commits.map(commit => `- ${commit.commit.message}`).join('\n');
+
+            // Fetch the current PR description
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            // Append the list of commit messages to the PR description
+            const updatedDescription = `${pullRequest.body}\n\n## Commits:\n${commitMessages}`;
+
+            // Update the PR description
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: updatedDescription,
+            });
