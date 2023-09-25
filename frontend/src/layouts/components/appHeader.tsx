@@ -1,7 +1,7 @@
 import { Button } from "@app/components/button";
 import { useAuthStore } from "@app/stores/authStore";
-import { Group, Header, Text, Title } from "@mantine/core";
-import { IconLogout, IconSettings } from "@tabler/icons-react";
+import { Group, Header } from "@mantine/core";
+import { IconLogout } from "@tabler/icons-react";
 
 function AppHeader() {
   const { user, isAuthenticated, logout } = useAuthStore();

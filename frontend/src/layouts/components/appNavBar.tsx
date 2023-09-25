@@ -49,6 +49,13 @@ function AppNavBar() {
       }),
       disabled: noOrganizations,
     },
+    {
+      label: "Customers",
+      ...(currentOrganization && {
+        path: `/organization/${currentOrganization._id}/customers`,
+      }),
+      disabled: noOrganizations,
+    },
   ] as NavTab[];
   const createOrganizationModal = getCreateOrganizationModal({
     onSuccess: onOrganizationCreated,
