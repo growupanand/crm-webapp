@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { useEffect, useState } from "react";
+import CustomersList from "./components/customersList";
 
 type State = {
   loadingCustomers: boolean;
@@ -31,12 +32,14 @@ function CustomersPage() {
   const { loadingCustomers, customers, error } = state;
   const { currentOrganization } = useOrganizationStore();
   const { client } = useAPIClient();
-  const newCustomerModal = getCreateCustomerModal({});
+  const newCustomerModal = getCreateCustomerModal({
+    onSuccess: fetchCustomers,
+  });
 
   const openNewCustomerModal = () => modals.open(newCustomerModal);
 
-  const fetchCustomers = async () => {
-    const endpoint = `organizations/${currentOrganization._id}/customersa`;
+  async function fetchCustomers() {
+    const endpoint = `organizations/${currentOrganization._id}/customers`;
     setState((cs) => ({ ...cs, loadingCustomers: true, error: null }));
     try {
       const customers = await client<Customer[]>(endpoint, {});
@@ -52,7 +55,7 @@ function CustomersPage() {
         loadingCustomers: false,
       }));
     }
-  };
+  }
 
   useEffect(() => {
     fetchCustomers();
@@ -62,6 +65,7 @@ function CustomersPage() {
     <Container size="xs" px="xs" mx={0} fluid>
       <Group position="apart">
         <Title order={1}>Customers</Title>
+
         <Button onClick={openNewCustomerModal}>New Customer</Button>
       </Group>
       <Box>
@@ -72,14 +76,7 @@ function CustomersPage() {
             retry={fetchCustomers}
           />
         )}
-        {customers.length === 0 && <p>No customers found</p>}
-        {customers.length > 0 && (
-          <ul>
-            {customers.map((customer) => (
-              <li key={customer._id}>{customer.name}</li>
-            ))}
-          </ul>
-        )}
+        {!loadingCustomers && !error && <CustomersList customers={customers} />}
       </Box>
     </Container>
   );

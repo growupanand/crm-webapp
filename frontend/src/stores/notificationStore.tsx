@@ -118,7 +118,6 @@ export const useNotificationsStore = create<NotificationsStore>((set, get) => ({
 
   deleteNotification: (notificationId: string) => {
     const { notifications } = get();
-    console.log({ deletenotifiation: notificationId });
     mantineNotifications.hide(notificationId);
     const updatedNotifications = notifications.filter(
       (i) => i.id !== notificationId
