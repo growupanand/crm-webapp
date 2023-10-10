@@ -45,7 +45,7 @@ export const register = async (req: Request, res: Response) => {
       context: {
         subject: "Registration successfully",
         name: newUser.name,
-        link: `${BASE_URL}api/auth/verifyEmail/${emailVerificationToken}`,
+        link: `https://crm-webapp-zeta.vercel.app/api/auth/verifyEmail/${emailVerificationToken}`,
       },
     });
     return res.status(200).json({ accessToken, refreshToken });
