@@ -1,5 +1,7 @@
+import { useOrganizationStore } from "@app/stores/organizationStore";
 import { Customer } from "@app/types/customer";
-import { Box, Text } from "@mantine/core";
+import { Box, Text, NavLink } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   customers: Customer[];
@@ -7,6 +9,8 @@ type Props = {
 
 function CustomersList(props: Props) {
   const { customers } = props;
+  const { currentOrganization } = useOrganizationStore();
+  const navigate = useNavigate();
 
   return (
     <Box my="md">
@@ -20,12 +24,17 @@ function CustomersList(props: Props) {
         </Text>
       )}
       {customers.map((customer) => (
-        <Box key={customer._id} mt="md">
-          <Text size="xl">{customer.name}</Text>
-          <Text size="md" color="gray">
-            {customer.mobileNumber}
-          </Text>
-        </Box>
+        <NavLink
+          key={customer._id}
+          label={customer.name}
+          description={customer.mobileNumber}
+          onClick={() =>
+            navigate(
+              `/organization/${currentOrganization._id}/customers/${customer._id}`
+            )
+          }
+          mt="md"
+        />
       ))}
     </Box>
   );
