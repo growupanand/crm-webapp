@@ -26,6 +26,7 @@ type Props = {
   submitButtonWithFullWidth?: boolean;
   additionalPayloadData?: Record<string, any>;
   formTitle?: string;
+  onCancel?: () => void;
 };
 
 type State = {
@@ -129,8 +130,18 @@ function Form(props: Props) {
           </Alert>
         )}
         {children}
-        <Group mt="xl" grow={submitButtonWithFullWidth}>
-          <Button disabled={isFormBusy} loading={isFormBusy} type="submit">
+        <Group mt="xl" position="apart" grow={submitButtonWithFullWidth}>
+          {props.onCancel && (
+            <Button variant="default" onClick={props.onCancel}>
+              Cancel
+            </Button>
+          )}
+          <Button
+            disabled={isFormBusy}
+            loading={isFormBusy}
+            type="submit"
+            px={!submitButtonWithFullWidth && "xl"}
+          >
             {submitButtonLabel || "Submit"}
           </Button>
         </Group>
