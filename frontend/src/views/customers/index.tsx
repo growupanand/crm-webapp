@@ -16,6 +16,7 @@ import {
 import { modals } from "@mantine/modals";
 import { useEffect, useState } from "react";
 import CustomersList from "./components/customersList";
+import { Navigate, useNavigate } from "react-router-dom";
 
 type State = {
   loadingCustomers: boolean;
@@ -32,8 +33,12 @@ function CustomersPage() {
   const { loadingCustomers, customers, error } = state;
   const { currentOrganization } = useOrganizationStore();
   const { client } = useAPIClient();
+  const navigate = useNavigate();
   const newCustomerModal = getCreateCustomerModal({
-    onSuccess: fetchCustomers,
+    onSuccess: (customer: Customer) =>
+      navigate(
+        `/organization/${currentOrganization._id}/customers/${customer._id}`
+      ),
   });
 
   const openNewCustomerModal = () => modals.open(newCustomerModal);

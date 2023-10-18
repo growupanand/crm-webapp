@@ -15,6 +15,7 @@ import OrganizationSettingsLayout from "@app/layouts/organizationSettingsLayout"
 import OrganizationSettingsDetailsPage from "@app/views/organizationSettings/details";
 import OrganizationInvitations from "@app/views/organizationSettings/organizationInvitations";
 import CustomersPage from "@app/views/customers";
+import ViewCustomerPage from "@app/views/customers/viewCustomer";
 
 function buildRoutes() {
   const settingRoutes = (
@@ -34,6 +35,7 @@ function buildRoutes() {
         <Route path="invitations" Component={OrganizationInvitations} />
       </Route>
       <Route path="customers" Component={CustomersPage} />
+      <Route path="customers/:customerId" Component={ViewCustomerPage} />
     </Route>
   );
 
