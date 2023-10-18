@@ -6,3 +6,30 @@ h1 {
   width: 100px;
   height: 100px;
 }
+
+/* Style for the hamburger button */
+.hamburger-menu {
+  display: none; /* Hide by default on desktop screens */
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Style for the expanded menu */
+.mobile-menu {
+  display: none; /* Hide by default on mobile screens */
+}
+
+/* Media query to show/hide elements based on screen size */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none; /* Hide the desktop navigation on small screens */
+  }
+
+  .hamburger-menu {
+    display: block; /* Show the hamburger button on small screens */
+  }
+
+  .mobile-menu {
+    display: block; /* Show the expanded menu on small screens */
+  }
+}
