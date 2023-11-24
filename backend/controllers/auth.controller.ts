@@ -13,7 +13,7 @@ import {
 import userModel from "@models/user";
 import { User } from "@app/types/user";
 import { sendMail } from "@app/utils/sendMail";
-import { BASE_URL } from "@app/constants";
+import { BASE_URL, FRONTEND_HOST } from "@app/constants";
 import organizationModel from "@app/models/organization";
 
 /**
@@ -45,7 +45,7 @@ export const register = async (req: Request, res: Response) => {
       context: {
         subject: "Registration successfully",
         name: newUser.name,
-        link: `https://crm-webapp-zeta.vercel.app/api/auth/verifyEmail/${emailVerificationToken}`,
+        link: `${FRONTEND_HOST}/api/auth/verifyEmail/${emailVerificationToken}`,
       },
     });
     return res.status(200).json({ accessToken, refreshToken });

@@ -57,7 +57,7 @@ const resendEmailVerify = async (req: Request, res: Response) => {
     context: {
       subject: "Verification Mail",
       name: user.name,
-      link: `${FRONTEND_HOST}api/auth/verifyEmail/${newEmailVerificationToken}/`,
+      link: `${FRONTEND_HOST}/auth/token/${newEmailVerificationToken}`,
     },
   });
   if (!data) {
