@@ -6,7 +6,7 @@ import {
   deleteEmailVerificationTokens,
   generateEmailVerificationToken,
 } from "@app/utils";
-import { BASE_URL } from "@app/constants";
+import { BASE_URL, FRONTEND_HOST } from "@app/constants";
 
 /** Get any user details */
 const getUser = async (req: Request, res: Response) => {
@@ -57,7 +57,7 @@ const resendEmailVerify = async (req: Request, res: Response) => {
     context: {
       subject: "Verification Mail",
       name: user.name,
-      link: `${BASE_URL}api/auth/verifyEmail/${newEmailVerificationToken}/`,
+      link: `${FRONTEND_HOST}/auth/token/${newEmailVerificationToken}`,
     },
   });
   if (!data) {
