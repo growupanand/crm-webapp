@@ -14,5 +14,6 @@ router.use(
   organizationMiddleware,
   require("./insuranceCompany")
 );
+router.use("/status", require("./status"));
 
 export default router;
