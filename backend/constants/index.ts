@@ -45,6 +45,10 @@ export const ALLOWED_PATHS_WITHOUT_USER_LOGGED_IN = [
     path: "/auth/getAccessToken",
     method: ["POST"],
   },
+  {
+    path: "/status",
+    method: ["GET"],
+  },
 ];
 
 /** when server start, default roles will be loaded automatically in Database */
