@@ -6,13 +6,18 @@ import { Button } from "@app/components/button";
 import ResetPasswordPage from "./resetPassword";
 import OrganizationInvitationPage from "./organizationInvitation";
 import { useAuthStore } from "@app/stores/authStore";
+import EmailVerificationToken from "./emailVerificationToken";
 
 type State = {
   isValidatingToken: boolean;
   tokenData: null | Record<string, any>;
 };
 
-const VALID_TOKEN_TYPES = ["resetPasswordToken", "organizationInvitationToken"];
+const VALID_TOKEN_TYPES = [
+  "resetPasswordToken",
+  "organizationInvitationToken",
+  "emailVerificationToken",
+];
 
 function TokenPage() {
   const { token } = useParams();
@@ -40,6 +45,12 @@ function TokenPage() {
       case "organizationInvitationToken":
         TokenTypePage = (
           <OrganizationInvitationPage token={token} tokenData={tokenData} />
+        );
+        break;
+
+      case "emailVerificationToken":
+        TokenTypePage = (
+          <EmailVerificationToken token={token} tokenData={tokenData} />
         );
         break;
 
