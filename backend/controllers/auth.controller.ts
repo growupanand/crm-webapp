@@ -45,7 +45,7 @@ export const register = async (req: Request, res: Response) => {
       context: {
         subject: "Registration successfully",
         name: newUser.name,
-        link: `${FRONTEND_HOST}/api/auth/verifyEmail/${emailVerificationToken}`,
+        link: `${FRONTEND_HOST}/auth/token/${emailVerificationToken}/`,
       },
     });
     return res.status(200).json({ accessToken, refreshToken });
