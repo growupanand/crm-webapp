@@ -3,6 +3,15 @@
 
 CRM-Webapp is an **open-source CRM web app** built using the **MERN stack (MongoDB, Express, React, Node.js)  and TypeScript**. It provides a user-friendly interface for managing customer relationships, tracking leads, and closing deals.
 
+I created this project for learning purpose, Below are some **key highlights of this project:**
+
+- Build Backend from scratch with test cases to make it work independently without Frontend
+- Build Frontend from scratch using webpack and react - https://github.com/growupanand/crm-webapp/pull/65
+- Build custom JWT Authentication and Authorization with access token and refresh token
+- Added email service for email verification, organization member invitation Etc.
+- Added Git actions to check test cases coverage for every Pull request and also deploy the test coverage report on https://growupanand.github.io/crm-webapp/
+- The whole monorepo is in Typescript with shared Types between Frontend and Backend
+
 ## Project health
 [![Frontend deployment](https://img.shields.io/github/deployments/growupanand/crm-webapp/production?label=Frontend&logo=vercel)](https://crm-webapp-zeta.vercel.app/)
 [![Frontend deployment](https://img.shields.io/badge/Backend-status-green)](https://crm-webapp.openstatus.dev/)
